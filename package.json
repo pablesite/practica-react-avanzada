@@ -1,5 +1,5 @@
 {
-  "name": "pruebas_material_desde_0",
+  "name": "practica-fundamentos-react",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -27,5 +27,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@material-ui/core": "^4.5.1"
   }
 }
