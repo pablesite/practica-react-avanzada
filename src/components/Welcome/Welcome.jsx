@@ -17,17 +17,8 @@ export default class Welcome extends Component {
             <React.Fragment>                
                     
                     <div>
-                        <p>Welcome {this.props.name}!</p>
-                        <p>
-                            {
-                                this.props.role === 'admin'
-                                    ?
-                                    'You are Admin'
-                                    :
-                                    'You are User'
-                            }
-                        </p>
-
+                        <p>Welcome {this.props.name} {this.props.surname}!</p>
+                        
                         <p>Remember that you will find a selection of adverts filtered by {this.props.tag}</p>
 
                     </div>
