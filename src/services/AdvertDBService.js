@@ -13,8 +13,9 @@ const getRequest = (url) => {
 }
 
 const discoverAdverts = () => {
+  console.log('discoverAdverts')
   return getRequest(`${API_URL}`)
-  .then(res => res.results.map(mov => new Advert(mov)))
+  .then(res => res.results.map(adv => new Advert(adv)))
 }
 
 const getAdvert = (advertID) => {
@@ -29,8 +30,8 @@ const getAdvert = (advertID) => {
 }
 
 const searchAdverts = (query) => {
-  return getRequest(`${API_URL}/search/movie&query=${query}&page=1&include_adult=false`)
-  .then(res => res.results.map(mov => new Advert(mov)))
+  return getRequest(`${API_URL}?${query}`)
+  .then(res => res.results.map(adv => new Advert(adv)))
 }
 
 export {

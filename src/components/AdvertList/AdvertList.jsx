@@ -6,10 +6,13 @@ export default class AdvertsList extends Component {
   buildAdvertList = (adverts) => {
     
     return (
-      <div className="row">
+      <div>
         {
-           adverts.map(advert => <Advert advert={advert}/>) 
-        }
+           //adverts.map(advert1 => <Advert advert={advert1}/>) 
+           adverts.map(function (advert1, i) {
+              return <Advert key={i} advert={advert1}/>
+              })
+        }  
       </div>
     )
   };
@@ -18,7 +21,7 @@ export default class AdvertsList extends Component {
     const { adverts } = this.props;
     
     return (
-      <div className="mt-3">
+      <div >
         {
           adverts
           &&
@@ -30,7 +33,7 @@ export default class AdvertsList extends Component {
         {
           !adverts
           &&
-          <div className="text-center mt-5">
+          <div >
             <h2>No hay anuncios</h2>
           </div>
         }

@@ -9,23 +9,13 @@ class Advert extends Component {
   render() {
     const { advert } = this.props;
     return (
-      <div
-        style={{
-          cursor: "pointer"
-        }}
-        key={advert._id}
-        className="col-4"
-        onClick={this.goToDetail}
+      <div 
+      key={advert._id}
+      onClick={this.goToDetail}
       >
-        <p>{advert.photo}</p>
 
-        <h5
-          // style={{
-          //   color: advert.isImportant() ? "green" : "red"
-          // }}
-        >
-          {advert.name}
-        </h5>
+<p>{advert.photo}</p>    
+        <p> {advert.name}</p>
         <p>{advert.description}</p>
         <p>{advert.price}</p>
         <p>{advert.tags}</p>

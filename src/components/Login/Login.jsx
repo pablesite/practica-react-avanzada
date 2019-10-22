@@ -169,7 +169,6 @@ export default class Login extends Component {
                             { <FormControl>
                                 <InputLabel htmlFor="select-multiple" style={styles.textField}>Tags</InputLabel>
                                 <Select
-                                    multiple
                                     value={tag}
                                     name="tag"
                                     onChange={this.onInputChange}
