@@ -4,7 +4,7 @@ import * as API from '../../services/AdvertDBService';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Welcome from '../Welcome/Welcome';
-import { UserConsumer } from '../Context/User'
+//import { UserConsumer } from '../Context/User'
 import UserContext from '../Context/User'
 import AdvertList from '../AdvertList/AdvertList';
 import TextField from '@material-ui/core/TextField';
@@ -101,7 +101,7 @@ export default class Home extends Component {
       }
     }
 
-console.log(filterString)
+// console.log(filterString)
     if (filterString && filterString.trim().length) {
       API.searchAdverts(filterString).then(adverts => this.setState({ adverts }))
     } else {
@@ -189,7 +189,7 @@ console.log(filterString)
 
     const { adverts, filters } = this.state;
 
-    console.log(this.state.filters)
+    // console.log(this.state.filters)
 
     return (
       <React.Fragment>

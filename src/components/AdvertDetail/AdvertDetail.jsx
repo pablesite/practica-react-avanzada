@@ -11,7 +11,7 @@ class AdvertDetail extends Component {
     const advertID = this.props.match.params.id;
 
     getAdvert(advertID).then(advert => {
-      if (advert.success == false) {
+      if (advert.success === false) {
         this.props.history.push("/404");
       } else {
         this.setState({ advert });

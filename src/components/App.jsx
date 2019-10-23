@@ -10,13 +10,13 @@ export default class App extends Component {
   constructor(props) {
     super(props);
 
-    this.updateUser = this.updateUser.bind(this);
+     this.updateUser = this.updateUser.bind(this);
 
     this.state = {
       user: {
         name: '',
         surname: '',
-        tag: []
+        tag: ''
       },
       updateUser: this.updateUser
     }
@@ -29,15 +29,17 @@ export default class App extends Component {
 
   }
 
-  updateUser(user) {
+   updateUser(user) {
 
-    console.log('Entra en update users de app');
-    this.setState({ user })
-  }
+    //  console.log('Entra en update users de app');
+     this.setState({ user })
+
+   }
 
 
 
   render() {
+    
     return (
       <div>
         <UserProvider value={this.state}>
