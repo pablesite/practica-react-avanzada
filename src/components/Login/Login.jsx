@@ -12,6 +12,7 @@ import Input from '@material-ui/core/Input';
 import React, { Component } from 'react';
 //import { withRouter } from "react-router-dom";
 import { red } from "@material-ui/core/colors";
+import { getTags } from '../../services/AdvertDBService';
 
 
 const styles = {
@@ -59,12 +60,6 @@ const MenuProps = {
     },
 };
 
-const personTags = [
-    'work',
-    'lifestyle',
-    'motor',
-    'mobile'
-  ];
 
 const theme = createMuiTheme();
 
@@ -76,13 +71,24 @@ export default class Login extends Component {
             user: {
               name: "",
               surname: "",
-              tag: ""
-            }
+              tag: "",
+            },
+            tagList: []
           };
+
 
         this.onInputChange = this.onInputChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+
+    this.getTags();
+
     }
+
+    getTags = () => {
+        getTags().then(tags => { 
+        this.setState ({tagList: tags});
+      })};
+
 
     static contextType = UserContext;
 
@@ -107,8 +113,6 @@ export default class Login extends Component {
        
         const { name, value } = event.target;
         
-        
-
         this.setState(({ user }) => ({
             user: {
               ...user,
@@ -117,13 +121,12 @@ export default class Login extends Component {
           }));
 
 
-          
     };
 
 
     render() {
         const { name, surname, tag } = this.state.user;
-        
+        const { tagList } = this.state;      
 
         return (
                     <MuiThemeProvider theme={theme}>
@@ -158,7 +161,7 @@ export default class Login extends Component {
                                     MenuProps={MenuProps}
                                     style={styles.textField}
                                 >
-                                     {personTags.map((tags, i) => (
+                                     {tagList.map((tags, i) => (
                                         <MenuItem key={tags} value={tags} style={styles.fontWeight}>
                                             {tags}
                                         </MenuItem>

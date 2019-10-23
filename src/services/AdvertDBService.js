@@ -1,6 +1,6 @@
 import Advert from '../models/Advert';
 
-const API_URL = 'http://localhost:3001/apiv1/anuncios/';
+const API_URL = 'http://localhost:3001/apiv1';
 //const API_KEY = '1d3ad03800b6b9dac38bcea89b495be8'
 
 const getRequest = (url) => {
@@ -12,14 +12,14 @@ const getRequest = (url) => {
    .then(res => res.json());
 }
 
-const discoverAdverts = () => {
-  console.log('discoverAdverts')
-  return getRequest(`${API_URL}`)
-  .then(res => res.results.map(adv => new Advert(adv)))
+const getTags = () => {
+  console.log('getTags')
+  return getRequest(`${API_URL}/tags/`)
+  .then(res => res.results) //revisar esto
 }
 
 const getAdvert = (advertID) => {
-  return getRequest(`${API_URL}${advertID}`)
+  return getRequest(`${API_URL}/anuncios/${advertID}`)
   .then(res => {
     if (!res.success) {
       return res;
@@ -29,13 +29,21 @@ const getAdvert = (advertID) => {
   })
 }
 
-const searchAdverts = (query) => {
-  return getRequest(`${API_URL}?${query}`)
+const discoverAdverts = () => {
+  return getRequest(`${API_URL}/anuncios/`)
   .then(res => res.results.map(adv => new Advert(adv)))
 }
 
+
+const searchAdverts = (query) => {
+  return getRequest(`${API_URL}/anuncios/?${query}`)
+  .then(res => res.results.map(adv => new Advert(adv)))
+}
+
+
 export {
-  searchAdverts,
+  getTags,
+  getAdvert,
   discoverAdverts,
-  getAdvert
+  searchAdverts
 };
