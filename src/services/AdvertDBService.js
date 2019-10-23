@@ -13,7 +13,7 @@ const getRequest = (url) => {
 }
 
 const getTags = () => {
-  console.log('getTags')
+  
   return getRequest(`${API_URL}/tags/`)
   .then(res => res.results) //revisar esto
 }
@@ -36,7 +36,7 @@ const discoverAdverts = () => {
 
 
 const searchAdverts = (query) => {
-  return getRequest(`${API_URL}/anuncios/?${query}`)
+  return getRequest(`${API_URL}/anuncios?${query}`)
   .then(res => res.results.map(adv => new Advert(adv)))
 }
 

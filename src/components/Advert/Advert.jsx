@@ -15,7 +15,7 @@ class Advert extends Component {
       >
 
 
-        <p><img src={`http://localhost:3001${advert.photo}`}></img></p>    
+        <p><img src={`http://localhost:3001${advert.photo}`} alt={advert.name} ></img></p>    
         <p> {advert.name}</p>
         <p>{advert.description}</p>
         <p>{advert.price}</p>

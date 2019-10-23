@@ -12,14 +12,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
+import { getTags } from '../../services/AdvertDBService';
 
-
-const personTags = [
-  'work',
-  'lifestyle',
-  'motor',
-  'mobile'
-];
 
 const ventas = [
   'venta',
@@ -35,6 +29,7 @@ export default class Home extends Component {
 
     this.state = {
       adverts: [],
+      tagList: [],
       filters: {
         name: '',
         price: '',
@@ -44,22 +39,29 @@ export default class Home extends Component {
 
     }
 
-    this.discoverAdverts();
+    
+    this.getTags();
 
   };
 
+
+  getTags = () => {
+    getTags().then(tags => {
+      this.setState({ tagList: tags });
+    })
+  };
+
+
+
   discoverAdverts = () => {
-    API.discoverAdverts().then(adverts => {
-      this.setState({
-        adverts
-      })
-    });
+    const  { tag }  = this.context.user;
+    API.searchAdverts("tag="+tag).then(adverts => this.setState({ adverts }));
   }
 
   onSubmit = (event) => {
     event && event.preventDefault();
 
-    const { name, price, tag, venta } = this.state.filters;
+    const { name, price, tag, venta } = this.state.filters;  
     let filterString = '';
     let temp = true;
 
@@ -101,7 +103,7 @@ export default class Home extends Component {
       }
     }
 
-// console.log(filterString)
+    // console.log(filterString)
     if (filterString && filterString.trim().length) {
       API.searchAdverts(filterString).then(adverts => this.setState({ adverts }))
     } else {
@@ -180,14 +182,21 @@ export default class Home extends Component {
 
   };
 
+  componentDidMount() {
+    this.discoverAdverts();
+  }
+
+  
 
 
   render() {
     //const { adverts } = this.state;
     const { user } = this.context;
+
+    
     //const {name, role, tag} = this.props.match.params;
 
-    const { adverts, filters } = this.state;
+    const { adverts, tagList, filters } = this.state;
 
     // console.log(this.state.filters)
 
@@ -241,7 +250,7 @@ export default class Home extends Component {
             // MenuProps={MenuProps}
             // style={styles.textField}
             >
-              {personTags.map(tag => (
+              {tagList.map(tag => (
                 <MenuItem key={tag} value={tag} >
                   {tag}
                 </MenuItem>
