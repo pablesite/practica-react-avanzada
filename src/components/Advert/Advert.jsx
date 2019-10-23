@@ -14,7 +14,8 @@ class Advert extends Component {
       onClick={this.goToDetail}
       >
 
-<p>{advert.photo}</p>    
+
+        <p><img src={`http://localhost:3001${advert.photo}`}></img></p>    
         <p> {advert.name}</p>
         <p>{advert.description}</p>
         <p>{advert.price}</p>
