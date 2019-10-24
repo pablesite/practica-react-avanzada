@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import { getAdvert }  from "../../services/AdvertDBService";
+import { getAdvert } from "../../services/AdvertDBService";
+import { getUser } from '../../services/Storage';
+import UserContext from '../Context/User'
+import Button from '@material-ui/core/Button';
+import Profile from '../Profile/Profile';
 
 class AdvertDetail extends Component {
   constructor(props) {
@@ -8,8 +12,14 @@ class AdvertDetail extends Component {
 
     this.state = {};
 
-    const advertID = this.props.match.params.id;
 
+    this.getAdvert = this.getAdvert.bind(this);
+    this.goHome = this.goHome.bind(this);
+
+  }
+
+  getAdvert() {
+    const advertID = this.props.match.params.id;
     getAdvert(advertID).then(advert => {
       if (advert.success === false) {
         this.props.history.push("/404");
@@ -17,15 +27,44 @@ class AdvertDetail extends Component {
         this.setState({ advert });
       }
     });
-
   }
- 
 
+
+  checkUserExist() {
+    if (getUser() !== null) {
+      // Actualizo el contexto
+      this.context.updateUser(getUser());
+      return true;
+    } else {
+      this.props.history.push("/login");
+      return false;
+    }
+  }
+
+
+  componentDidMount() {
+    if (this.checkUserExist()) {
+      this.getAdvert();
+    }
+  }
+
+  goHome() {
+    this.props.history.push('/home');
+  }
 
   render() {
+    const { user } = this.context;
     const { advert } = this.state;
 
     return (
+<React.Fragment>
+      <Profile
+      name={user.name}
+      surname={user.surname}
+      tag={user.tag}
+    > </Profile>
+
+
       <div className="container">
         {
           advert
@@ -40,9 +79,21 @@ class AdvertDetail extends Component {
           &&
           <h1>Loading...</h1>
         }
+
+        <Button variant="contained"
+          color="secondary"
+          className="button is-link"
+          onClick={this.goHome}
+        >
+          Volver a home
+        </Button>
       </div>
+
+      </React.Fragment>
     )
   }
 }
+
+AdvertDetail.contextType = UserContext;
 
 export default withRouter(AdvertDetail);

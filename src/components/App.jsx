@@ -45,10 +45,9 @@ export default class App extends Component {
         <UserProvider value={this.state}>
           <Router>
             <Switch>
-              <Route path='/login' component={Login} />
-              {/* <Route path='/home/:name/:role/:tag' component={Home} /> */}
-              <Route path='/home/' component={Home} />
-              <Route path='/detail/:id' component={AdvertDetail} />
+              <Route exact path='/login' component={Login} />
+              <Route exact path='/home/' component={Home} />
+              <Route exact path='/detail/:id' component={AdvertDetail} />
               <Route component={Login} />
             </Switch>
           </Router>

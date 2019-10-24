@@ -3,7 +3,7 @@ import * as API from '../../services/AdvertDBService';
 // import AdvertDetail from '../AdvertDetail/AdvertDetail';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import Welcome from '../Welcome/Welcome';
+import Profile from '../Profile/Profile';
 //import { UserConsumer } from '../Context/User'
 import UserContext from '../Context/User'
 import AdvertList from '../AdvertList/AdvertList';
@@ -13,6 +13,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import { getTags } from '../../services/AdvertDBService';
+import { getUser } from '../../services/Storage';
+
 
 
 const ventas = [
@@ -22,7 +24,7 @@ const ventas = [
 
 
 export default class Home extends Component {
-  static contextType = UserContext;
+
 
   constructor(props) {
     super(props);
@@ -39,11 +41,19 @@ export default class Home extends Component {
 
     }
 
-    
-    this.getTags();
-
   };
 
+
+  checkUserExist() {
+    if (getUser() !== null) {
+      // Actualizo el contexto
+      this.context.updateUser(getUser());
+      return true;
+    } else {
+      this.props.history.push("/login");
+      return false;
+    }
+  }
 
   getTags = () => {
     getTags().then(tags => {
@@ -51,17 +61,24 @@ export default class Home extends Component {
     })
   };
 
-
-
   discoverAdverts = () => {
-    const  { tag }  = this.context.user;
-    API.searchAdverts("tag="+tag).then(adverts => this.setState({ adverts }));
+    const { tag } = this.context.user;
+    API.searchAdverts("tag=" + tag).then(adverts => this.setState({ adverts }));
   }
+
+  componentDidMount() {
+    if (this.checkUserExist()) {
+      this.getTags();
+      this.discoverAdverts();
+    }
+  }
+
+
 
   onSubmit = (event) => {
     event && event.preventDefault();
 
-    const { name, price, tag, venta } = this.state.filters;  
+    const { name, price, tag, venta } = this.state.filters;
     let filterString = '';
     let temp = true;
 
@@ -112,39 +129,8 @@ export default class Home extends Component {
 
   }
 
-  // search = (e) => {
-  //   const query = e.target.value;
-
-  //   if (query && query.trim().length) {
-  //     API.searchAdverts('name=' + query).then(adverts => this.setState({ adverts }))
-  //   } else {
-  //     this.discoverAdverts();
-  //   }
-  // };
 
 
-  // SEGUIR ESTE EJEMPLO PARA RENDERIZAR LOS QUERYPARAMS A LA HORA DE FILTRAR. 
-  // LA CLAVE ES ES USAR URLSEARCHPARAMS PARA SACAR LOS DATOS DE LA URL.
-  // componentWillMount() {
-  //   const params = new URLSearchParams(this.props.location.search);
-
-  //   const clear = params.get("clear");
-
-  //   if (clear === "true") return;
-
-  //   const name = params.get("name");
-  //   const description = params.get("description");
-  //   const role = params.get("role");
-  //   const submit = params.get("submit");
-
-  //   this.setState({
-  //     name: name || '',
-  //     description: description || '',
-  //     role: role || USER_ROLES[0].id
-  //   }, () => {
-  //     submit === "true" && this.onSubmit();
-  //   });
-  // }
 
   onInputChange = (event) => {
 
@@ -182,33 +168,34 @@ export default class Home extends Component {
 
   };
 
-  componentDidMount() {
-    this.discoverAdverts();
-  }
 
-  
 
 
   render() {
     //const { adverts } = this.state;
+
     const { user } = this.context;
 
-    
     //const {name, role, tag} = this.props.match.params;
 
     const { adverts, tagList, filters } = this.state;
 
     // console.log(this.state.filters)
 
+    // if (Object.entries(user).length === 0) {
+    //   console.log('entra en render');
+    //   return null;
+    // }
     return (
       <React.Fragment>
-        Vista de home.
-
-        <Welcome
+       
+        <Profile
           name={user.name}
           surname={user.surname}
           tag={user.tag}
-        > </Welcome>
+        > </Profile>
+
+        
 
 
         <Grid container >
@@ -304,3 +291,5 @@ export default class Home extends Component {
     );
   }
 }
+
+Home.contextType = UserContext;

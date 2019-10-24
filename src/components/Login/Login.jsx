@@ -13,6 +13,8 @@ import React, { Component } from 'react';
 //import { withRouter } from "react-router-dom";
 import { red } from "@material-ui/core/colors";
 import { getTags } from '../../services/AdvertDBService';
+import { saveUser, getUser, deleteStorage } from '../../services/Storage';
+import Profile from '../Profile/Profile'
 
 
 const styles = {
@@ -69,56 +71,82 @@ export default class Login extends Component {
 
         this.state = {
             user: {
-              name: "",
-              surname: "",
-              tag: "",
+                name: "",
+                surname: "",
+                tag: "",
             },
             tagList: []
-          };
+        };
 
 
         this.onInputChange = this.onInputChange.bind(this);
+        this.deleteUser = this.deleteUser.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-
-    this.getTags();
 
     }
 
     getTags = () => {
-        getTags().then(tags => { 
-        this.setState ({tagList: tags});
-      })};
+        getTags().then(tags => {
+            this.setState({ tagList: tags });
+        })
+    };
 
 
-    static contextType = UserContext;
+    checkUserExist() {
+        if (getUser() !== null) {
+            this.setState(() => ({ user: getUser() }));
+        }
+    }
+
+    deleteUser(event) {
+        event.preventDefault();
+        this.context.updateUser({});
+        //this.setState(({ user }) => ({user: {}}));
+
+        deleteStorage();
+
+        this.setState({
+            user: {
+                name: "",
+                surname: "",
+                tag: ""
+            }
+        });
+        //this.props.history.push('/login');
+    }
+
+
+    componentDidMount() {
+        this.checkUserExist();
+        this.getTags();
+    }
+
 
     onSubmit = (event) => {
         event.preventDefault();
-
-        const { updateUser } = this.context;
-
         // if (!name || name.trim().length < 3) {
         //     alert("Name is smaller than 3");
         //     return;
         // }
-        
-        updateUser(this.state.user);
-        
+
+        this.context.updateUser(this.state.user);
+        saveUser(this.state.user);
+
         this.props.history.push("/home");
         return true;
 
     }
 
     onInputChange = (event) => {
-       
+
         const { name, value } = event.target;
-        
+
         this.setState(({ user }) => ({
             user: {
-              ...user,
-              [name]: value
+                ...user,
+                [name]: value
             }
-          }));
+        }));
 
 
     };
@@ -126,66 +154,87 @@ export default class Login extends Component {
 
     render() {
         const { name, surname, tag } = this.state.user;
-        const { tagList } = this.state;      
+        const { tagList } = this.state;
 
         return (
-                    <MuiThemeProvider theme={theme}>
-                        <form onSubmit={this.onSubmit}>
-                            <TextField
-                                className={styles.TextField}
-                                label="Name"
-                                value={name}
-                                name="name"
-                                onChange={this.onInputChange}
-                                style={styles.textField}
-                            />
-                            <br></br>
-                            <TextField
-                                label="Surname"
-                                value={surname}
-                                name="surname"
-                                onChange={this.onInputChange}
-                                style={styles.textField}
-                            />
+            <MuiThemeProvider theme={theme}>
 
-                            <br></br>
+                {
+                    getUser()
+                    &&
+                    <Profile
+                    name={name}
+                    surname={surname}
+                    tag={tag}
+                  > </Profile>
+                }
 
-                            { <FormControl>
-                                <InputLabel  style={styles.textField}>Tags</InputLabel>
-                                <Select
-                                    
-                                    name="tag"
-                                    value={tag}
-                                    onChange={this.onInputChange}
-                                    input={<Input  />}
-                                    MenuProps={MenuProps}
-                                    style={styles.textField}
-                                >
-                                     {tagList.map((tags, i) => (
-                                        <MenuItem key={tags} value={tags} style={styles.fontWeight}>
-                                            {tags}
-                                        </MenuItem>
-                                    ))} 
 
-                                </Select>
-                            </FormControl> }
+                <form onSubmit={this.onSubmit}>
+                    <TextField
+                        className={styles.TextField}
+                        label="Name"
+                        value={name}
+                        name="name"
+                        onChange={this.onInputChange}
+                        style={styles.textField}
+                    />
+                    <br></br>
+                    <TextField
+                        label="Surname"
+                        value={surname}
+                        name="surname"
+                        onChange={this.onInputChange}
+                        style={styles.textField}
+                    />
 
-                            <br></br>
+                    <br></br>
 
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                label="Continue"
-                                style={styles.button}
-                                onClick={this.continue}
-                                type='submit'
-                            >
-                                Enter
+                    {<FormControl>
+                        <InputLabel style={styles.textField}>Tags</InputLabel>
+                        <Select
+
+                            name="tag"
+                            value={tag}
+                            onChange={this.onInputChange}
+                            input={<Input />}
+                            MenuProps={MenuProps}
+                            style={styles.textField}
+                        >
+                            {tagList.map((tags, i) => (
+                                <MenuItem key={tags} value={tags} style={styles.fontWeight}>
+                                    {tags}
+                                </MenuItem>
+                            ))}
+
+                        </Select>
+                    </FormControl>}
+
+                    <br></br>
+
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        label="Continue"
+                        style={styles.button}
+                        onClick={this.continue}
+                        type='submit'
+                    >
+                        Enter
                     </Button>
 
-                        </form>
-                    </MuiThemeProvider>
+                    <Button variant="contained"
+                        color="secondary"
+                        className="button is-link"
+                        onClick={this.deleteUser}
+                    >
+                        Borrar usuario
+                    </Button>
+
+                </form>
+            </MuiThemeProvider>
         );
     }
 }
 
+Login.contextType = UserContext;
