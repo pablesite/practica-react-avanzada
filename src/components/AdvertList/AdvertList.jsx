@@ -6,14 +6,14 @@ export default class AdvertsList extends Component {
   buildAdvertList = (adverts) => {
     
     return (
-      <div>
+      <React.Fragment>
         {
            //adverts.map(advert1 => <Advert advert={advert1}/>) 
            adverts.map(function (advert1, i) {
               return <Advert key={i} advert={advert1}/>
               })
         }  
-      </div>
+      </React.Fragment>
     )
   };
 
@@ -21,7 +21,7 @@ export default class AdvertsList extends Component {
     const { adverts } = this.props;
     
     return (
-      <div >
+      <React.Fragment>
         {
           adverts
           &&
@@ -37,7 +37,7 @@ export default class AdvertsList extends Component {
             <h2>No hay anuncios</h2>
           </div>
         }
-      </div>
+      </React.Fragment>
     );
   }
 }

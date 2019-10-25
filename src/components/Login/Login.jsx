@@ -15,19 +15,27 @@ import { red } from "@material-ui/core/colors";
 import { getTags } from '../../services/AdvertDBService';
 import { saveUser, getUser, deleteStorage } from '../../services/Storage';
 import Profile from '../Profile/Profile'
+import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { makeStyles } from '@material-ui/core/styles';
+import "./Login.css"
+
 
 
 const styles = {
-    button: {
+   
+      
+      button: {
         margin: 15
     },
 
     container: {
         display: 'flex',
         flexWrap: 'wrap',
-
-
     },
+
+ 
+      
     textField: {
         marginLeft: 10,
         marginRight: 10,
@@ -65,6 +73,37 @@ const MenuProps = {
 
 const theme = createMuiTheme();
 
+
+const useStyles = makeStyles(theme => ({
+    '@global': {
+      body: {
+        backgroundColor: theme.palette.common.white,
+      },
+    },
+    paper: {
+      marginTop: theme.spacing(8),
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+    avatar: {
+      margin: theme.spacing(1),
+      backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+      width: '100%', // Fix IE 11 issue.
+      marginTop: theme.spacing(3),
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+    },
+  }));
+
+
+
+
+
+
 export default class Login extends Component {
     constructor(props) {
         super(props);
@@ -78,12 +117,13 @@ export default class Login extends Component {
             tagList: []
         };
 
-
         this.onInputChange = this.onInputChange.bind(this);
         this.deleteUser = this.deleteUser.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
     }
+
+
 
     getTags = () => {
         getTags().then(tags => {
@@ -119,6 +159,7 @@ export default class Login extends Component {
     componentDidMount() {
         this.checkUserExist();
         this.getTags();
+        
     }
 
 
@@ -163,78 +204,87 @@ export default class Login extends Component {
                     getUser()
                     &&
                     <Profile
-                    name={name}
-                    surname={surname}
-                    tag={tag}
-                  > </Profile>
+                        name={name}
+                        surname={surname}
+                        tag={tag}
+                    > </Profile>
                 }
 
+                <Container component="main" maxWidth="xs">
+                <CssBaseline />
 
-                <form onSubmit={this.onSubmit}>
-                    <TextField
-                        className={styles.TextField}
-                        label="Name"
-                        value={name}
-                        name="name"
-                        onChange={this.onInputChange}
-                        style={styles.textField}
-                    />
-                    <br></br>
-                    <TextField
-                        label="Surname"
-                        value={surname}
-                        name="surname"
-                        onChange={this.onInputChange}
-                        style={styles.textField}
-                    />
-
-                    <br></br>
-
-                    {<FormControl>
-                        <InputLabel style={styles.textField}>Tags</InputLabel>
-                        <Select
-
-                            name="tag"
-                            value={tag}
+                          
+                <div className='marg'>     
+                    <form onSubmit={this.onSubmit}>
+                    
+                        <TextField
+                            className={styles.TextField}
+                            label="Name"
+                            value={name}
+                            name="name"
                             onChange={this.onInputChange}
-                            input={<Input />}
-                            MenuProps={MenuProps}
                             style={styles.textField}
+                        />
+                        <br></br>
+                        <TextField
+                            label="Surname"
+                            value={surname}
+                            name="surname"
+                            onChange={this.onInputChange}
+                            style={styles.textField}
+                        />
+
+                        <br></br>
+
+                        {<FormControl>
+                            <InputLabel style={styles.textField}>Tags</InputLabel>
+                            <Select
+
+                                name="tag"
+                                value={tag}
+                                onChange={this.onInputChange}
+                                input={<Input />}
+                                MenuProps={MenuProps}
+                                style={styles.textField}
+                            >
+                                {tagList.map((tags, i) => (
+                                    <MenuItem key={tags} value={tags} style={styles.fontWeight}>
+                                        {tags}
+                                    </MenuItem>
+                                ))}
+
+                            </Select>
+                        </FormControl>}
+
+                        <br></br>
+
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            label="Continue"
+                            style={styles.button}
+                            onClick={this.continue}
+                            type='submit'
                         >
-                            {tagList.map((tags, i) => (
-                                <MenuItem key={tags} value={tags} style={styles.fontWeight}>
-                                    {tags}
-                                </MenuItem>
-                            ))}
-
-                        </Select>
-                    </FormControl>}
-
-                    <br></br>
-
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        label="Continue"
-                        style={styles.button}
-                        onClick={this.continue}
-                        type='submit'
-                    >
-                        Enter
+                            Enter
                     </Button>
 
-                    <Button variant="contained"
-                        color="secondary"
-                        className="button is-link"
-                        onClick={this.deleteUser}
-                    >
-                        Borrar usuario
+                        <Button variant="contained"
+                            color="secondary"
+                            className="button is-link"
+                            onClick={this.deleteUser}
+                        >
+                            Borrar usuario
                     </Button>
-
-                </form>
+                    
+                    </form>
+                    </div>
+                    
+                </Container>
             </MuiThemeProvider>
         );
     }
 }
+
 
 Login.contextType = UserContext;

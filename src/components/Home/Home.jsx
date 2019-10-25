@@ -188,103 +188,111 @@ export default class Home extends Component {
     // }
     return (
       <React.Fragment>
-       
+
         <Profile
           name={user.name}
           surname={user.surname}
           tag={user.tag}
         > </Profile>
 
-        
-
-
-        <Grid container >
-
-          <Grid item >Test Grid</Grid>
-
-
-        </Grid>
-
-
-
         <form onSubmit={this.onSubmit}>
-          <TextField
-            // className={styles.TextField}
-            label="Name"
-            value={filters.name}
-            name="name"
-            onChange={this.onInputChange}
 
-          />
+          <Grid  alignItems='center' justify='center' container spacing={3}>
 
-          <TextField
-            // className={styles.TextField}
-            label="Precio (min-max)"
-            value={filters.price}
-            name="price"
-            onChange={this.onInputChange}
+            <Grid item xs={10} sm={2}>
+              <TextField
+                // className={styles.TextField}
+                label="Name"
+                value={filters.name}
+                name="name"
+                onChange={this.onInputChange}
+                fullWidth
+              />
+            </Grid>
 
-          />
+            <Grid item xs={10} sm={2}>
+              <TextField
+                // className={styles.TextField}
+                label="Precio (min-max)"
+                value={filters.price}
+                name="price"
+                onChange={this.onInputChange}
+                fullWidth
+              />
+            </Grid>
 
-          <FormControl>
-            <InputLabel >Tags</InputLabel>
-            <Select
-              label="Tag"
-              value={filters.tag}
-              name="tag"
-              onChange={this.onInputChange}
-            // input={<Input id="select-multiple" />}
-            // MenuProps={MenuProps}
-            // style={styles.textField}
-            >
-              {tagList.map(tag => (
-                <MenuItem key={tag} value={tag} >
-                  {tag}
-                </MenuItem>
-              ))}
+            <Grid item xs={10} sm={1}>
+              <FormControl fullWidth>
+                <InputLabel >Tags</InputLabel>
+                <Select
+                  label="Tag"
+                  value={filters.tag}
+                  name="tag"
+                  onChange={this.onInputChange}
 
-            </Select>
-          </FormControl>
+                // input={<Input id="select-multiple" />}
+                // MenuProps={MenuProps}
+                // style={styles.textField}
+                >
+                  {tagList.map(tag => (
+                    <MenuItem key={tag} value={tag} >
+                      {tag}
+                    </MenuItem>
+                  ))}
 
+                </Select>
+              </FormControl>
+            </Grid>
 
-          <FormControl>
-            <InputLabel >Venta</InputLabel>
-            <Select
-              label="Venta"
-              value={filters.venta}
-              name="venta"
-              onChange={this.onInputChange}
-            // input={<Input id="select-multiple" />}
-            // MenuProps={MenuProps}
-            // style={styles.textField}
-            >
-              {ventas.map(venta => (
-                <MenuItem key={venta} value={venta} >
-                  {venta}
-                </MenuItem>
-              ))}
+            <Grid item xs={10} sm={1}>
+              <FormControl fullWidth >
+                <InputLabel >Venta</InputLabel>
+                <Select
+                  label="Venta"
+                  value={filters.venta}
+                  name="venta"
+                  onChange={this.onInputChange}
 
-            </Select>
-          </FormControl>
+                // input={<Input id="select-multiple" />}
+                // MenuProps={MenuProps}
+                // style={styles.textField}
+                >
+                  {ventas.map(venta => (
+                    <MenuItem key={venta} value={venta} >
+                      {venta}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl >
+            </Grid>
 
-
-
-          <br></br>
-          <Button
-            variant="contained"
-            color="primary"
-            type='submit'
-          >
-            Filtra!
-        </Button>
+            <br></br>
+            <Grid item xs={10} sm={3}>
+              <Button
+                variant="contained"
+                color="primary"
+                type='submit'
+              >
+                Filtra!
+            </Button>
+            </Grid>
+          </Grid>
         </form>
+
+
+
+
 
         {
           adverts
           &&
           adverts.length
           &&
-          <AdvertList adverts={adverts} />
+          <Grid container alignItems='space-between' alignContent='center'   spacing={5}>
+           {/* Esto hay que ver bien donde ponerlo porque se están anidando todos los anuncios en un sólo item */}
+              <AdvertList adverts={adverts} />
+              
+          </Grid>
         }
 
       </React.Fragment>
