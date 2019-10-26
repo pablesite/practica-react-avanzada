@@ -30,7 +30,6 @@ const getAdvert = (advertID) => {
 }
 
 const discoverAdverts = () => {
-  console.log('test')
   return getRequest(`${API_URL}/anuncios/`)
   .then(res => res.results.map(adv => new Advert(adv)))
 }

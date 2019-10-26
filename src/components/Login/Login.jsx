@@ -17,7 +17,6 @@ import { saveUser, getUser, deleteStorage } from '../../services/Storage';
 import Profile from '../Profile/Profile'
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { makeStyles } from '@material-ui/core/styles';
 import "./Login.css"
 //import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 
@@ -75,30 +74,30 @@ const MenuProps = {
 const theme = createMuiTheme();
 
 
-const useStyles = makeStyles(theme => ({
-    '@global': {
-        body: {
-            backgroundColor: theme.palette.common.white,
-        },
-    },
-    paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
-        width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing(3),
-    },
-    submit: {
-        margin: theme.spacing(3, 0, 2),
-    },
-}));
+// const useStyles = makeStyles(theme => ({
+//     '@global': {
+//         body: {
+//             backgroundColor: theme.palette.common.white,
+//         },
+//     },
+//     paper: {
+//         marginTop: theme.spacing(8),
+//         display: 'flex',
+//         flexDirection: 'column',
+//         alignItems: 'center',
+//     },
+//     avatar: {
+//         margin: theme.spacing(1),
+//         backgroundColor: theme.palette.secondary.main,
+//     },
+//     form: {
+//         width: '100%', // Fix IE 11 issue.
+//         marginTop: theme.spacing(3),
+//     },
+//     submit: {
+//         margin: theme.spacing(3, 0, 2),
+//     },
+// }));
 
 
 
@@ -119,6 +118,7 @@ export default class Login extends Component {
             check: false
         };
 
+        
         this.onInputChange = this.onInputChange.bind(this);
         this.deleteUser = this.deleteUser.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -164,7 +164,6 @@ export default class Login extends Component {
             check: true
         });
 
-        console.log(this.state)
     }
 
     componentDidMount() {
@@ -210,8 +209,7 @@ export default class Login extends Component {
     render() {
         const { name, surname, tag } = this.state.user;
         const { tagList, check } = this.state;
-        console.log(check)
-
+        
         return (
 
             <MuiThemeProvider theme={theme}>

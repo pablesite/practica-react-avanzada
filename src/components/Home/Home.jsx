@@ -29,6 +29,8 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
 
+    this.deactivateFilters = this.deactivateFilters.bind(this);
+
     this.state = {
       adverts: [],
       tagList: [],
@@ -37,7 +39,9 @@ export default class Home extends Component {
         price: '',
         tag: '',
         venta: ''
-      }
+      },
+      deactivateFilters: this.deactivateFilters,
+      update: true
 
     }
 
@@ -76,6 +80,9 @@ export default class Home extends Component {
   }
 
 
+  deactivateFilters() {  
+    this.setState({ update: false })
+  }
 
   onSubmit = (event) => {
     event && event.preventDefault();
@@ -84,12 +91,11 @@ export default class Home extends Component {
     let filterString = '';
     let temp = true;
 
+
     // if (price) {
     //   alert("The name must be bigger than 3 characters");
     //   return false;
     // }
-
-
 
     if (name) {
       filterString = 'name=' + name;
@@ -109,7 +115,6 @@ export default class Home extends Component {
       }
     }
 
-
     if (venta) {
       if (venta === 'venta') {
         temp = true;
@@ -117,19 +122,24 @@ export default class Home extends Component {
         temp = false;
       }
 
-      if (filterString === '') {
+    if (filterString === '') {
         filterString = 'venta=' + temp;
-      } else {
+    } else {
         filterString = filterString + '&venta=' + temp;
       }
     }
 
-    // console.log(filterString)
+     console.log(filterString)
     if (filterString && filterString.trim().length) {
       API.searchAdverts(filterString).then(adverts => this.setState({ adverts }))
     } else {
       this.discoverAdverts();
+
     }
+
+    // Asigno directo porque no necesito renderizar
+     this.state.update = true;
+  
 
   }
 
@@ -137,7 +147,7 @@ export default class Home extends Component {
 
 
   onInputChange = (event) => {
-
+    
     const { name, value } = event.target;
 
     if (name === 'price') {
@@ -176,16 +186,11 @@ export default class Home extends Component {
 
 
   render() {
-    //const { adverts } = this.state;
-
+  
     const { user } = this.context;
+    const { adverts, tagList, filters, deactivateFilters, update } = this.state;
 
-    //const {name, role, tag} = this.props.match.params;
-
-    const { adverts, tagList, filters } = this.state;
-
-    // console.log(this.state.filters)
-
+    
     // if (Object.entries(user).length === 0) {
     //   console.log('entra en render');
     //   return null;
@@ -284,14 +289,21 @@ export default class Home extends Component {
         </form>
 
 
-        Test {adverts.length}
+        {/* Número de anuncios: {adverts.length}
+         {console.log(adverts)}  */}
         {
           adverts
           &&
           adverts.length
           &&
 
-          <Pagination totalAdverts={adverts.length} numberPerPage='3' adverts={adverts}>
+          <Pagination
+            totalAdverts={adverts.length}
+            numberPerPage='3'
+            adverts={adverts}
+            deactivateFilters = {deactivateFilters}
+            update={update}
+           >
 
           </Pagination>
         }
