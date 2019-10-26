@@ -105,7 +105,6 @@ export default class Pagination extends Component {
     render() {
         //const { advert } = this.state;
         const { advertActualPage, actualPage, pagesNumber } = this.state;
-        console.log(this.state)
 
         return (
             <React.Fragment>

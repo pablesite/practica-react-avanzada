@@ -14,7 +14,7 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import { getTags } from '../../services/AdvertDBService';
 import { getUser } from '../../services/Storage';
-
+//import CreateOrUpdate from '../CreateOrUpdate/CreateOrUpdate';
 
 
 const ventas = [
@@ -137,6 +137,10 @@ export default class Home extends Component {
 
   }
 
+  createOrUpdate = (event) => {
+    event.preventDefault();
+    this.props.history.push("/createOrUpdate");
+  };
 
   onInputChange = (event) => {
     
@@ -268,16 +272,31 @@ export default class Home extends Component {
             </Grid>
 
             <br></br>
-            <Grid item xs={10} sm={3}>
+            
+          </Grid>
+         
+          <Grid alignItems='center' justify='center' container spacing={3}>
+          <Grid item xs={1} sm={2}>
               <Button
                 variant="contained"
                 color="primary"
+                onClick={this.createOrUpdate}
+              >
+                Crea un anuncio
+            </Button>
+            </Grid>
+
+            <Grid item xs={1} sm={2}>
+              <Button
+                variant="contained"
+                color="secondary"
                 type='submit'
               >
                 Filtra!
             </Button>
             </Grid>
-          </Grid>
+            </Grid>
+            
         </form>
 
 

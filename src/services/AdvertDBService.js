@@ -3,6 +3,8 @@ import Advert from '../models/Advert';
 const API_URL = 'http://localhost:3001/apiv1';
 //const API_KEY = '1d3ad03800b6b9dac38bcea89b495be8'
 
+
+
 const getRequest = (url) => {
   return fetch(url,
    { method: "GET" },
@@ -12,8 +14,20 @@ const getRequest = (url) => {
    .then(res => res.json());
 }
 
+const sendRequest = (url, advert) => {
+return fetch(url, {
+  method: 'POST', // or 'PUT'
+  body: JSON.stringify(advert), // data can be `string` or {object}!
+  headers:{
+    'Content-Type': 'application/json'
+  }
+}).then(res => res.json());
+
+}
+
+
+
 const getTags = () => {
-  
   return getRequest(`${API_URL}/tags/`)
   .then(res => res.results) //revisar esto
 }
@@ -40,10 +54,21 @@ const searchAdverts = (query) => {
   .then(res => res.results.map(adv => new Advert(adv)))
 }
 
+const createAdvert = (advert) => {
+  return sendRequest(`${API_URL}/anuncios`, advert)
+  .catch(error => console.error('Error:', error))
+  .then(response => ( response))
+   //.then(res => console.log(res.results))
+  
+}
+
+
+
 
 export {
   getTags,
   getAdvert,
   discoverAdverts,
-  searchAdverts
+  searchAdverts,
+  createAdvert
 };

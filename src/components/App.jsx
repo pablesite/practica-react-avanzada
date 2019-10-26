@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Login from './Login/Login'
 import Home from './Home/Home'
 import AdvertDetail from './AdvertDetail/AdvertDetail'
+import CreateOrUpdate from './CreateOrUpdate/CreateOrUpdate'
 import { UserProvider } from './Context/User';
 import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
 
@@ -50,6 +51,8 @@ export default class App extends Component {
                 <Route exact path='/login' component={Login} />
                 <Route exact path='/home/' component={Home} />
                 <Route exact path='/detail/:id' component={AdvertDetail} />
+                <Route exact path='/createOrUpdate/' component={CreateOrUpdate} />
+                
                 <Route component={Login} />
               </Switch>
             </Router>
