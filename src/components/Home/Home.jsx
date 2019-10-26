@@ -87,6 +87,8 @@ export default class Home extends Component {
     //   return false;
     // }
 
+
+
     if (name) {
       filterString = 'name=' + name;
     }
@@ -280,15 +282,12 @@ export default class Home extends Component {
         </form>
 
 
-
-
-
         {
           adverts
           &&
           adverts.length
           &&
-          <Grid container alignItems='space-between' alignContent='center'   spacing={5}>
+          <Grid container alignItems='center' alignContent='center'   spacing={5}>
            {/* Esto hay que ver bien donde ponerlo porque se están anidando todos los anuncios en un sólo item */}
               <AdvertList adverts={adverts} />
               

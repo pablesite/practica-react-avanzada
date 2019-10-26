@@ -19,13 +19,14 @@ import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import "./Login.css"
+//import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 
 
 
 const styles = {
-   
-      
-      button: {
+
+
+    button: {
         margin: 15
     },
 
@@ -34,8 +35,8 @@ const styles = {
         flexWrap: 'wrap',
     },
 
- 
-      
+
+
     textField: {
         marginLeft: 10,
         marginRight: 10,
@@ -76,28 +77,28 @@ const theme = createMuiTheme();
 
 const useStyles = makeStyles(theme => ({
     '@global': {
-      body: {
-        backgroundColor: theme.palette.common.white,
-      },
+        body: {
+            backgroundColor: theme.palette.common.white,
+        },
     },
     paper: {
-      marginTop: theme.spacing(8),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
+        marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
     },
     avatar: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.secondary.main,
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
     },
     form: {
-      width: '100%', // Fix IE 11 issue.
-      marginTop: theme.spacing(3),
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(3),
     },
     submit: {
-      margin: theme.spacing(3, 0, 2),
+        margin: theme.spacing(3, 0, 2),
     },
-  }));
+}));
 
 
 
@@ -114,13 +115,14 @@ export default class Login extends Component {
                 surname: "",
                 tag: "",
             },
-            tagList: []
+            tagList: [],
+            check: false
         };
 
         this.onInputChange = this.onInputChange.bind(this);
         this.deleteUser = this.deleteUser.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-
+        this.checkError = this.checkError.bind(this);
     }
 
 
@@ -155,11 +157,20 @@ export default class Login extends Component {
         //this.props.history.push('/login');
     }
 
+    checkError(event) {
+        event.preventDefault();
+
+        this.setState({
+            check: true
+        });
+
+        console.log(this.state)
+    }
 
     componentDidMount() {
         this.checkUserExist();
         this.getTags();
-        
+
     }
 
 
@@ -174,7 +185,9 @@ export default class Login extends Component {
         saveUser(this.state.user);
 
         this.props.history.push("/home");
-        return true;
+
+
+        // return true;
 
     }
 
@@ -190,14 +203,17 @@ export default class Login extends Component {
         }));
 
 
+
     };
 
 
     render() {
         const { name, surname, tag } = this.state.user;
-        const { tagList } = this.state;
+        const { tagList, check } = this.state;
+        
 
         return (
+
             <MuiThemeProvider theme={theme}>
 
                 {
@@ -211,77 +227,96 @@ export default class Login extends Component {
                 }
 
                 <Container component="main" maxWidth="xs">
-                <CssBaseline />
+                    <CssBaseline />
 
-                          
-                <div className='marg'>     
-                    <form onSubmit={this.onSubmit}>
-                    
-                        <TextField
-                            className={styles.TextField}
-                            label="Name"
-                            value={name}
-                            name="name"
-                            onChange={this.onInputChange}
-                            style={styles.textField}
-                        />
-                        <br></br>
-                        <TextField
-                            label="Surname"
-                            value={surname}
-                            name="surname"
-                            onChange={this.onInputChange}
-                            style={styles.textField}
-                        />
 
-                        <br></br>
+                    <div className='marg'>
+                        <form onSubmit={this.onSubmit}>
 
-                        {<FormControl>
-                            <InputLabel style={styles.textField}>Tags</InputLabel>
-                            <Select
-
-                                name="tag"
-                                value={tag}
+                            <TextField
+                                className={styles.TextField}
+                                label="Name"
+                                value={name}
+                                name="name"
                                 onChange={this.onInputChange}
-                                input={<Input />}
-                                MenuProps={MenuProps}
                                 style={styles.textField}
+                            />
+                            <br></br>
+
+                            <TextField
+                                label="Surname"
+                                value={surname}
+                                name="surname"
+                                onChange={this.onInputChange}
+                                style={styles.textField}
+                            />
+
+                            <br></br>
+
+                            {<FormControl>
+                                <InputLabel style={styles.textField}>Tags</InputLabel>
+                                <Select
+
+                                    name="tag"
+                                    value={tag}
+                                    onChange={this.onInputChange}
+                                    input={<Input />}
+                                    MenuProps={MenuProps}
+                                    style={styles.textField}
+                                >
+                                    {tagList.map((tags, i) => (
+                                        <MenuItem key={tags} value={tags} style={styles.fontWeight}>
+                                            {tags}
+                                        </MenuItem>
+                                    ))}
+
+                                </Select>
+                            </FormControl>}
+
+                            <br></br>
+
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                label="Continue"
+                                style={styles.button}
+                                onClick={this.continue}
+                                type='submit'
                             >
-                                {tagList.map((tags, i) => (
-                                    <MenuItem key={tags} value={tags} style={styles.fontWeight}>
-                                        {tags}
-                                    </MenuItem>
-                                ))}
-
-                            </Select>
-                        </FormControl>}
-
-                        <br></br>
-
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            label="Continue"
-                            style={styles.button}
-                            onClick={this.continue}
-                            type='submit'
-                        >
-                            Enter
+                                Enter
                     </Button>
 
-                        <Button variant="contained"
-                            color="secondary"
-                            className="button is-link"
-                            onClick={this.deleteUser}
-                        >
-                            Borrar usuario
+                            <Button variant="contained"
+                                color="secondary"
+                                className="button is-link"
+                                onClick={this.deleteUser}
+                            >
+                                Borrar usuario
                     </Button>
-                    
-                    </form>
+
+                        </form>
                     </div>
+
+                    <Button variant="contained"
+                    color="secondary"
+                    className="button is-link"
+                    onClick={this.checkError}
+                >
+                    Check Error
+                    </Button>
+
+                   
+                {
                     
+                    check
+                    &&
+                    undefined.methodDoesNotExist()
+                }
+
                 </Container>
+
             </MuiThemeProvider>
+
         );
     }
 }

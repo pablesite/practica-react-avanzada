@@ -39,7 +39,7 @@ class Advert extends Component {
 <Grid key={advert._id}
         onClick={this.goToDetail} 
         item xs={10} sm={4}> 
-        <Card fullWidth className="card">
+        <Card  className="card">
           <CardActionArea>
           <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
@@ -54,17 +54,17 @@ class Advert extends Component {
             />
             <CardContent>
               <Typography variant="body2" color="textSecondary" component="p">
-                <p>{advert.description}</p>
+                {advert.description}
               </Typography>
 
               <Typography variant="body2" color="textSecondary" component="p">
-                <p>{advert.price}</p>
+                {advert.price}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                <p>{advert.tags}</p>
+               {advert.tags}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                <p>{advert.type}</p>
+                {advert.type}
               </Typography>
             </CardContent>
 
