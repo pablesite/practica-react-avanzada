@@ -28,9 +28,7 @@ export default class ErrorBoundary extends Component {
         );
       } else {
         return (
-                this.props.children
-         
-           
+                this.props.children           
         )}
     }
   }

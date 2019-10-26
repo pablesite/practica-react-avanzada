@@ -210,7 +210,7 @@ export default class Login extends Component {
     render() {
         const { name, surname, tag } = this.state.user;
         const { tagList, check } = this.state;
-        
+        console.log(check)
 
         return (
 
@@ -284,7 +284,7 @@ export default class Login extends Component {
                                 type='submit'
                             >
                                 Enter
-                    </Button>
+                            </Button>
 
                             <Button variant="contained"
                                 color="secondary"
@@ -292,26 +292,26 @@ export default class Login extends Component {
                                 onClick={this.deleteUser}
                             >
                                 Borrar usuario
-                    </Button>
+                             </Button>
 
                         </form>
                     </div>
 
                     <Button variant="contained"
-                    color="secondary"
-                    className="button is-link"
-                    onClick={this.checkError}
-                >
-                    Check Error
+                        color="secondary"
+                        className="button is-link"
+                        onClick={this.checkError}
+                    >
+                        Check Error
                     </Button>
 
-                   
-                {
-                    
-                    check
-                    &&
-                    undefined.methodDoesNotExist()
-                }
+
+                    {
+
+                        check
+                        &&
+                        undefined.methodDoesNotExist()
+                    }
 
                 </Container>
 

@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Profile from '../Profile/Profile';
 //import { UserConsumer } from '../Context/User'
 import UserContext from '../Context/User'
-import AdvertList from '../AdvertList/AdvertList';
+import Pagination from '../Pagination/Pagination';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -40,6 +40,8 @@ export default class Home extends Component {
       }
 
     }
+
+    // this.checkUserExist = this.checkUserExist.bind(this);
 
   };
 
@@ -199,7 +201,7 @@ export default class Home extends Component {
 
         <form onSubmit={this.onSubmit}>
 
-          <Grid  alignItems='center' justify='center' container spacing={3}>
+          <Grid alignItems='center' justify='center' container spacing={3}>
 
             <Grid item xs={10} sm={2}>
               <TextField
@@ -282,16 +284,16 @@ export default class Home extends Component {
         </form>
 
 
+        Test {adverts.length}
         {
           adverts
           &&
           adverts.length
           &&
-          <Grid container alignItems='center' alignContent='center'   spacing={5}>
-           {/* Esto hay que ver bien donde ponerlo porque se están anidando todos los anuncios en un sólo item */}
-              <AdvertList adverts={adverts} />
-              
-          </Grid>
+
+          <Pagination totalAdverts={adverts.length} numberPerPage='3' adverts={adverts}>
+
+          </Pagination>
         }
 
       </React.Fragment>
