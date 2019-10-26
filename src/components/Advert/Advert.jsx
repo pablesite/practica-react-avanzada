@@ -20,66 +20,52 @@ class Advert extends Component {
     const { advert } = this.props;
     return (
       <React.Fragment>
-      {/* <div
-        key={advert._id}
-        onClick={this.goToDetail}
-      > */}
-{/* Esto del div hace falta. Lo he quitado para probar */}
 
-        {/* 
-<p><img src={`http://localhost:3001${advert.photo}`} alt={advert.name} ></img></p>
-        <p> {advert.name}</p>
-        <p>{advert.description}</p>
-        <p>{advert.price}</p>
-        <p>{advert.tags}</p>
-        <p>{advert.type}</p>
 
-        <br></br> */}
-
-<Grid key={advert._id}
-        onClick={this.goToDetail} 
-        item xs={10} sm={4}> 
-        <Card  className="card">
-          <CardActionArea>
-          <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
-                {advert.name}
-              </Typography>
+        <Grid key={advert._id}
+          onClick={this.goToDetail}
+          item xs={10} sm={4}>
+          <Card className="card">
+            <CardActionArea>
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                  {advert.name}
+                </Typography>
               </CardContent>
 
-            <CardMedia
-              className="media"
-              image={`http://localhost:3001${advert.photo}`}
-              title={advert.name}
-            />
-            <CardContent>
-              <Typography variant="body2" color="textSecondary" component="p">
-                {advert.description}
-              </Typography>
+              <CardMedia
+                className="media"
+                image={`http://localhost:3001${advert.photo}`}
+                title={advert.name}
+              />
+              <CardContent>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  {advert.description}
+                </Typography>
 
-              <Typography variant="body2" color="textSecondary" component="p">
-                {advert.price}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-               {advert.tags}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                {advert.type}
-              </Typography>
-            </CardContent>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  {advert.price}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  {advert.tags}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  {advert.type}
+                </Typography>
+              </CardContent>
 
-          </CardActionArea>
-          <CardActions>
-            <Button size="small" color="primary">
-              Share
+            </CardActionArea>
+            <CardActions>
+              <Button size="small" color="primary">
+                Share
         </Button>
-            <Button size="small" color="primary">
-              Learn More
+              <Button size="small" color="primary">
+                Learn More
         </Button>
-          </CardActions>
-        </Card>
-        </Grid > 
-{/*         
+            </CardActions>
+          </Card>
+        </Grid >
+        {/*         
       </div> */}
       </React.Fragment>
     );

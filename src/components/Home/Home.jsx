@@ -29,7 +29,7 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
 
-    this.deactivateFilters = this.deactivateFilters.bind(this);
+    this.disableUpdate = this.disableUpdate.bind(this);
 
     this.state = {
       adverts: [],
@@ -40,7 +40,7 @@ export default class Home extends Component {
         tag: '',
         venta: ''
       },
-      deactivateFilters: this.deactivateFilters,
+      disableUpdate: this.disableUpdate,
       update: true
 
     }
@@ -69,7 +69,7 @@ export default class Home extends Component {
 
   discoverAdverts = () => {
     const { tag } = this.context.user;
-    API.searchAdverts("tag=" + tag).then(adverts => this.setState({ adverts }));
+    API.searchAdverts("tag=" + tag).then(adverts => this.setState({ adverts}));
   }
 
   componentDidMount() {
@@ -80,7 +80,7 @@ export default class Home extends Component {
   }
 
 
-  deactivateFilters() {  
+  disableUpdate() {  
     this.setState({ update: false })
   }
 
@@ -90,7 +90,6 @@ export default class Home extends Component {
     const { name, price, tag, venta } = this.state.filters;
     let filterString = '';
     let temp = true;
-
 
     // if (price) {
     //   alert("The name must be bigger than 3 characters");
@@ -129,21 +128,14 @@ export default class Home extends Component {
       }
     }
 
-     console.log(filterString)
     if (filterString && filterString.trim().length) {
-      API.searchAdverts(filterString).then(adverts => this.setState({ adverts }))
+      API.searchAdverts(filterString).then(adverts => this.setState({ adverts, update: true }))
     } else {
       this.discoverAdverts();
 
     }
 
-    // Asigno directo porque no necesito renderizar
-     this.state.update = true;
-  
-
   }
-
-
 
 
   onInputChange = (event) => {
@@ -188,7 +180,7 @@ export default class Home extends Component {
   render() {
   
     const { user } = this.context;
-    const { adverts, tagList, filters, deactivateFilters, update } = this.state;
+    const { adverts, tagList, filters, disableUpdate, update } = this.state;
 
     
     // if (Object.entries(user).length === 0) {
@@ -301,7 +293,7 @@ export default class Home extends Component {
             totalAdverts={adverts.length}
             numberPerPage='3'
             adverts={adverts}
-            deactivateFilters = {deactivateFilters}
+            disableUpdate = {disableUpdate}
             update={update}
            >
 
