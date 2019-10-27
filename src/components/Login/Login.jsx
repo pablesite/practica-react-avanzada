@@ -115,7 +115,6 @@ export default class Login extends Component {
         const { name, surname, tag } = this.state.user;
         const { tagList, check } = this.state;
 
-
         return (
             <React.Fragment>
                 {

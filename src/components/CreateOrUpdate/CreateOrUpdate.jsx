@@ -199,7 +199,6 @@ class CreateOrUpdate extends Component {
     const { user } = this.context;
     const { description, name, photo, price, tags, type, _id } = this.state.advert;
     const { tagList } = this.state;
-    console.log(this.state.advert)
     return (
       <React.Fragment>
 
