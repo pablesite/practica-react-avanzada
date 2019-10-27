@@ -1,7 +1,24 @@
-.card {
-     /* max-height: 35vw;  */
-  }
+   .card {
+     background-color:#eeeeee;
+   }
+
+   .type {
+      background-color:#ff5722;
+    }
 
   .media {
-     height: 200px; 
+     height: 20vh; 
   }
+
+  .limit-height-12vh {
+     height: 12vh;
+  }
+
+  .limit-height-6vh {
+   height: 6vh;
+}
+
+.price-text{
+   font-size: larger;
+   margin-top: .5rem;
+}

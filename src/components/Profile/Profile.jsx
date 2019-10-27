@@ -1,16 +1,15 @@
 import React from 'react';
-
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import { fade, makeStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
 import { withRouter } from 'react-router-dom';
 import { UserConsumer } from '../Context/User'
 import { deleteStorage } from '../../services/Storage';
+
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import { fade, makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 
 
 const useStyles = makeStyles(theme => ({
@@ -20,6 +19,10 @@ const useStyles = makeStyles(theme => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
+  toolbar: {
+    minHeight: 10,
+  },
+
   title: {
     flexGrow: 1,
     display: 'none',
@@ -71,8 +74,8 @@ const useStyles = makeStyles(theme => ({
 
 function Profile(props) {
   const classes = useStyles();
-  
-  function createOrUpdate (event) {
+
+  function createOrUpdate(event) {
     event.preventDefault();
     props.history.push("/createOrUpdate/");
   };
@@ -80,57 +83,56 @@ function Profile(props) {
 
   return (
     <UserConsumer>
-      {({updateUser}) => (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
-            User: {props.name} {props.surname}.
-            Your favourite tag is '{props.tag}'.
-          </Typography>
+      {({ updateUser }) => (
+        <div className={classes.root}>
+          <AppBar position="static">
+            <Toolbar className={classes.toolbar}>
+              <Grid container alignItems="center" spacing={2}>
 
+                <Grid item xs={10} sm={4}>
+                  <Button
+                    variant="contained"
+                    color='secondary'
+                    onClick={createOrUpdate}
+                  >
+                    New Advert
+                </Button>
+                </Grid>
 
-          <Grid item xs={10} sm={3}>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={createOrUpdate}
-              >
-                New Advert
-            </Button>
-            </Grid>
+                <Grid item xs={10} sm={4}>
+                  <Typography className={classes.title} variant="h5" noWrap>
+                    <Box textAlign="center">
+                      {props.name} {props.surname}
+                      <h6>(Tag selected: {props.tag})</h6>
+                    </Box>
+                  </Typography>
+                </Grid>
 
-            <Grid item xs={10} sm={3}>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => {
-                    updateUser({});
-                    deleteStorage();
-                    props.history.push("/login/");
-                }}
-              >
-                Log out
-            </Button>
-            </Grid>
+                <Grid item xs={10} sm={4}>
+                  <Box textAlign="right">
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={() => {
+                        updateUser({});
+                        deleteStorage();
+                        props.history.push("/login/");
+                      }}
+                    >
+                      Log out
+                </Button>
+                  </Box>
+                </Grid>
 
+              </Grid>
+            </Toolbar>
+          </AppBar>
 
-        </Toolbar>
-      </AppBar>
-
-    </div>
+        </div>
       )}
     </UserConsumer>
   );
-  
+
 }
 
 

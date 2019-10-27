@@ -1,22 +1,26 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import UserContext from '../Context/User'
+
+import Profile from '../Profile/Profile';
 import * as API from '../../services/AdvertDBService';
-// import AdvertDetail from '../AdvertDetail/AdvertDetail';
+import { getTags } from '../../services/AdvertDBService';
+import { getUser } from '../../services/Storage';
+import { getAdvert } from "../../services/AdvertDBService";
+
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import Profile from '../Profile/Profile';
-//import { UserConsumer } from '../Context/User'
-
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
-import UserContext from '../Context/User'
-import { getTags } from '../../services/AdvertDBService';
-import { getUser } from '../../services/Storage';
-import { getAdvert } from "../../services/AdvertDBService";
+import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
+import './CreateOrUpdate.css'
 
 const ventas = [
   'buy',
@@ -147,7 +151,7 @@ class CreateOrUpdate extends Component {
         },
         tagList: [],
         update: true,
-       
+
       });
     }
   }
@@ -203,8 +207,7 @@ class CreateOrUpdate extends Component {
   };
 
   onFileSelected = event => {
-    const value = event.target.files[0].name;
-
+    //const value = event.target.files[0].name;
     this.setState(({ advert }) => ({
       advert: {
         ...advert,
@@ -220,7 +223,7 @@ class CreateOrUpdate extends Component {
     const { user } = this.context;
     const { description, name, photo, price, tags, type, _id } = this.state.advert;
     const { tagList } = this.state;
-console.log(this.state.advert)
+    console.log(this.state.advert)
     return (
       <React.Fragment>
 
@@ -230,153 +233,164 @@ console.log(this.state.advert)
           tag={user.tag}
         > </Profile>
 
-        <form required onSubmit={this.onSubmit}>
 
-          <Grid alignItems='center' justify='center' container spacing={3}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
 
-            <Grid item xs={10} sm={2}>
-              <TextField
-                // className={styles.TextField}
-                label="Name"
-                value={name}
-                name="name"
-                onChange={this.onInputChange}
-                required
+          <div className='paper'>
+
+            <Typography component="h1" variant="h5">
+              New Advert
+                        </Typography>
+
+            <form className='form' onSubmit={this.onSubmit}>
+              <Grid container justify="center" spacing={2}>
+
+                <Grid item xs={12} >
+                  <TextField
+                    label="Advert name"
+                    value={name}
+                    name="name"
+                    onChange={this.onInputChange}
+                    fullWidth
+                    variant="filled"
+                    required
+                  />
+                </Grid>
+
+                <Grid item xs={12} >
+                  <TextField
+                    label="Description"
+                    value={description}
+                    name="description"
+                    onChange={this.onInputChange}
+                    fullWidth
+                    variant="filled"
+                    required
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                  <FormControl required fullWidth variant="filled" >
+                    <InputLabel >Venta</InputLabel>
+                    <Select
+                      label="Venta"
+                      value={type}
+                      name="type"
+                      onChange={this.onInputChange}
+                      required
+                    >
+
+                      {ventas.map(venta => (
+                        <MenuItem key={venta} value={venta} >
+                          {venta}
+                        </MenuItem>
+                      ))}
+                    </Select>
+
+                  </FormControl >
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                  <FormControl required fullWidth variant="filled">
+                    <InputLabel >Tags</InputLabel>
+                    <Select
+                      multiple
+                      label="Tag"
+                      value={tags}
+                      name="tags"
+                      onChange={this.onInputChange}
+                      required
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+
+                      {tagList.map(tag => (
+                        <MenuItem key={tag} value={tag} >
+                          {tag}
+                        </MenuItem>
+                      ))}
+
+                    </Select>
+
+                  </FormControl>
+                </Grid>
 
 
-              />
-            </Grid>
 
-            <Grid item xs={10} sm={2}>
-              <TextField
-                // className={styles.TextField}
-                label="Description"
-                value={description}
-                name="description"
-                onChange={this.onInputChange}
-                required
+                <Grid item xs={12}>
+                  <TextField
+                    // className={styles.TextField}
+                    label={type === 'buy' ? "Precio máximo" : "Precio"}
+                    value={price}
+                    name="price"
+                    onChange={this.onInputChange}
+                    fullWidth
+                    variant="filled"
+                    required
 
-              />
-            </Grid>
+                  />
+                </Grid>
 
-            <Grid item xs={10} sm={2}>
-              <input
-                accept="image/*"
-                // className={classes.input}
-                style={{ display: 'none' }}
-                id="raised-button-file"
-                multiple
-                type="file"
-                onChange={this.onFileSelected}
-               
+                <Grid item xs={12} >
+                  <input
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                    id="raised-button-file"
+                    multiple
+                    type="file"
+                    onChange={this.onFileSelected}
 
-              />
-              <label htmlFor="raised-button-file">
-                <Button  
-                  component="span" 
-                // className={classes.button}
-                >
-                  Upload
+                  />
+                  <label htmlFor="raised-button-file">
+                    <Button
+                      component="span"
+                      fullWidth
+                      variant="outlined"
+                      color="primary"
+                    >
+                      Upload an image
                 </Button>
-              </label>
-              {photo}
+                  </label>
+                  <Box textAlign="justify">
+                    <h3>The photo entered has the name: {photo}.
+                    Attention: This functionality is disabled because the API does not have an endpoint to upload photos.</h3>
+                  </Box>
 
-            </Grid>
+                </Grid>
 
-            <Grid item xs={10} sm={2}>
-              <TextField
-                // className={styles.TextField}
-                label={type === 'buy' ? "Precio máximo" : "Precio"}
-                value={price}
-                name="price"
-                onChange={this.onInputChange}
-                required
+              
 
-              />
-            </Grid>
-
-            <Grid item xs={10} sm={1}>
-              <FormControl required fullWidth>
-                <InputLabel >Tags</InputLabel>
-                <Select
-                  multiple
-                  label="Tag"
-                  value={tags}
-                  name="tags"
-                  onChange={this.onInputChange}
-                  required
-
-                // input={<Input id="select-multiple" />}
-                // MenuProps={MenuProps}
-                // style={styles.textField}
+              <Grid item xs={12} >
+                <Button
+                  label="Create"
+                  type='submit'
+                  fullWidth
+                  variant="contained"
+                  color="primary"
                 >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
+                  {_id ? 'Update advert' : 'Create a new advert'}
+                </Button>
+              </Grid>
 
-                  {tagList.map(tag => (
-                    <MenuItem key={tag} value={tag} >
-                      {tag}
-                    </MenuItem>
-                  ))}
-
-                </Select>
-
-              </FormControl>
-            </Grid>
-
-            <Grid item xs={10} sm={1}>
-              <FormControl required fullWidth >
-                <InputLabel >Venta</InputLabel>
-                <Select
-                  label="Venta"
-                  value={type}
-                  name="type"
-                  onChange={this.onInputChange}
-                  required
-
-                // input={<Input id="select-multiple" />}
-                // MenuProps={MenuProps}
-                // style={styles.textField}
+              <div className="back-home">
+              <Grid item xs={12} >
+                <Button variant="contained"
+                  color="secondary"
+                  className="button is-link"
+                  onClick={this.goHome}
                 >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  {ventas.map(venta => (
-                    <MenuItem key={venta} value={venta} >
-                      {venta}
-                    </MenuItem>
-                  ))}
-                </Select>
+                  Back to home
+                </Button>
+              </Grid>
+              </div>
+              </Grid>
+            </form>
 
-              </FormControl >
-            </Grid>
+          </div>
 
-            <br></br>
-
-
-            <Grid item xs={10} sm={3}>
-              <Button
-                variant="contained"
-                color="primary"
-                type='submit'
-              >
-                {_id ? 'Actualiza' : 'Crea tu anuncio!'}
-              </Button>
-            </Grid>
-
-            <Grid item xs={10} sm={3}>
-              <Button variant="contained"
-                color="secondary"
-                className="button is-link"
-                onClick={this.goHome}
-              >
-                Back to home
-        </Button>
-            </Grid>
-
-          </Grid>
-        </form>
+        </Container>
 
       </React.Fragment>
     );

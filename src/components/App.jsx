@@ -8,6 +8,25 @@ import CreateOrUpdate from './CreateOrUpdate/CreateOrUpdate'
 import { UserProvider } from './Context/User';
 import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
 
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: '#ff784e',
+      main: '#ff5722',
+      dark: '#b23c17',
+      contrastText: '#fff',
+    },
+    secondary: {
+      light: '#696969',
+      main: '#444444',
+      dark: '#2f2f2f',
+      contrastText: '#fff',
+    },
+  },
+});
+
 
 export default class App extends Component {
   constructor(props) {
@@ -32,6 +51,8 @@ export default class App extends Component {
 
   }
 
+  
+
   updateUser(user) {
     this.setState({ user })
 
@@ -44,6 +65,7 @@ export default class App extends Component {
     return (
         <ErrorBoundary>
           <UserProvider value={this.state}>
+          <MuiThemeProvider theme={theme}>
             <Router>
               <Switch>
                 <Route exact path='/login' component={Login} />
@@ -55,6 +77,7 @@ export default class App extends Component {
                 <Route component={Login} />
               </Switch>
             </Router>
+            </MuiThemeProvider>
           </UserProvider>
         </ErrorBoundary>
         // {/* <div className="App">

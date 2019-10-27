@@ -1,107 +1,41 @@
 import "../../App.css";
 import UserContext from '../Context/User'
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import React, { Component } from 'react';
+import { getTags } from '../../services/AdvertDBService';
+import { saveUser, getUser, deleteStorage } from '../../services/Storage';
+import Profile from '../Profile/Profile'
+
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
-import React, { Component } from 'react';
-//import { withRouter } from "react-router-dom";
-import { red } from "@material-ui/core/colors";
-import { getTags } from '../../services/AdvertDBService';
-import { saveUser, getUser, deleteStorage } from '../../services/Storage';
-import Profile from '../Profile/Profile'
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+
+
 import "./Login.css"
-//import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 
 
-
-const styles = {
-
-
-    button: {
-        margin: 15
-    },
-
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-
-
-
-    textField: {
-        marginLeft: 10,
-        marginRight: 10,
-        width: 200,
-        color: red,
-    },
-    dense: {
-        marginTop: 19,
-        color: red,
-    },
-    menu: {
-        width: 200,
-        color: red,
-    },
-    formControl: {
-        margin: 10,
-        minWidth: 120,
-        maxWidth: 300,
-        color: red,
-    }
-
+function Copyright() {
+    return (
+        <Typography variant="body2" color="textSecondary" align="center">
+            {'Copyright © '}
+            <Link color="inherit" href="https://material-ui.com/">
+                Wallakeep - Pablo Ruiz Molina
+        </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Typography>
+    );
 }
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-    PaperProps: {
-        style: {
-            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            width: 250,
-        },
-    },
-};
-
-
-const theme = createMuiTheme();
-
-
-// const useStyles = makeStyles(theme => ({
-//     '@global': {
-//         body: {
-//             backgroundColor: theme.palette.common.white,
-//         },
-//     },
-//     paper: {
-//         marginTop: theme.spacing(8),
-//         display: 'flex',
-//         flexDirection: 'column',
-//         alignItems: 'center',
-//     },
-//     avatar: {
-//         margin: theme.spacing(1),
-//         backgroundColor: theme.palette.secondary.main,
-//     },
-//     form: {
-//         width: '100%', // Fix IE 11 issue.
-//         marginTop: theme.spacing(3),
-//     },
-//     submit: {
-//         margin: theme.spacing(3, 0, 2),
-//     },
-// }));
-
-
-
-
 
 
 export default class Login extends Component {
@@ -118,18 +52,15 @@ export default class Login extends Component {
             check: false
         };
 
-        
         this.onInputChange = this.onInputChange.bind(this);
-        this.deleteUser = this.deleteUser.bind(this);
+        // this.deleteUser = this.deleteUser.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.checkError = this.checkError.bind(this);
     }
 
 
-
     getTags = () => {
         getTags().then(tags => {
-            tags.shift();
             this.setState({ tagList: tags });
         })
     };
@@ -141,22 +72,22 @@ export default class Login extends Component {
         }
     }
 
-    deleteUser(event) {
-        event.preventDefault();
-        this.context.updateUser({});
-        //this.setState(({ user }) => ({user: {}}));
+    // deleteUser(event) {
+    //     event.preventDefault();
+    //     this.context.updateUser({});
+    //     //this.setState(({ user }) => ({user: {}}));
 
-        deleteStorage();
+    //     deleteStorage();
 
-        this.setState({
-            user: {
-                name: "",
-                surname: "",
-                tag: ""
-            }
-        });
-        //this.props.history.push('/login');
-    }
+    //     this.setState({
+    //         user: {
+    //             name: "",
+    //             surname: "",
+    //             tag: ""
+    //         }
+    //     });
+    //     //this.props.history.push('/login');
+    // }
 
     checkError(event) {
         event.preventDefault();
@@ -194,15 +125,13 @@ export default class Login extends Component {
     onInputChange = (event) => {
 
         const { name, value } = event.target;
-
+        
         this.setState(({ user }) => ({
             user: {
                 ...user,
                 [name]: value
             }
         }));
-
-
 
     };
 
@@ -211,8 +140,9 @@ export default class Login extends Component {
         const { name, surname, tag } = this.state.user;
         const { tagList, check } = this.state;
 
+
         return (
-            <MuiThemeProvider theme={theme}>
+            <React.Fragment>
                 {
                     getUser()
                     &&
@@ -220,94 +150,117 @@ export default class Login extends Component {
                         name={name}
                         surname={surname}
                         tag={tag}
-                    > </Profile>
+                    >
+                    </Profile>
                 }
 
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />
 
+                    <div className='paper'>
 
-                    <div className='marg'>
-                        <form onSubmit={this.onSubmit}>
+                        <Avatar className='avatar'>
+                            <LockOutlinedIcon />
+                        </Avatar>
 
-                            <TextField
-                                className={styles.TextField}
-                                label="Name"
-                                value={name}
-                                name="name"
-                                onChange={this.onInputChange}
-                                style={styles.textField}
-                                variant="outlined"
-                            />
-                            <br></br>
+                        <Typography component="h1" variant="h5">
+                            Sign up
+                        </Typography>
 
-                            <TextField
-                                label="Surname"
-                                value={surname}
-                                name="surname"
-                                onChange={this.onInputChange}
-                                style={styles.textField}
-                                variant="outlined"
-                            />
+                        <form className='form' onSubmit={this.onSubmit}>
+                            <Grid container spacing={2}>
 
-                            <br></br>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        label="Name"
+                                        value={name}
+                                        name="name"
+                                        onChange={this.onInputChange}
+                                        fullWidth
+                                        variant="outlined"
+                                        required
+                                    />
+                                </Grid>
 
-                            {<FormControl variant="outlined" >
-                                <InputLabel style={styles.textField} htmlFor="outlined-age-simple">Tags</InputLabel>
-                                <Select
-                                    name="tag"
-                                    value={tag ? tag : ''}
-                                    onChange={this.onInputChange}
-                                    input={<Input />}
-                                    MenuProps={MenuProps}
-                                    style={styles.textField}
-                                    variant="outlined"
-                                    inputProps={{
-                                        name: 'age',
-                                        id: 'outlined-age-simple',
-                                      }}
-                                    
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        label="Surname"
+                                        value={surname}
+                                        name="surname"
+                                        onChange={this.onInputChange}
+                                        fullWidth
+                                        variant="outlined"
+                                        required
+                                    />
+                                </Grid>
+
+                                <Grid item xs={12}>
+                                    <FormControl required fullWidth variant="outlined" >
+                                        <InputLabel htmlFor="tag-required" >Tags</InputLabel>
+                                        <Select
+                                            
+                                            name="tag"
+                                            value={tag ? tag : ''}
+                                            onChange={this.onInputChange}
+                                            required
+                                            inputProps={{
+                                                name: 'tag',
+                                                id: 'tag-required',
+                                              }}
+                                        >
+                                            {tagList.map((tags, i) => (
+                                                <MenuItem key={i} value={tags}>
+                                                    {tags}
+                                                </MenuItem>
+                                            ))} 
+
+                                        </Select>
+                                    </FormControl>
+                                </Grid>
+                            </Grid>
+
+                            <div className="submit">
+                                <Button
+                                    label="Continue"
+                                    type='submit'
+                                    fullWidth
+                                    variant="contained"
+                                    color="primary"
                                 >
-                                    {tagList.map((tags, i) => (
-                                        <MenuItem key={tags} value={tags} style={styles.fontWeight}>
-                                            {tags}
-                                        </MenuItem>
-                                    ))}
-
-                                </Select>
-                            </FormControl>}
-
-                            <br></br>
-
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                label="Continue"
-                                style={styles.button}
-                                onClick={this.continue}
-                                type='submit'
-                            >
-                                Enter
+                                    Enter
                             </Button>
-
-                            <Button variant="contained"
-                                color="secondary"
-                                className="button is-link"
-                                onClick={this.deleteUser}
-                            >
-                                Borrar usuario
-                             </Button>
+                            </div>
 
                         </form>
-                    </div>
 
-                    <Button variant="contained"
-                        color="secondary"
-                        className="button is-link"
-                        onClick={this.checkError}
-                    >
-                        Check Error
-                    </Button>
+
+                        <Grid container justify="center">
+
+                            <Grid item xs={12}>
+                                <Box textAlign="justify">
+                                    <h3>By pressing the button below you can check Error Boundary functionality.
+                                Remember to test this functionality in production mode.</h3>
+                                </Box>
+                            </Grid>
+
+                            <Grid item xs={6}>
+                                <Button
+                                    variant="contained"
+                                    color="secondary"
+                                    fullWidth
+                                    onClick={this.checkError}
+                                    label="Error Boundary"
+                                >
+                                    Check Error
+                            </Button>
+                            </Grid>
+                        </Grid>
+
+                        <Box mt={5}>
+                            <Copyright />
+                        </Box>
+
+                    </div>
 
                     {
                         check
@@ -317,7 +270,7 @@ export default class Login extends Component {
 
                 </Container>
 
-            </MuiThemeProvider>
+            </React.Fragment>
 
         );
     }

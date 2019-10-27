@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 
+import './Pagination.css'
 
 
 export default class Pagination extends Component {
@@ -108,10 +109,11 @@ export default class Pagination extends Component {
 
         return (
             <React.Fragment>
-                
-                <Grid container alignItems='center' alignContent='center' spacing={5}>
+                <div className="grid"> 
+                <Grid container alignItems='center' alignContent='center' spacing={2}>
                     <AdvertList adverts={advertActualPage} />
                 </Grid>
+                </div>
 
                 <Grid container alignItems='center' alignContent='space-between' spacing={1} justify='center'>
                         <Grid item xs={1} sm={2}>
@@ -119,7 +121,7 @@ export default class Pagination extends Component {
                                 <Button
                                     onClick={this.goBack}
                                     variant="text"
-                                    color="secondary"
+                                    color="primary"
                                 >
                                 Go Back
                                 </Button>
@@ -127,23 +129,8 @@ export default class Pagination extends Component {
                         </Grid>
                         
                         <Grid item xs={1} sm={2}   >
-                            <Box textAlign="center">
-                                {
-                                    // STATE: pages (info anuncios), actualPage (id), advertActualPage, pagesNumber
-                                    //             // PROPS: 
-                                    // totalAdverts={adverts.length}
-                                    // numberPerPage='3'
-                                    // adverts={adverts}
-                                    // disableUpdate = {disableUpdate}
-                                    // update={update}
-
-                                actualPage
-
-                                    // {/* // adverts.map(function (advert1, i) {
-                                    // //     return <Advert key={i} advert={advert1}/>
-                                    // //     }) */}
-                            
-                                } of {pagesNumber}
+                            <Box textAlign="center" className="pages">
+                                {`${actualPage} of ${pagesNumber}`}
                             </Box>
                          </Grid>
 
@@ -152,7 +139,7 @@ export default class Pagination extends Component {
                                 <Button
                                     onClick={this.goForward}
                                     variant="text"
-                                    color="secondary"
+                                    color="primary"
                                 >
                                 Go Forward
                                 </Button>

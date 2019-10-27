@@ -1,25 +1,27 @@
 import React, { Component } from 'react';
 import * as API from '../../services/AdvertDBService';
-// import AdvertDetail from '../AdvertDetail/AdvertDetail';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import Profile from '../Profile/Profile';
-//import { UserConsumer } from '../Context/User'
 import UserContext from '../Context/User'
+
+import Profile from '../Profile/Profile';
+import { getTags } from '../../services/AdvertDBService';
+import { getUser } from '../../services/Storage';
+
+import Box from '@material-ui/core/Box';
 import Pagination from '../Pagination/Pagination';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
-import { getTags } from '../../services/AdvertDBService';
-import { getUser } from '../../services/Storage';
-//import CreateOrUpdate from '../CreateOrUpdate/CreateOrUpdate';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+
+import "./Home.css"
 
 
-const ventas = [
-  'venta',
-  'compra',
+const type = [
+  'sell',
+  'buy',
 ];
 
 
@@ -38,7 +40,7 @@ export default class Home extends Component {
         name: '',
         price: '',
         tag: '',
-        venta: ''
+        type: ''
       },
       disableUpdate: this.disableUpdate,
       update: true,
@@ -87,7 +89,7 @@ export default class Home extends Component {
   onSubmit = (event) => {
     event && event.preventDefault();
 
-    const { name, price, tag, venta } = this.state.filters;
+    const { name, price, tag, type } = this.state.filters;
     let filterString = '';
     let temp = true;
 
@@ -114,8 +116,8 @@ export default class Home extends Component {
       }
     }
 
-    if (venta) {
-      if (venta === 'venta') {
+    if (type) {
+      if (type === 'sell') {
         temp = true;
       } else {
         temp = false;
@@ -191,7 +193,7 @@ export default class Home extends Component {
           tag={user.tag}
         > </Profile>
 
-        <form onSubmit={this.onSubmit}>
+        <form className="filter-form" onSubmit={this.onSubmit}>
 
           <Grid container alignItems='center' justify='center' spacing={3}>
 
@@ -209,7 +211,7 @@ export default class Home extends Component {
             <Grid item xs={10} sm={2}>
               <TextField
                 // className={styles.TextField}
-                label="Precio (min-max)"
+                label="Price (min-max)"
                 value={filters.price}
                 name="price"
                 onChange={this.onInputChange}
@@ -217,10 +219,11 @@ export default class Home extends Component {
               />
             </Grid>
 
-            <Grid item xs={10} sm={1}>
+            <Grid item xs={10} sm={2}>
               <FormControl fullWidth>
                 <InputLabel >Tags</InputLabel>
                 <Select
+                
                   label="Tag"
                   value={filters.tag}
                   name="tag"
@@ -230,6 +233,7 @@ export default class Home extends Component {
                 // MenuProps={MenuProps}
                 // style={styles.textField}
                 >
+                  <MenuItem value='' > <em>None</em> </MenuItem>
                   {tagList.map(tag => (
                     <MenuItem key={tag} value={tag} >
                       {tag}
@@ -240,20 +244,21 @@ export default class Home extends Component {
               </FormControl>
             </Grid>
 
-            <Grid item xs={10} sm={1}>
+            <Grid item xs={10} sm={2}>
               <FormControl fullWidth >
-                <InputLabel >Venta</InputLabel>
+                <InputLabel >Type</InputLabel>
                 <Select
-                  label="Venta"
-                  value={filters.venta}
-                  name="venta"
+                  label="Type"
+                  value={filters.type}
+                  name="type"
                   onChange={this.onInputChange}
 
                 // input={<Input id="select-multiple" />}
                 // MenuProps={MenuProps}
                 // style={styles.textField}
                 >
-                  {ventas.map(venta => (
+                  <MenuItem value='' > <em>None</em> </MenuItem>
+                  {type.map(venta => (
                     <MenuItem key={venta} value={venta} >
                       {venta}
                     </MenuItem>
@@ -262,31 +267,28 @@ export default class Home extends Component {
               </FormControl >
             </Grid>
 
-            <br></br>
-
-
-
-
-
-            <Grid item xs={1} sm={2}>
+            <Grid item xs={10} sm={2}>
+            <Box textAlign="center">
               <Button
                 variant="contained"
-                color="secondary"
+                color="primary"
                 type='submit'
               >
                 Filtra!
             </Button>
+            </Box>
             </Grid>
           </Grid>
 
         </form>
 
+  
         {
           adverts
           &&
           !adverts.length
           &&
-          <h2>No hay anuncios. Prueba otra búsqueda.</h2>
+          <h2>No hay anuncios. Pruebe otra búsqueda por favor.</h2>
           
         }
 
