@@ -4,10 +4,13 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import { withRouter } from 'react-router-dom';
+import { UserConsumer } from '../Context/User'
+import { deleteStorage } from '../../services/Storage';
 
 
 const useStyles = makeStyles(theme => ({
@@ -65,10 +68,19 @@ const useStyles = makeStyles(theme => ({
 
 
 
-export default function Profile(props) {
+
+function Profile(props) {
   const classes = useStyles();
+  
+  function createOrUpdate (event) {
+    event.preventDefault();
+    props.history.push("/createOrUpdate/");
+  };
+
 
   return (
+    <UserConsumer>
+      {({updateUser}) => (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
@@ -85,24 +97,42 @@ export default function Profile(props) {
             Your favourite tag is '{props.tag}'.
           </Typography>
 
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
+
+          <Grid item xs={10} sm={3}>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={createOrUpdate}
+              >
+                New Advert
+            </Button>
+            </Grid>
+
+            <Grid item xs={10} sm={3}>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => {
+                    updateUser({});
+                    deleteStorage();
+                    props.history.push("/login/");
+                }}
+              >
+                Log out
+            </Button>
+            </Grid>
+
+
         </Toolbar>
       </AppBar>
 
     </div>
+      )}
+    </UserConsumer>
   );
   
 }
 
+
+
+export default withRouter(Profile);

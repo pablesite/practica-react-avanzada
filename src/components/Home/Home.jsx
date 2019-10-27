@@ -41,7 +41,7 @@ export default class Home extends Component {
         venta: ''
       },
       disableUpdate: this.disableUpdate,
-      update: true
+      update: true,
 
     }
 
@@ -69,7 +69,7 @@ export default class Home extends Component {
 
   discoverAdverts = () => {
     const { tag } = this.context.user;
-    API.searchAdverts("tag=" + tag).then(adverts => this.setState({ adverts}));
+    API.searchAdverts("tag=" + tag).then(adverts => this.setState({ adverts }));
   }
 
   componentDidMount() {
@@ -80,7 +80,7 @@ export default class Home extends Component {
   }
 
 
-  disableUpdate() {  
+  disableUpdate() {
     this.setState({ update: false })
   }
 
@@ -121,9 +121,9 @@ export default class Home extends Component {
         temp = false;
       }
 
-    if (filterString === '') {
+      if (filterString === '') {
         filterString = 'venta=' + temp;
-    } else {
+      } else {
         filterString = filterString + '&venta=' + temp;
       }
     }
@@ -137,13 +137,9 @@ export default class Home extends Component {
 
   }
 
-  createOrUpdate = (event) => {
-    event.preventDefault();
-    this.props.history.push("/createOrUpdate");
-  };
 
   onInputChange = (event) => {
-    
+
     const { name, value } = event.target;
 
     if (name === 'price') {
@@ -182,15 +178,10 @@ export default class Home extends Component {
 
 
   render() {
-  
+
     const { user } = this.context;
     const { adverts, tagList, filters, disableUpdate, update } = this.state;
 
-    
-    // if (Object.entries(user).length === 0) {
-    //   console.log('entra en render');
-    //   return null;
-    // }
     return (
       <React.Fragment>
 
@@ -202,7 +193,7 @@ export default class Home extends Component {
 
         <form onSubmit={this.onSubmit}>
 
-          <Grid alignItems='center' justify='center' container spacing={3}>
+          <Grid container alignItems='center' justify='center' spacing={3}>
 
             <Grid item xs={10} sm={2}>
               <TextField
@@ -272,19 +263,10 @@ export default class Home extends Component {
             </Grid>
 
             <br></br>
-            
-          </Grid>
-         
-          <Grid alignItems='center' justify='center' container spacing={3}>
-          <Grid item xs={1} sm={2}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={this.createOrUpdate}
-              >
-                Crea un anuncio
-            </Button>
-            </Grid>
+
+
+
+
 
             <Grid item xs={1} sm={2}>
               <Button
@@ -295,29 +277,43 @@ export default class Home extends Component {
                 Filtra!
             </Button>
             </Grid>
-            </Grid>
-            
+          </Grid>
+
         </form>
 
-
-        {/* Número de anuncios: {adverts.length}
-         {console.log(adverts)}  */}
         {
           adverts
           &&
-          adverts.length
+          !adverts.length
           &&
+          <h2>No hay anuncios. Prueba otra búsqueda.</h2>
+          
+        }
+
+
+
+        {
+          
+           adverts
+           &&
+           adverts.length !==0
+           &&
 
           <Pagination
             totalAdverts={adverts.length}
             numberPerPage='3'
             adverts={adverts}
-            disableUpdate = {disableUpdate}
+            disableUpdate={disableUpdate}
             update={update}
-           >
+          >
 
           </Pagination>
         }
+
+
+
+
+
 
       </React.Fragment>
     );

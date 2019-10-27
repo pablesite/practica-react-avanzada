@@ -108,6 +108,7 @@ export default class Pagination extends Component {
 
         return (
             <React.Fragment>
+                
                 <Grid container alignItems='center' alignContent='center' spacing={5}>
                     <AdvertList adverts={advertActualPage} />
                 </Grid>
@@ -125,7 +126,7 @@ export default class Pagination extends Component {
                             </Box>
                         </Grid>
                         
-                        <Grid item xs={1} sm={2} alignItems='center' alignContent='center' justify='center'  >
+                        <Grid item xs={1} sm={2}   >
                             <Box textAlign="center">
                                 {
                                     // STATE: pages (info anuncios), actualPage (id), advertActualPage, pagesNumber
@@ -158,6 +159,8 @@ export default class Pagination extends Component {
                             </Box>
                         </Grid>
                     </Grid>
+
+                    
                     
             </React.Fragment>
         )

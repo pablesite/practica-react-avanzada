@@ -14,7 +14,7 @@ const getRequest = (url) => {
    .then(res => res.json());
 }
 
-const sendRequest = (url, advert) => {
+const createRequest = (url, advert) => {
 return fetch(url, {
   method: 'POST', // or 'PUT'
   body: JSON.stringify(advert), // data can be `string` or {object}!
@@ -22,8 +22,18 @@ return fetch(url, {
     'Content-Type': 'application/json'
   }
 }).then(res => res.json());
-
 }
+
+const updateRequest = (url, advert) => {
+  return fetch(url, {
+    method: 'PUT', // or 'PUT'
+    body: JSON.stringify(advert), // data can be `string` or {object}!
+    headers:{
+      'Content-Type': 'application/json'
+    }
+  }).then(res => res.json());
+  
+  }
 
 
 
@@ -55,7 +65,15 @@ const searchAdverts = (query) => {
 }
 
 const createAdvert = (advert) => {
-  return sendRequest(`${API_URL}/anuncios`, advert)
+  return createRequest(`${API_URL}/anuncios`, advert)
+  .catch(error => console.error('Error:', error))
+  .then(response => ( response))
+   //.then(res => console.log(res.results))
+  
+}
+
+const updateAdvert = (advert, id) => {
+  return updateRequest(`${API_URL}/anuncios/${id}`, advert)
   .catch(error => console.error('Error:', error))
   .then(response => ( response))
    //.then(res => console.log(res.results))
@@ -63,12 +81,11 @@ const createAdvert = (advert) => {
 }
 
 
-
-
 export {
   getTags,
   getAdvert,
   discoverAdverts,
   searchAdverts,
-  createAdvert
+  createAdvert,
+  updateAdvert
 };

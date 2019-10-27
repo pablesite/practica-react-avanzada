@@ -23,19 +23,7 @@ export default class AdvertsList extends Component {
     return (
       <React.Fragment>
         {
-          adverts
-          &&
-          adverts.length
-          &&
           this.buildAdvertList(adverts)
-        }
-        
-        {
-          !adverts
-          &&
-          <div >
-            <h2>No hay anuncios</h2>
-          </div>
         }
       </React.Fragment>
     );

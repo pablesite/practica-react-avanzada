@@ -33,8 +33,6 @@ export default class App extends Component {
   }
 
   updateUser(user) {
-
-    //  console.log('Entra en update users de app');
     this.setState({ user })
 
   }
@@ -52,6 +50,7 @@ export default class App extends Component {
                 <Route exact path='/home/' component={Home} />
                 <Route exact path='/detail/:id' component={AdvertDetail} />
                 <Route exact path='/createOrUpdate/' component={CreateOrUpdate} />
+                <Route exact path='/createOrUpdate/:id' component={CreateOrUpdate} />
                 
                 <Route component={Login} />
               </Switch>

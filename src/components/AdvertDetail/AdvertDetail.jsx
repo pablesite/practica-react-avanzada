@@ -15,6 +15,7 @@ class AdvertDetail extends Component {
 
     this.getAdvert = this.getAdvert.bind(this);
     this.goHome = this.goHome.bind(this);
+    this.updateAdvert = this.updateAdvert.bind(this);
 
   }
 
@@ -52,6 +53,12 @@ class AdvertDetail extends Component {
     this.props.history.push('/home');
   }
 
+  updateAdvert() {
+    this.props.history.push(`/createOrUpdate/${this.props.match.params.id}`);
+
+  }
+
+
   render() {
     const { user } = this.context;
     const { advert } = this.state;
@@ -85,8 +92,17 @@ class AdvertDetail extends Component {
           className="button is-link"
           onClick={this.goHome}
         >
-          Volver a home
+          Back to home
         </Button>
+
+        <Button variant="contained"
+          color="secondary"
+          className="button is-link"
+          onClick={this.updateAdvert}
+        >
+          Update Advert
+        </Button>
+
       </div>
 
       </React.Fragment>

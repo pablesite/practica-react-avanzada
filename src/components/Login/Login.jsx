@@ -129,6 +129,7 @@ export default class Login extends Component {
 
     getTags = () => {
         getTags().then(tags => {
+            tags.shift();
             this.setState({ tagList: tags });
         })
     };
@@ -209,11 +210,9 @@ export default class Login extends Component {
     render() {
         const { name, surname, tag } = this.state.user;
         const { tagList, check } = this.state;
-        
+
         return (
-
             <MuiThemeProvider theme={theme}>
-
                 {
                     getUser()
                     &&
@@ -238,6 +237,7 @@ export default class Login extends Component {
                                 name="name"
                                 onChange={this.onInputChange}
                                 style={styles.textField}
+                                variant="outlined"
                             />
                             <br></br>
 
@@ -247,20 +247,26 @@ export default class Login extends Component {
                                 name="surname"
                                 onChange={this.onInputChange}
                                 style={styles.textField}
+                                variant="outlined"
                             />
 
                             <br></br>
 
-                            {<FormControl>
-                                <InputLabel style={styles.textField}>Tags</InputLabel>
+                            {<FormControl variant="outlined" >
+                                <InputLabel style={styles.textField} htmlFor="outlined-age-simple">Tags</InputLabel>
                                 <Select
-
                                     name="tag"
-                                    value={tag}
+                                    value={tag ? tag : ''}
                                     onChange={this.onInputChange}
                                     input={<Input />}
                                     MenuProps={MenuProps}
                                     style={styles.textField}
+                                    variant="outlined"
+                                    inputProps={{
+                                        name: 'age',
+                                        id: 'outlined-age-simple',
+                                      }}
+                                    
                                 >
                                     {tagList.map((tags, i) => (
                                         <MenuItem key={tags} value={tags} style={styles.fontWeight}>
@@ -303,9 +309,7 @@ export default class Login extends Component {
                         Check Error
                     </Button>
 
-
                     {
-
                         check
                         &&
                         undefined.methodDoesNotExist()

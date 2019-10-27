@@ -35,7 +35,7 @@ class Advert extends Component {
 
               <CardMedia
                 className="media"
-                image={`http://localhost:3001${advert.photo}`}
+                image={advert.photo !== 'noPhoto' ? `http://localhost:3001${advert.photo}` :  `http://localhost:3000/noHayImagen.gif`}
                 title={advert.name}
               />
               <CardContent>
