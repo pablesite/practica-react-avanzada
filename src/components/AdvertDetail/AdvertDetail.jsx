@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+
 import { getAdvert } from "../../services/AdvertDBService";
 import { getUser } from '../../services/Storage';
 import UserContext from '../Context/User'
@@ -27,7 +28,6 @@ class AdvertDetail extends Component {
 
     this.state = {};
 
-
     this.getAdvert = this.getAdvert.bind(this);
     this.goHome = this.goHome.bind(this);
     this.updateAdvert = this.updateAdvert.bind(this);
@@ -48,7 +48,6 @@ class AdvertDetail extends Component {
 
   checkUserExist() {
     if (getUser() !== null) {
-      // Actualizo el contexto
       this.context.updateUser(getUser());
       return true;
     } else {

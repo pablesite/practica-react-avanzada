@@ -47,10 +47,7 @@ class CreateOrUpdate extends Component {
       update: true,
 
     };
-    // Mirar si tenemos el ID como path param
-    // Si tenemos el ID buscamos el producto en la base de datos (llamada al backend) y lo ponemos en el estado
-    // Si no tenemos el ID inicializamos el estado a un objeto vacío
-
+  
     this.checkCreateorUpdate = this.checkCreateorUpdate.bind(this);
     this.goHome = this.goHome.bind(this);
   };
@@ -59,7 +56,6 @@ class CreateOrUpdate extends Component {
 
   checkUserExist() {
     if (getUser() !== null) {
-      // Actualizo el contexto
       this.context.updateUser(getUser());
       return true;
     } else {
@@ -104,11 +100,6 @@ class CreateOrUpdate extends Component {
       })
     }
 
-
-    // if (update) {
-    //     this.updatePages();
-    //     disableUpdate();
-    // }
   }
 
 
@@ -156,12 +147,6 @@ class CreateOrUpdate extends Component {
     }
   }
 
-  // static getDerivedStateFromProps(props, state) {
-  //   return {
-  //     name: props.name
-  //   }
-  // }
-
   onSubmit = (event) => {
     event && event.preventDefault();
     this.createOrUpdateAdvert();
@@ -174,16 +159,7 @@ class CreateOrUpdate extends Component {
   }
 
   onInputChange = (event) => {
-
     const { name, value } = event.target;
-
-    // this.setState(({ advert }) => ({
-    //   advert: {
-    //     ...advert,
-    //     [name]: value
-    //   }
-    // }));
-
 
     if (name === 'price') {
 
@@ -232,7 +208,6 @@ class CreateOrUpdate extends Component {
           surname={user.surname}
           tag={user.tag}
         > </Profile>
-
 
         <Container component="main" maxWidth="xs">
           <CssBaseline />
@@ -321,7 +296,6 @@ class CreateOrUpdate extends Component {
 
                 <Grid item xs={12}>
                   <TextField
-                    // className={styles.TextField}
                     label={type === 'buy' ? "Precio máximo" : "Precio"}
                     value={price}
                     name="price"
@@ -360,31 +334,29 @@ class CreateOrUpdate extends Component {
 
                 </Grid>
 
-              
+                <Grid item xs={12} >
+                  <Button
+                    label="Create"
+                    type='submit'
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                  >
+                    {_id ? 'Update advert' : 'Create a new advert'}
+                  </Button>
+                </Grid>
 
-              <Grid item xs={12} >
-                <Button
-                  label="Create"
-                  type='submit'
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                >
-                  {_id ? 'Update advert' : 'Create a new advert'}
+                <div className="back-home">
+                  <Grid item xs={12} >
+                    <Button variant="contained"
+                      color="secondary"
+                      className="button is-link"
+                      onClick={this.goHome}
+                    >
+                      Back to home
                 </Button>
-              </Grid>
-
-              <div className="back-home">
-              <Grid item xs={12} >
-                <Button variant="contained"
-                  color="secondary"
-                  className="button is-link"
-                  onClick={this.goHome}
-                >
-                  Back to home
-                </Button>
-              </Grid>
-              </div>
+                  </Grid>
+                </div>
               </Grid>
             </form>
 
@@ -398,6 +370,5 @@ class CreateOrUpdate extends Component {
 }
 
 CreateOrUpdate.contextType = UserContext;
-
 
 export default withRouter(CreateOrUpdate);

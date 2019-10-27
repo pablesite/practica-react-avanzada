@@ -2,7 +2,7 @@ import "../../App.css";
 import UserContext from '../Context/User'
 import React, { Component } from 'react';
 import { getTags } from '../../services/AdvertDBService';
-import { saveUser, getUser, deleteStorage } from '../../services/Storage';
+import { saveUser, getUser} from '../../services/Storage';
 import Profile from '../Profile/Profile'
 
 import MenuItem from '@material-ui/core/MenuItem';
@@ -53,7 +53,6 @@ export default class Login extends Component {
         };
 
         this.onInputChange = this.onInputChange.bind(this);
-        // this.deleteUser = this.deleteUser.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.checkError = this.checkError.bind(this);
     }
@@ -71,23 +70,6 @@ export default class Login extends Component {
             this.setState(() => ({ user: getUser() }));
         }
     }
-
-    // deleteUser(event) {
-    //     event.preventDefault();
-    //     this.context.updateUser({});
-    //     //this.setState(({ user }) => ({user: {}}));
-
-    //     deleteStorage();
-
-    //     this.setState({
-    //         user: {
-    //             name: "",
-    //             surname: "",
-    //             tag: ""
-    //         }
-    //     });
-    //     //this.props.history.push('/login');
-    // }
 
     checkError(event) {
         event.preventDefault();
@@ -107,19 +89,12 @@ export default class Login extends Component {
 
     onSubmit = (event) => {
         event.preventDefault();
-        // if (!name || name.trim().length < 3) {
-        //     alert("Name is smaller than 3");
-        //     return;
-        // }
 
         this.context.updateUser(this.state.user);
+
         saveUser(this.state.user);
 
         this.props.history.push("/home");
-
-
-        // return true;
-
     }
 
     onInputChange = (event) => {

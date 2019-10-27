@@ -24,10 +24,7 @@ const type = [
   'buy',
 ];
 
-
 export default class Home extends Component {
-
-
   constructor(props) {
     super(props);
 
@@ -47,14 +44,11 @@ export default class Home extends Component {
 
     }
 
-    // this.checkUserExist = this.checkUserExist.bind(this);
-
   };
 
 
   checkUserExist() {
     if (getUser() !== null) {
-      // Actualizo el contexto
       this.context.updateUser(getUser());
       return true;
     } else {
@@ -92,11 +86,6 @@ export default class Home extends Component {
     const { name, price, tag, type } = this.state.filters;
     let filterString = '';
     let temp = true;
-
-    // if (price) {
-    //   alert("The name must be bigger than 3 characters");
-    //   return false;
-    // }
 
     if (name) {
       filterString = 'name=' + name;
@@ -199,7 +188,6 @@ export default class Home extends Component {
 
             <Grid item xs={10} sm={2}>
               <TextField
-                // className={styles.TextField}
                 label="Name"
                 value={filters.name}
                 name="name"
@@ -210,7 +198,6 @@ export default class Home extends Component {
 
             <Grid item xs={10} sm={2}>
               <TextField
-                // className={styles.TextField}
                 label="Price (min-max)"
                 value={filters.price}
                 name="price"
@@ -228,10 +215,6 @@ export default class Home extends Component {
                   value={filters.tag}
                   name="tag"
                   onChange={this.onInputChange}
-
-                // input={<Input id="select-multiple" />}
-                // MenuProps={MenuProps}
-                // style={styles.textField}
                 >
                   <MenuItem value='' > <em>None</em> </MenuItem>
                   {tagList.map(tag => (
@@ -252,10 +235,6 @@ export default class Home extends Component {
                   value={filters.type}
                   name="type"
                   onChange={this.onInputChange}
-
-                // input={<Input id="select-multiple" />}
-                // MenuProps={MenuProps}
-                // style={styles.textField}
                 >
                   <MenuItem value='' > <em>None</em> </MenuItem>
                   {type.map(venta => (
@@ -289,13 +268,9 @@ export default class Home extends Component {
           !adverts.length
           &&
           <h2>No hay anuncios. Pruebe otra búsqueda por favor.</h2>
-          
         }
 
-
-
         {
-          
            adverts
            &&
            adverts.length !==0
@@ -311,11 +286,6 @@ export default class Home extends Component {
 
           </Pagination>
         }
-
-
-
-
-
 
       </React.Fragment>
     );

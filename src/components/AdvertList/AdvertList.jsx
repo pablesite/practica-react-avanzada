@@ -8,7 +8,6 @@ export default class AdvertsList extends Component {
     return (
       <React.Fragment>
         {
-           //adverts.map(advert1 => <Advert advert={advert1}/>) 
            adverts.map(function (advert1, i) {
               return <Advert key={i} advert={advert1}/>
               })

@@ -1,9 +1,6 @@
 import Advert from '../models/Advert';
 
 const API_URL = 'http://localhost:3001/apiv1';
-//const API_KEY = '1d3ad03800b6b9dac38bcea89b495be8'
-
-
 
 const getRequest = (url) => {
   return fetch(url,
@@ -34,8 +31,6 @@ const updateRequest = (url, advert) => {
   }).then(res => res.json());
   
   }
-
-
 
 const getTags = () => {
   return getRequest(`${API_URL}/tags/`)
@@ -79,7 +74,6 @@ const updateAdvert = (advert, id) => {
    //.then(res => console.log(res.results))
   
 }
-
 
 export {
   getTags,

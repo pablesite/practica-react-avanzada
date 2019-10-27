@@ -11,8 +11,6 @@ import Typography from '@material-ui/core/Typography';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Grid from '@material-ui/core/Grid';
 
-
-
 import "./Advert.css"
 
 
@@ -63,18 +61,14 @@ class Advert extends Component {
                   {advert.description}
                 </Typography>
                 
-               
                 <div className="price-text">
                     Precio: {advert.price} €.
                 </div>
-               
                
               </CardContent>
             </div>
           </Card>
         </Grid >
-        {/*         
-      </div> */}
       </React.Fragment>
     );
   }

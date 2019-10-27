@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+
 import { UserConsumer } from '../Context/User'
 import { deleteStorage } from '../../services/Storage';
 
@@ -70,8 +71,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-
-
 function Profile(props) {
   const classes = useStyles();
 
@@ -134,7 +133,6 @@ function Profile(props) {
   );
 
 }
-
 
 
 export default withRouter(Profile);

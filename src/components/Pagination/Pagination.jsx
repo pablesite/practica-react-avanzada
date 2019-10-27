@@ -104,7 +104,6 @@ export default class Pagination extends Component {
 
 
     render() {
-        //const { advert } = this.state;
         const { advertActualPage, actualPage, pagesNumber } = this.state;
 
         return (
@@ -146,13 +145,8 @@ export default class Pagination extends Component {
                             </Box>
                         </Grid>
                     </Grid>
-
-                    
                     
             </React.Fragment>
         )
     }
 }
-
-
-//export default withRouter(Pagination);
