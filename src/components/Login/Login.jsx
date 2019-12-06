@@ -58,6 +58,43 @@ export default class Login extends Component {
     }
 
 
+    componentDidMount() {
+        this.checkUserExist();
+        this.getTags();
+
+    }
+
+    onInputChange = (event) => {
+        const { name, value } = event.target;
+        
+        this.setState(({ user }) => ({
+            user: {
+                ...user,
+                [name]: value
+            }
+        }));
+
+    };
+
+    onSubmit = (event) => {
+        event.preventDefault();
+
+        this.context.updateUser(this.state.user);
+
+        saveUser(this.state.user);
+
+        this.props.history.push("/home");
+    }
+
+    checkError(event) {
+        event.preventDefault();
+
+        this.setState({
+            check: true
+        });
+
+    }
+
     getTags = () => {
         getTags().then(tags => {
             this.setState({ tagList: tags });
@@ -70,45 +107,6 @@ export default class Login extends Component {
             this.setState(() => ({ user: getUser() }));
         }
     }
-
-    checkError(event) {
-        event.preventDefault();
-
-        this.setState({
-            check: true
-        });
-
-    }
-
-    componentDidMount() {
-        this.checkUserExist();
-        this.getTags();
-
-    }
-
-
-    onSubmit = (event) => {
-        event.preventDefault();
-
-        this.context.updateUser(this.state.user);
-
-        saveUser(this.state.user);
-
-        this.props.history.push("/home");
-    }
-
-    onInputChange = (event) => {
-
-        const { name, value } = event.target;
-        
-        this.setState(({ user }) => ({
-            user: {
-                ...user,
-                [name]: value
-            }
-        }));
-
-    };
 
 
     render() {

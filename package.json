@@ -33,6 +33,7 @@
   "devDependencies": {
     "@material-ui/core": "^4.5.1",
     "@material-ui/icons": "^4.5.1",
-    "react-material-ui-form": "^1.1.4"
+    "react-material-ui-form": "^1.1.4",
+    "redux": "^4.0.4"
   }
 }

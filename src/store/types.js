@@ -1,0 +1,13 @@
+// export const FETCH_BIKES_REQUEST = 'FETCH_BIKES_REQUEST';
+// export const FETCH_BIKES_FAILURE = 'FETCH_BIKES_FAILURE';
+// export const FETCH_BIKES_SUCCESS = 'FETCH_BIKES_SUCCESS';
+export const SET_ADVERTS = 'SET_ADVERTS';
+export const SET_FILTER = 'SET_FILTER';
+export const SET_USER = 'SET_USER';
+// // export const ADD_TO_CART = 'ADD_TO_CART';
+// export const ADD_TO_CART_REQUEST = 'ADD_TO_CART_REQUEST';
+// export const ADD_TO_CART_SUCCESS = 'ADD_TO_CART_SUCCESS';
+// export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
+// // export const CHECKOUT_CART = 'CHECKOUT_CART';
+// export const CHECKOUT_CART_REQUEST = 'CHECKOUT_CART_REQUEST';
+// export const CHECKOUT_CART_SUCCESS = 'CHECKOUT_CART_SUCCESS';
