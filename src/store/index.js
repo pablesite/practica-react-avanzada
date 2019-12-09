@@ -2,12 +2,12 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 // import thunkMiddleware from 'redux-thunk';
 // import { createLogger } from 'redux-logger';
 // import { connectRouter, routerMiddleware } from 'connected-react-router';
-// import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
 import reducer  from './reducers';
 
 export function configureStore () {  
-    const store = createStore(reducer);
+    const store = createStore(reducer, composeWithDevTools());
     return store;
   };
 

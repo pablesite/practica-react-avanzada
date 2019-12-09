@@ -12,12 +12,17 @@ import { setUser } from './store/actions'
 const store = configureStore();
 
 
-// Test de meter el usuario en Redux! Vamos! Sólo hay que replicar esta lógica en el componente index, para que cargue el user en el store siempre que exista, o cuando se registre/loguee.
+// Test de meter el usuario en Redux! Vamos! 
+//Sólo hay que replicar esta lógica en el componente index, 
+//para que cargue el user en el store siempre que exista, o cuando se registre/loguee.
 store.subscribe(() => console.log('redux', store.getState()));
-store.dispatch(setUser(getUser()));
+// store.dispatch(setUser(getUser()));
 
+const rootProps = {
+    store,
+  };
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App {...rootProps} />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

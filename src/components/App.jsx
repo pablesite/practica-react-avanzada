@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Login from './Login/Login'
+import Login from './Login'
 import Home from './Home/Home'
 import AdvertDetail from './AdvertDetail/AdvertDetail'
 import CreateOrUpdate from './CreateOrUpdate/CreateOrUpdate'
@@ -32,7 +32,7 @@ const theme = createMuiTheme({
 export default class App extends Component {
   constructor(props) {
     super(props);
-
+    
     this.updateUser = this.updateUser.bind(this);
 
     this.state = {
@@ -41,7 +41,7 @@ export default class App extends Component {
         surname: '',
         tag: ''
       },
-      updateUser: this.updateUser
+      updateUser: this.updateUser,
     }
 
   }
@@ -55,18 +55,23 @@ export default class App extends Component {
   render() {
 
     return (
-        <ErrorBoundary>
-          <UserProvider value={this.state}>
+        <ErrorBoundary >
+          {/* <Login store={this.props.store}/> */}
+          <UserProvider value={this.state} >
           <MuiThemeProvider theme={theme}>
             <Router>
               <Switch>
-                <Route exact path='/login' component={Login} />
+                {/* <Route exact path='/login' component={Login} /> */}
+                <Route exact path='/login' render={ (props) => <Login {...props} store={this.props.store} /> } />
                 <Route exact path='/home/' component={Home} />
                 <Route exact path='/detail/:id' component={AdvertDetail} />
                 <Route exact path='/createOrUpdate/' component={CreateOrUpdate} />
                 <Route exact path='/createOrUpdate/:id' component={CreateOrUpdate} />
                 
-                <Route component={Login} />
+                <Route render={ (props) => <Login {...props} store={this.props.store} /> } />
+                
+                {/* <Route component={Login}  store={this.props.store}/> */}
+
               </Switch>
             </Router>
             </MuiThemeProvider>

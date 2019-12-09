@@ -1,5 +1,5 @@
 import "../../App.css";
-import UserContext from '../Context/User'
+//import UserContext from '../Context/User'
 import React, { Component } from 'react';
 import { getTags } from '../../services/AdvertDBService';
 import { saveUser, getUser} from '../../services/Storage';
@@ -24,21 +24,21 @@ import Box from '@material-ui/core/Box';
 import "./Login.css"
 
 
-function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://material-ui.com/">
-                Wallakeep - Pablo Ruiz Molina
-        </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
+// function Copyright() {
+//     return (
+//         <Typography variant="body2" color="textSecondary" align="center">
+//             {'Copyright © '}
+//             <Link color="inherit" href="https://material-ui.com/">
+//                 Wallakeep - Pablo Ruiz Molina
+//         </Link>{' '}
+//             {new Date().getFullYear()}
+//             {'.'}
+//         </Typography>
+//     );
+// }
 
 
-export default class Login extends Component {
+class Login extends Component {
     constructor(props) {
         super(props);
 
@@ -55,6 +55,7 @@ export default class Login extends Component {
         this.onInputChange = this.onInputChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.checkError = this.checkError.bind(this);
+
     }
 
 
@@ -79,9 +80,10 @@ export default class Login extends Component {
     onSubmit = (event) => {
         event.preventDefault();
 
-        this.context.updateUser(this.state.user);
+        //this.context.updateUser(this.state.user);
 
         saveUser(this.state.user);
+        this.props.setUserInStore(this.state.user);
 
         this.props.history.push("/home");
     }
@@ -105,6 +107,9 @@ export default class Login extends Component {
     checkUserExist() {
         if (getUser() !== null) {
             this.setState(() => ({ user: getUser() }));
+            
+            this.props.setUserInStore(getUser());
+            // store.dispatch(setUser(getUser()));
         }
     }
 
@@ -229,7 +234,7 @@ export default class Login extends Component {
                         </Grid>
 
                         <Box mt={5}>
-                            <Copyright />
+                            {/* <Copyright /> */}
                         </Box>
 
                     </div>
@@ -249,4 +254,6 @@ export default class Login extends Component {
 }
 
 
-Login.contextType = UserContext;
+export default Login;
+
+//Login.contextType = UserContext;
