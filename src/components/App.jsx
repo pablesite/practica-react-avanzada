@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Provider } from 'react-redux'
 
 import Login from './Login'
 import Home from './Home/Home'
@@ -32,7 +33,7 @@ const theme = createMuiTheme({
 export default class App extends Component {
   constructor(props) {
     super(props);
-    
+
     this.updateUser = this.updateUser.bind(this);
 
     this.state = {
@@ -55,28 +56,30 @@ export default class App extends Component {
   render() {
 
     return (
-        <ErrorBoundary >
-          {/* <Login store={this.props.store}/> */}
+      <ErrorBoundary >
+        <Provider {...this.props} store={this.props.store} > {/*Paso el store a todos los componentes*/}
           <UserProvider value={this.state} >
-          <MuiThemeProvider theme={theme}>
-            <Router>
-              <Switch>
-                {/* <Route exact path='/login' component={Login} /> */}
-                <Route exact path='/login' render={ (props) => <Login {...props} store={this.props.store} /> } />
-                <Route exact path='/home/' component={Home} />
-                <Route exact path='/detail/:id' component={AdvertDetail} />
-                <Route exact path='/createOrUpdate/' component={CreateOrUpdate} />
-                <Route exact path='/createOrUpdate/:id' component={CreateOrUpdate} />
-                
-                <Route render={ (props) => <Login {...props} store={this.props.store} /> } />
-                
-                {/* <Route component={Login}  store={this.props.store}/> */}
+            <MuiThemeProvider theme={theme}>
+              <Router>
+                <Switch>
+                  <Route exact path='/login' component={Login} />
+                  {/* <Route exact path='/login' render={(props) => <Login {...props} store={this.props.store} />} /> */}
+                  <Route exact path='/home/' component={Home} />
+                  <Route exact path='/detail/:id' component={AdvertDetail} />
+                  <Route exact path='/createOrUpdate/' component={CreateOrUpdate} />
+                  <Route exact path='/createOrUpdate/:id' component={CreateOrUpdate} />
 
-              </Switch>
-            </Router>
+                  <Route component={Login} />
+                  {/* <Route render={(props) => <Login {...props} store={this.props.store} />} /> */}
+
+                  {/* <Route component={Login}  store={this.props.store}/> */}
+
+                </Switch>
+              </Router>
             </MuiThemeProvider>
           </UserProvider>
-        </ErrorBoundary>
+        </Provider>
+      </ErrorBoundary>
 
     );
   }

@@ -3,7 +3,7 @@ import "../../App.css";
 import React, { Component } from 'react';
 import { getTags } from '../../services/AdvertDBService';
 import { saveUser, getUser} from '../../services/Storage';
-import Profile from '../Profile/Profile'
+import Profile from '../Profile'
 
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -117,6 +117,7 @@ class Login extends Component {
     render() {
         const { name, surname, tag } = this.state.user;
         const { tagList, check } = this.state;
+        
 
         return (
             <React.Fragment>

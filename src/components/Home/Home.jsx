@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as API from '../../services/AdvertDBService';
 import UserContext from '../Context/User'
 
-import Profile from '../Profile/Profile';
+import Profile from '../Profile';
 import { getTags } from '../../services/AdvertDBService';
 import { getUser } from '../../services/Storage';
 

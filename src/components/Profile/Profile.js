@@ -70,10 +70,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-
 function Profile(props) {
   const classes = useStyles();
 
+  
   function createOrUpdate(event) {
     event.preventDefault();
     props.history.push("/createOrUpdate/");
@@ -115,6 +115,7 @@ function Profile(props) {
                       onClick={() => {
                         updateUser({});
                         deleteStorage();
+                        props.setUserInStore({ name: "", surname: "", tag: "" });
                         props.history.push("/login/");
                       }}
                     >
@@ -134,5 +135,5 @@ function Profile(props) {
 
 }
 
-
+//export default Profile;
 export default withRouter(Profile);

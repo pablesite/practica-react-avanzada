@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import UserContext from '../Context/User'
 
-import Profile from '../Profile/Profile';
+import Profile from '../Profile';
 import * as API from '../../services/AdvertDBService';
 import { getTags } from '../../services/AdvertDBService';
 import { getUser } from '../../services/Storage';

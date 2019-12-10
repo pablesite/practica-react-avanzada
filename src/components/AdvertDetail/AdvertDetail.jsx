@@ -5,7 +5,7 @@ import { getAdvert } from "../../services/AdvertDBService";
 import { getUser } from '../../services/Storage';
 import UserContext from '../Context/User'
 import Button from '@material-ui/core/Button';
-import Profile from '../Profile/Profile';
+import Profile from '../Profile';
 
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -80,10 +80,11 @@ class AdvertDetail extends Component {
     return (
       <React.Fragment>
 
-        <Profile
+        <Profile 
           name={user.name}
           surname={user.surname}
           tag={user.tag}
+          setUserInStore={this.props.setUserInStore}
         > </Profile>
 
         <div className="container">
