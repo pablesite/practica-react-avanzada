@@ -84,7 +84,7 @@ class AdvertDetail extends Component {
           name={user.name}
           surname={user.surname}
           tag={user.tag}
-          setUserInStore={this.props.setUserInStore}
+          // setUserInStore={this.props.setUserInStore}
         > </Profile>
 
         <div className="container">

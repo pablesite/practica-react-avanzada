@@ -21,12 +21,14 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case TYPES.SET_ADVERTS:
-            return action.adverts;
         case TYPES.SET_FILTER:
             return action.filter;
         case TYPES.SET_USER:
             return action.user;
+        case TYPES.FETCH_ADVERTS_SUCCESS:
+            return action.adverts;
+       
+
         default:
             return state;
     }

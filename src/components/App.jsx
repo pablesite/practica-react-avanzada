@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux'
 
 import Login from './Login'
-import Home from './Home/Home'
+import Home from './Home'
 import AdvertDetail from './AdvertDetail/AdvertDetail'
 import CreateOrUpdate from './CreateOrUpdate/CreateOrUpdate'
 

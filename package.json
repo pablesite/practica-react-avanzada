@@ -36,6 +36,7 @@
     "@material-ui/icons": "^4.5.1",
     "react-material-ui-form": "^1.1.4",
     "redux": "^4.0.4",
-    "redux-devtools-extension": "^2.13.8"
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0"
   }
 }

@@ -17,7 +17,6 @@ const mapDispatchToProps = {
     setUserInStore: setUser,
 };
 
-console.log('TEEEEEEEEEEEEST')
  
 function mapStateToProps(state) {
    return {test: 1};
