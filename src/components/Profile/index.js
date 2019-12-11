@@ -8,7 +8,7 @@ const mapDispatchToProps = {
     setUserInStore: setUser,
 };
 
- console.log('Prueba de entrar en index de Profile', mapDispatchToProps)
+
 function mapStateToProps(state) {
    return {test: 1};
  }

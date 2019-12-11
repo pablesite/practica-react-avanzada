@@ -63,7 +63,7 @@ const createAdvert = (advert) => {
   return createRequest(`${API_URL}/anuncios`, advert)
   .catch(error => console.error('Error:', error))
   .then(response => ( response))
-  
+
 }
 
 const updateAdvert = (advert, id) => {

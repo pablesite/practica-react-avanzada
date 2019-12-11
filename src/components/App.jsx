@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import Login from './Login'
 import Home from './Home'
 import AdvertDetail from './AdvertDetail/AdvertDetail'
-import CreateOrUpdate from './CreateOrUpdate/CreateOrUpdate'
+import CreateOrUpdate from './CreateOrUpdate'
 
 import { UserProvider } from './Context/User';
 import ErrorBoundary from './ErrorBoundary/ErrorBoundary'

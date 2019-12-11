@@ -1,17 +1,17 @@
 import { connect } from 'react-redux';
+import CreateOrUpdate from './CreateOrUpdate';
 
-import Home from './Home';
-import { fetchAdverts } from '../../store/actions';
-import { setUser } from '../../store/actions' 
+import { createAdvert } from '../../store/actions';
+//import { setUser } from '../../store/actions' 
+
 
 
 const mapDispatchToProps = {
-  loadAdverts: fetchAdverts,
-  setUserInStore: setUser
+  createAdvert: createAdvert,
+  //setUserInStore: setUser
 };
 
 function mapStateToProps(state) {
-    console.log('statederedux', state)
 //   return state.ui;
 return {adverts: state.adverts, user: state.user} //con state sólo sí que funciona
 }
@@ -19,4 +19,4 @@ return {adverts: state.adverts, user: state.user} //con state sólo sí que func
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Home);
+)(CreateOrUpdate);

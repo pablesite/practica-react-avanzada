@@ -115,7 +115,7 @@ function Profile(props) {
                       onClick={() => {
                         updateUser({});
                         deleteStorage();
-                        props.setUserInStore({ name: "", surname: "", tag: "" });
+                        props.setUserInStore( { name: "", surname: "", tag: "" });
                         props.history.push("/login/");
                       }}
                     >

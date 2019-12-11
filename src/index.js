@@ -12,7 +12,7 @@ import { setUser } from './store/actions'
 
 // const store = configureStore();
 
-console.log(AdvertsService)
+
 // const store = configureStore({ history, services: { BikesService }, push })();
 const store = configureStore({  services: { AdvertsService } });
 

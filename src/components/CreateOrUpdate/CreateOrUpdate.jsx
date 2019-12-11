@@ -110,7 +110,9 @@ class CreateOrUpdate extends Component {
     if (_id) {
       API.updateAdvert(this.state.advert, _id).then(res => { this.props.history.push(`/detail/${res.result._id}`) });
     } else {
-      API.createAdvert(this.state.advert).then(res => { this.props.history.push(`/home/`) });
+      //API.createAdvert(this.state.advert).then(res => { this.props.history.push(`/home/`) });
+      
+      this.props.createAdvert(this.state.advert).then(res => { this.props.history.push(`/home/`) });
     }
 
 

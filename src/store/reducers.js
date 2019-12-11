@@ -3,7 +3,7 @@ import * as TYPES from './types';
 
 const initialState = {
     adverts: [],
-    user: [],
+    user: '',
     filter: ADVERT_FILTERS.ALL,
 };
 
@@ -22,12 +22,14 @@ const initialState = {
 export default function (state = initialState, action) {
     switch (action.type) {
         case TYPES.SET_FILTER:
-            return action.filter;
+            return action.filter; //eliminar esto
         case TYPES.SET_USER:
-            return action.user;
+            return { ...state, user: action.user }
         case TYPES.FETCH_ADVERTS_SUCCESS:
-            return action.adverts;
-       
+            return { ...state, adverts: action.adverts }
+        case TYPES.CREATE_ADVERTS_SUCCESS:
+            return { ...state, adverts: action.adverts } //quizá pensar esto bien para que devuelva el nuevo anuncio más los que ya habían
+
 
         default:
             return state;

@@ -41,7 +41,6 @@ export default class Home extends Component {
       },
       disableUpdate: this.disableUpdate,
       update: true,
-
     }
 
   };
@@ -49,7 +48,10 @@ export default class Home extends Component {
 
   checkUserExist() {
     if (getUser() !== null) {
-      this.context.updateUser(getUser());
+      //this.context.updateUser(getUser());
+      console.log('hay usuario loco!')
+      this.props.setUserInStore(getUser());
+      console.log('hay usuario loco!')
       return true;
     } else {
       this.props.history.push("/login");
@@ -64,17 +66,14 @@ export default class Home extends Component {
   };
 
   discoverAdverts = () => {
-    const tag = 'mobile'; //sacarla del store
-
+    //comprobar si hay usuario guardado en localstore...
 
     //const { tag } = this.context.user;
     // API.searchAdverts("tag=" + tag).then(adverts => this.setState({ adverts }));
-    
-    this.props.loadAdverts("tag="+tag); //Esto hay que hacerlo en el login definitivamente.
-    //Hay que traer todos los anuncios y luego ya filtrar....¿?
+  
+    const tag  = getUser().tag;
+    this.props.loadAdverts("tag="+tag); 
    
-    //this.setState({ adverts: [] });
-        
   }
 
   componentDidMount() {
@@ -129,7 +128,8 @@ export default class Home extends Component {
     }
 
     if (filterString && filterString.trim().length) {
-      API.searchAdverts(filterString).then(adverts => this.setState({ adverts, update: true }))
+      this.props.loadAdverts(filterString).then(()=> this.setState({update: true}))
+      // API.searchAdverts(filterString).then(adverts => this.setState({ adverts, update: true }))
     } else {
       this.discoverAdverts();
 
@@ -179,19 +179,19 @@ export default class Home extends Component {
 
   render() {
 
-    const { user } = this.context;
+    //const { user } = this.context;
     const { /*adverts,*/ tagList, filters, disableUpdate, update } = this.state;
     
-    let adverts  = this.props.adverts;
+    // const adverts  = this.props.adverts;
+    const { adverts, user } = this.props;
+    
 
-    if (!Array.isArray(adverts)) { //CHAPUZA MÁXIMA. Hay que jugar bien con el estado de store. Habrá que definirlo bien y ver qué me traigo y qué no. 
-                                    // El asunto es que ahora mismo la primera vez que carga, es el estado inicial, que no coincide con el array de adverts. Mañana más!
-      adverts = [];
-    }
+    // if (!Array.isArray(adverts)) { //CHAPUZA MÁXIMA. Hay que jugar bien con el estado de store. Habrá que definirlo bien y ver qué me traigo y qué no. 
+    //                                 // El asunto es que ahora mismo la primera vez que carga, es el estado inicial, que no coincide con el array de adverts. Mañana más!
+    //   adverts = [];
+    // }
     
-    
-    console.log('test1', this.props.adverts, typeof(adverts))
-    
+   
 
     return (
       <React.Fragment>

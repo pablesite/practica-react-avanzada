@@ -34,6 +34,7 @@ export const configureStore = config =>  {
     reducer,
     composeEnhancers(applyMiddleware(...middlewares)),
   );
+  console.log('store:', store)
   return store;
 };
 

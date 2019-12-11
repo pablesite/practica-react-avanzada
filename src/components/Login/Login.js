@@ -83,6 +83,13 @@ class Login extends Component {
         //this.context.updateUser(this.state.user);
 
         saveUser(this.state.user);
+        
+        // this.props.setUserInStore((state) => ({
+        //     state: {
+        //         ...state,
+        //         user: this.state.user
+        //     } 
+        // }));
         this.props.setUserInStore(this.state.user);
 
         this.props.history.push("/home");
