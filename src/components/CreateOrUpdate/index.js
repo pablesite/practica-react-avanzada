@@ -1,13 +1,15 @@
 import { connect } from 'react-redux';
 import CreateOrUpdate from './CreateOrUpdate';
 
-import { createAdvert } from '../../store/actions';
-//import { setUser } from '../../store/actions' 
+import { createAdvert, updateAdvert } from '../../store/actions';
+import { setUser } from '../../store/actions' 
 
 
 
 const mapDispatchToProps = {
   createAdvert: createAdvert,
+  updateAdvert: updateAdvert,
+  setUserInStore: setUser,
   //setUserInStore: setUser
 };
 

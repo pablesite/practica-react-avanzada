@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
+import { withRouter } from "react-router-dom";
 import * as API from '../../services/AdvertDBService';
 import UserContext from '../Context/User'
 
 import Profile from '../Profile';
 import { getTags } from '../../services/AdvertDBService';
 import { getUser } from '../../services/Storage';
+
+import Loading from '../Loading';
+import Error from '../Error';
 
 import Box from '@material-ui/core/Box';
 import Pagination from '../Pagination/Pagination';
@@ -24,7 +28,7 @@ const type = [
   'buy',
 ];
 
-export default class Home extends Component {
+class Home extends Component {
   constructor(props) {
     super(props);
 
@@ -48,10 +52,7 @@ export default class Home extends Component {
 
   checkUserExist() {
     if (getUser() !== null) {
-      //this.context.updateUser(getUser());
-      console.log('hay usuario loco!')
       this.props.setUserInStore(getUser());
-      console.log('hay usuario loco!')
       return true;
     } else {
       this.props.history.push("/login");
@@ -59,27 +60,11 @@ export default class Home extends Component {
     }
   }
 
-  getTags = () => {
-    getTags().then(tags => {
-      this.setState({ tagList: tags });
-    })
-  };
-
-  discoverAdverts = () => {
-    //comprobar si hay usuario guardado en localstore...
-
-    //const { tag } = this.context.user;
-    // API.searchAdverts("tag=" + tag).then(adverts => this.setState({ adverts }));
-  
-    const tag  = getUser().tag;
-    this.props.loadAdverts("tag="+tag); 
-   
-  }
-
+ 
   componentDidMount() {
     if (this.checkUserExist()) {
-      this.getTags();
-      this.discoverAdverts();
+      getTags().then(tags => { this.setState({ tagList: tags }) })
+      this.props.loadAdverts("tag=" + getUser().tag).then(()=> this.setState({update: true}))
     }
   }
 
@@ -129,10 +114,9 @@ export default class Home extends Component {
 
     if (filterString && filterString.trim().length) {
       this.props.loadAdverts(filterString).then(()=> this.setState({update: true}))
-      // API.searchAdverts(filterString).then(adverts => this.setState({ adverts, update: true }))
     } else {
-      this.discoverAdverts();
-
+      this.props.loadAdverts().then(()=> this.setState({update: true}))
+     
     }
 
   }
@@ -179,20 +163,10 @@ export default class Home extends Component {
 
   render() {
 
-    //const { user } = this.context;
-    const { /*adverts,*/ tagList, filters, disableUpdate, update } = this.state;
-    
-    // const adverts  = this.props.adverts;
-    const { adverts, user } = this.props;
-    
 
-    // if (!Array.isArray(adverts)) { //CHAPUZA MÁXIMA. Hay que jugar bien con el estado de store. Habrá que definirlo bien y ver qué me traigo y qué no. 
-    //                                 // El asunto es que ahora mismo la primera vez que carga, es el estado inicial, que no coincide con el array de adverts. Mañana más!
-    //   adverts = [];
-    // }
-    
-   
-
+    const { /*adverts,*/ tagList, filters, disableUpdate, update } = this.state;    
+    const { adverts, user, isFetching, error } = this.props;
+  
     return (
       <React.Fragment>
 
@@ -280,9 +254,14 @@ export default class Home extends Component {
           </Grid>
 
         </form>
-
+        
+        
+        {isFetching && <Loading className="app-loading" />}
+        {error && <Error className="app-error" error={error} />}
   
         {
+          !isFetching
+          &&
           adverts
           &&
           !adverts.length
@@ -291,6 +270,7 @@ export default class Home extends Component {
         }
 
         {
+
            adverts
            &&
            adverts.length !==0
@@ -307,9 +287,12 @@ export default class Home extends Component {
           </Pagination>
         }
 
+        
+
       </React.Fragment>
     );
   }
 }
 
-Home.contextType = UserContext;
+
+export default withRouter(Home);

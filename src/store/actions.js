@@ -1,78 +1,83 @@
 import {
-    FETCH_ADVERTS_REQUEST,
-    FETCH_ADVERTS_FAILURE,
-    FETCH_ADVERTS_SUCCESS,
-    CREATE_ADVERTS_SUCCESS,
-    CREATE_ADVERTS_FAILURE,
-    //SET_ADVERTS,
-    SET_FILTER,
+    ADVERTS_REQUEST,
+    ADVERTS_FAILURE,
+    ADVERTS_SUCCESS,
     SET_USER,
-    // ADD_TO_CART,
-    // ADD_TO_CART_SUCCESS,
-    // ADD_TO_CART_REQUEST,
-    // REMOVE_FROM_CART,
-    // CHECKOUT_CART,
-    // CHECKOUT_CART_REQUEST,
-    // CHECKOUT_CART_SUCCESS,
+
   } from './types';
   
   export const fetchAdverts = (tag) => {
     return async function(dispatch, _getState, { services: { AdvertsService } }) {
-      dispatch(fetchAdvertsRequest());
+      dispatch(AdvertsRequest());
+     
       try {
         const adverts = await AdvertsService.searchAdverts(tag)
-        console.log('adverts', adverts)
         dispatch(fetchAdvertsSuccess(adverts));
       } catch (error) {
-        dispatch(fetchAdvertsFailure(error));
+        dispatch(AdvertsFailure(error));
       }
     };
   };
 
   export const createAdvert = (advert) => {
     return async function(dispatch, _getState, { services: { AdvertsService } }) {
-      dispatch(fetchAdvertsRequest());
+      dispatch(AdvertsRequest());
       try {
         await AdvertsService.createAdvert(advert)
-        dispatch(createAdvertsSuccess(advert));
+        dispatch(createorupdateAdvertsSuccess(advert));
       } catch (error) {
-        dispatch(createAdvertsFailure(error));
+        dispatch(AdvertsFailure(error));
+      }
+    };
+  };
+  
+  export const getAdvert = (id) => {
+    return async function(dispatch, _getState, { services: { AdvertsService } }) {
+      dispatch(AdvertsRequest());
+      try {
+        const advert = await AdvertsService.getAdvert(id)
+        dispatch(createorupdateAdvertsSuccess(advert));
+      } catch (error) {
+        dispatch(AdvertsFailure(error));
       }
     };
   };
 
 
+  export const updateAdvert = (advert, id) => {
+    return async function(dispatch, _getState, { services: { AdvertsService } }) {
+      dispatch(AdvertsRequest());
+      try {
+        const { result } = await AdvertsService.updateAdvert(advert, id)
+        dispatch(createorupdateAdvertsSuccess(result));
+      } catch (error) {
+        dispatch(AdvertsFailure(error));
+      }
+    };
+  };
 
   
-  export const fetchAdvertsRequest = () => ({
-    type: FETCH_ADVERTS_REQUEST,
+  export const AdvertsRequest = () => ({
+    type: ADVERTS_REQUEST,
   });
   
-  export const fetchAdvertsFailure = error => ({
-    type: FETCH_ADVERTS_FAILURE,
-    error,
-  });
-  
+
   export const fetchAdvertsSuccess = adverts => ({
-    type: FETCH_ADVERTS_SUCCESS,
+    type: ADVERTS_SUCCESS,
     adverts: adverts,
   });
 
-  export const createAdvertsSuccess = advert => ({
-    type: CREATE_ADVERTS_SUCCESS,
-    adverts: [advert] //debería de meter el creado pero no borrar los anteriores
+
+  export const createorupdateAdvertsSuccess = advert => ({
+    type: ADVERTS_SUCCESS,
+    adverts: [advert] 
   });
 
-  export const createAdvertsFailure = error => ({
-    type: CREATE_ADVERTS_FAILURE,
+  export const AdvertsFailure = error => ({
+    type: ADVERTS_FAILURE,
     error,
   });
-  
 
-  export const setFilter = filter => ({
-    type: SET_FILTER,
-    filter,
-  });
 
   export const setUser = user => ({
     type: SET_USER,

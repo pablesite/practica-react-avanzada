@@ -1,5 +1,4 @@
 import "../../App.css";
-//import UserContext from '../Context/User'
 import React, { Component } from 'react';
 import { getTags } from '../../services/AdvertDBService';
 import { saveUser, getUser} from '../../services/Storage';
@@ -24,18 +23,18 @@ import Box from '@material-ui/core/Box';
 import "./Login.css"
 
 
-// function Copyright() {
-//     return (
-//         <Typography variant="body2" color="textSecondary" align="center">
-//             {'Copyright © '}
-//             <Link color="inherit" href="https://material-ui.com/">
-//                 Wallakeep - Pablo Ruiz Molina
-//         </Link>{' '}
-//             {new Date().getFullYear()}
-//             {'.'}
-//         </Typography>
-//     );
-// }
+function Copyright() {
+    return (
+        <Typography variant="body2" color="textSecondary" align="center">
+            {'Copyright © '}
+            <Link color="inherit" href="https://material-ui.com/">
+                Wallakeep - Pablo Ruiz Molina
+        </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Typography>
+    );
+}
 
 
 class Login extends Component {
@@ -80,18 +79,8 @@ class Login extends Component {
     onSubmit = (event) => {
         event.preventDefault();
 
-        //this.context.updateUser(this.state.user);
-
         saveUser(this.state.user);
-        
-        // this.props.setUserInStore((state) => ({
-        //     state: {
-        //         ...state,
-        //         user: this.state.user
-        //     } 
-        // }));
         this.props.setUserInStore(this.state.user);
-
         this.props.history.push("/home");
     }
 
@@ -116,7 +105,6 @@ class Login extends Component {
             this.setState(() => ({ user: getUser() }));
             
             this.props.setUserInStore(getUser());
-            // store.dispatch(setUser(getUser()));
         }
     }
 
@@ -242,7 +230,7 @@ class Login extends Component {
                         </Grid>
 
                         <Box mt={5}>
-                            {/* <Copyright /> */}
+                            <Copyright />
                         </Box>
 
                     </div>
@@ -263,5 +251,3 @@ class Login extends Component {
 
 
 export default Login;
-
-//Login.contextType = UserContext;

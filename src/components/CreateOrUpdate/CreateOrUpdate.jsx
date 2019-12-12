@@ -8,6 +8,7 @@ import { getTags } from '../../services/AdvertDBService';
 import { getUser } from '../../services/Storage';
 import { getAdvert } from "../../services/AdvertDBService";
 
+
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -56,7 +57,8 @@ class CreateOrUpdate extends Component {
 
   checkUserExist() {
     if (getUser() !== null) {
-      this.context.updateUser(getUser());
+      //this.context.updateUser(getUser());
+      this.props.setUserInStore(getUser());
       return true;
     } else {
       this.props.history.push("/login");
@@ -103,16 +105,13 @@ class CreateOrUpdate extends Component {
   }
 
 
-
   createOrUpdateAdvert = () => {
 
     const { _id } = this.state.advert;
     if (_id) {
-      API.updateAdvert(this.state.advert, _id).then(res => { this.props.history.push(`/detail/${res.result._id}`) });
-    } else {
-      //API.createAdvert(this.state.advert).then(res => { this.props.history.push(`/home/`) });
-      
-      this.props.createAdvert(this.state.advert).then(res => { this.props.history.push(`/home/`) });
+      this.props.updateAdvert(this.state.advert, _id).then(() => { this.props.history.push(`/detail/${_id}`) });
+    } else {     
+      this.props.createAdvert(this.state.advert).then(() => { this.props.history.push(`/home/`) });
     }
 
 
@@ -198,9 +197,13 @@ class CreateOrUpdate extends Component {
 
 
   render() {
-    const { user } = this.context;
+
+    const { user} = this.props;
     const { description, name, photo, price, tags, type, _id } = this.state.advert;
     const { tagList } = this.state;
+
+
+
     return (
       <React.Fragment>
 
@@ -370,6 +373,5 @@ class CreateOrUpdate extends Component {
   }
 }
 
-CreateOrUpdate.contextType = UserContext;
 
 export default withRouter(CreateOrUpdate);

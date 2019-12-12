@@ -39,13 +39,7 @@ const getTags = () => {
 
 const getAdvert = (advertID) => {
   return getRequest(`${API_URL}/anuncios/${advertID}`)
-  .then(res => {
-    if (!res.success) {
-      return res;
-    } else {
-      return new Advert(res.result);
-    }
-  })
+  .then(res => new Advert(res.result))
 }
 
 const discoverAdverts = () => {

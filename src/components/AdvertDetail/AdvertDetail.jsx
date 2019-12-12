@@ -7,6 +7,9 @@ import UserContext from '../Context/User'
 import Button from '@material-ui/core/Button';
 import Profile from '../Profile';
 
+import Loading from '../Loading';
+import Error from '../Error';
+
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -26,29 +29,16 @@ class AdvertDetail extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
 
-    this.getAdvert = this.getAdvert.bind(this);
     this.goHome = this.goHome.bind(this);
     this.updateAdvert = this.updateAdvert.bind(this);
 
   }
 
-  getAdvert() {
-    const advertID = this.props.match.params.id;
-    getAdvert(advertID).then(advert => {
-      if (advert.success === false) {
-        this.props.history.push("/404");
-      } else {
-        this.setState({ advert });
-      }
-    });
-  }
-
 
   checkUserExist() {
     if (getUser() !== null) {
-      this.context.updateUser(getUser());
+      this.props.setUserInStore(getUser());
       return true;
     } else {
       this.props.history.push("/login");
@@ -59,7 +49,7 @@ class AdvertDetail extends Component {
 
   componentDidMount() {
     if (this.checkUserExist()) {
-      this.getAdvert();
+      this.props.getAdvert(this.props.match.params.id)
     }
   }
 
@@ -74,17 +64,19 @@ class AdvertDetail extends Component {
 
 
   render() {
-    const { user } = this.context;
-    const { advert } = this.state;
+
+    const { user, isFetching, error } = this.props;
+
+    const advert = this.props.adverts[0];
 
     return (
       <React.Fragment>
 
-        <Profile 
+        <Profile
           name={user.name}
           surname={user.surname}
           tag={user.tag}
-          // setUserInStore={this.props.setUserInStore}
+        // setUserInStore={this.props.setUserInStore}
         > </Profile>
 
         <div className="container">
@@ -96,10 +88,10 @@ class AdvertDetail extends Component {
 
               <div className='paper'>
                 <Grid container alignItems='center' alignContent='center' spacing={2}>
-                
+
                   <Grid item xs={12} >
                     <Card className="card">
-                    <div className="card-detail">
+                      <div className="card-detail">
                         <CardHeader
                           className="limit-height-12vh"
                           avatar={
@@ -137,49 +129,53 @@ class AdvertDetail extends Component {
 
 
                         </CardContent>
-                        </div>
+                      </div>
                     </Card>
                   </Grid >
-                 
-                    <Grid item xs={12} sm={6}>
-                      <Button variant="contained"
-                        color="secondary"
-                        onClick={this.goHome}
-                        fullWidth
-                      >
-                        Back to home
-                      </Button>
-                    </Grid>
 
-                    <Grid item xs={12} sm={6} >
-                      <Button variant="contained"
-                        color="primary"
-                        onClick={this.updateAdvert}
-                        fullWidth
-                      >
-                        Update Advert
+                  <Grid item xs={12} sm={6}>
+                    <Button variant="contained"
+                      color="secondary"
+                      onClick={this.goHome}
+                      fullWidth
+                    >
+                      Back to home
                       </Button>
-                    </Grid>
-                  
+                  </Grid>
+
+                  <Grid item xs={12} sm={6} >
+                    <Button variant="contained"
+                      color="primary"
+                      onClick={this.updateAdvert}
+                      fullWidth
+                    >
+                      Update Advert
+                      </Button>
+                  </Grid>
+
 
                 </Grid>
               </div>
             </Container>
           }
 
+          {isFetching && <Loading className="app-loading" />}
+          {error && <Error className="app-error" error={error} />}
+
           {
+            !isFetching
+            &&
             !advert
             &&
-            <h1>Loading...</h1>
+            <h1>There is not adverts...</h1>
           }
 
         </div>
+
 
       </React.Fragment>
     )
   }
 }
-
-AdvertDetail.contextType = UserContext;
 
 export default withRouter(AdvertDetail);
