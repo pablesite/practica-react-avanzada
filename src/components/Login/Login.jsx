@@ -52,12 +52,9 @@ class Login extends Component {
                 email: "",
                 tag: "",
             },
-            tagList: [],
             check: false
         };
-
-        this.onInputChange = this.onInputChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
+  
         this.checkError = this.checkError.bind(this);
 
     }
@@ -65,44 +62,15 @@ class Login extends Component {
 
     componentDidMount() {
         this.checkUserExist();
-        this.getTags();
-
-    }
-
-    onInputChange = (event) => {
-        const { name, value } = event.target;
-
-        this.setState(({ user }) => ({
-            user: {
-                ...user,
-                [name]: value
-            }
-        }));
-
-    };
-
-    onSubmit = (event) => {
-        event.preventDefault();
-
-        saveUser(this.state.user);
-        this.props.setUserInStore(this.state.user);
-        this.props.history.push("/home");
     }
 
 
-    handleSubmitFormControlled = (formValues) => (
-        alert(JSON.stringify(formValues))
-    )
-
-
-    // Inicio de pruebas
-    onSubmitTest = (user) => {
+    onSubmit = (user) => {
         saveUser(user);
         this.props.setUserInStore(user);
         this.props.history.push("/home");
     }
 
-    // Fin de pruebas
 
     checkError(event) {
         event.preventDefault();
@@ -113,12 +81,6 @@ class Login extends Component {
 
     }
 
-    getTags = () => {
-        getTags().then(tags => {
-            this.setState({ tagList: tags });
-        })
-    };
-
 
     checkUserExist() {
         if (getUser() !== null) {
@@ -128,11 +90,9 @@ class Login extends Component {
     }
 
 
-
-
     render() {
         const { name, surname, email, tag } = this.state.user;
-        const { tagList, check } = this.state;
+        const { check } = this.state;
 
         return (
             <React.Fragment>
@@ -161,123 +121,34 @@ class Login extends Component {
                             Sign up
                         </Typography>
 
-                        {/* Inicio de pruebas  */}
+
                         <FormEnhanced
-                            handleSubmit={this.onSubmitTest}
+                            handleSubmit={this.onSubmit}
                             initialState={
                                 {
                                     name: "Pablo",
                                     surname: "Ruiz",
                                     email: "pabloruiz@ctnaval.com",
                                     tag: "motor"
-
                                 }
                             }
                         >
-
                             <Grid container spacing={2}>
-
                                 <Grid item xs={12} sm={6}>
-                                    <InputEnhanced
-                                        type='text'
-                                        name='name'
-                                    />
+                                    <InputEnhanced type='text' name='name' />
                                 </Grid>
 
                                 <Grid item xs={12} sm={6}>
-                                    <InputEnhanced
-                                        type='text'
-                                        name='surname'
-                                    />
+                                    <InputEnhanced type='text' name='surname' />
                                 </Grid>
 
                                 <Grid item xs={12}>
-                                    <InputEnhanced
-                                        type='email'
-                                        name='email'
-                                    />
+                                    <InputEnhanced type='email' name='email' />
                                 </Grid>
-
-
-                                {/* <InputEnhanced
-                                    type='text'
-                                    name='tag'
-                                /> */}
-
-
                             </Grid>
 
 
                         </FormEnhanced>
-
-
-
-                        {/*  Fin de pruebas*/}
-                        <form className='form' onSubmit={this.onSubmit}>
-                            <Grid container spacing={2}>
-
-                                <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        label="Name"
-                                        value={name}
-                                        name="name"
-                                        onChange={this.onInputChange}
-                                        fullWidth
-                                        variant="outlined"
-                                        required
-                                    />
-                                </Grid>
-
-                                <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        label="Surname"
-                                        value={surname}
-                                        name="surname"
-                                        onChange={this.onInputChange}
-                                        fullWidth
-                                        variant="outlined"
-                                        required
-                                    />
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <FormControl required fullWidth variant="outlined" >
-                                        <InputLabel htmlFor="tag-required" >Tags</InputLabel>
-                                        <Select
-
-                                            name="tag"
-                                            value={tag ? tag : ''}
-                                            onChange={this.onInputChange}
-                                            required
-                                            inputProps={{
-                                                name: 'tag',
-                                                id: 'tag-required',
-                                            }}
-                                        >
-                                            {tagList.map((tags, i) => (
-                                                <MenuItem key={i} value={tags}>
-                                                    {tags}
-                                                </MenuItem>
-                                            ))}
-
-                                        </Select>
-                                    </FormControl>
-                                </Grid>
-                            </Grid>
-
-                            <div className="submit">
-                                <Button
-                                    label="Continue"
-                                    type='submit'
-                                    fullWidth
-                                    variant="contained"
-                                    color="primary"
-                                >
-                                    Enter
-                            </Button>
-                            </div>
-
-                        </form>
 
 
                         <Grid container justify="center">

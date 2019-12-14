@@ -155,14 +155,10 @@ class Home extends Component {
       }));
     }
 
-
   };
 
 
-
-
   render() {
-
 
     const { /*adverts,*/ tagList, filters, disableUpdate, update } = this.state;    
     const { adverts, user, isFetching, error } = this.props;
@@ -256,7 +252,6 @@ class Home extends Component {
 
         </form>
         
-        
         {isFetching && <Loading className="app-loading" />}
         {error && <Error className="app-error" error={error} />}
   
@@ -271,7 +266,6 @@ class Home extends Component {
         }
 
         {
-
            adverts
            &&
            adverts.length !==0
@@ -288,12 +282,9 @@ class Home extends Component {
           </Pagination>
         }
 
-        
-
       </React.Fragment>
     );
   }
 }
-
 
 export default withRouter(Home);
