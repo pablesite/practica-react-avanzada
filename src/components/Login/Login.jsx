@@ -1,8 +1,12 @@
 import "../../App.css";
 import React, { Component } from 'react';
 import { getTags } from '../../services/AdvertDBService';
-import { saveUser, getUser} from '../../services/Storage';
+import { saveUser, getUser } from '../../services/Storage';
 import Profile from '../Profile'
+
+
+import { FormEnhanced } from '../WithFormEnhanced/WithFormEnhanced'
+import { InputEnhanced } from '../WithInputEnhanced/WithInputEnhanced'
 
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -66,7 +70,7 @@ class Login extends Component {
 
     onInputChange = (event) => {
         const { name, value } = event.target;
-        
+
         this.setState(({ user }) => ({
             user: {
                 ...user,
@@ -83,6 +87,21 @@ class Login extends Component {
         this.props.setUserInStore(this.state.user);
         this.props.history.push("/home");
     }
+
+
+    handleSubmitFormControlled = (formValues) => (
+        alert(JSON.stringify(formValues))
+    )
+
+
+    // Inicio de pruebas
+    onSubmitTest = (state) => {
+        saveUser(state.user);
+        this.props.setUserInStore(state.user);
+        this.props.history.push("/home");
+    }
+
+    // Fin de pruebas
 
     checkError(event) {
         event.preventDefault();
@@ -103,16 +122,16 @@ class Login extends Component {
     checkUserExist() {
         if (getUser() !== null) {
             this.setState(() => ({ user: getUser() }));
-            
             this.props.setUserInStore(getUser());
         }
     }
 
 
+
+
     render() {
         const { name, surname, tag } = this.state.user;
         const { tagList, check } = this.state;
-        
 
         return (
             <React.Fragment>
@@ -140,6 +159,46 @@ class Login extends Component {
                             Sign up
                         </Typography>
 
+                        {/* Inicio de pruebas  */}
+                        <FormEnhanced
+                            handleSubmit={this.onSubmitTest}
+                            initialState={
+                                {
+                                    user:
+                                    {
+                                        name: "Pablo",
+                                        surname: "Ruiz",
+                                        email: "pabloruiz@ctnaval.com",
+                                        tag: "motor"
+                                    }
+                                }
+                            }
+                        >
+                            Test
+                            <InputEnhanced
+                                type='text'
+                                name='tag'
+                            />
+
+
+                            {/* 
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    label="Name"
+                                    value={name}
+                                    name="name"
+                                    onChange={this.onInputChange}
+                                    fullWidth
+                                    variant="outlined"
+                                    required
+                                />
+                            </Grid> */}
+
+                        </FormEnhanced>
+
+
+
+                        {/*  Fin de pruebas*/}
                         <form className='form' onSubmit={this.onSubmit}>
                             <Grid container spacing={2}>
 
@@ -171,7 +230,7 @@ class Login extends Component {
                                     <FormControl required fullWidth variant="outlined" >
                                         <InputLabel htmlFor="tag-required" >Tags</InputLabel>
                                         <Select
-                                            
+
                                             name="tag"
                                             value={tag ? tag : ''}
                                             onChange={this.onInputChange}
@@ -179,13 +238,13 @@ class Login extends Component {
                                             inputProps={{
                                                 name: 'tag',
                                                 id: 'tag-required',
-                                              }}
+                                            }}
                                         >
                                             {tagList.map((tags, i) => (
                                                 <MenuItem key={i} value={tags}>
                                                     {tags}
                                                 </MenuItem>
-                                            ))} 
+                                            ))}
 
                                         </Select>
                                     </FormControl>
