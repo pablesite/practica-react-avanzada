@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
-import { withRouter } from "react-router-dom";
-import * as API from '../../services/AdvertDBService';
-import UserContext from '../Context/User'
+//import React, { Component } from 'react';
+
+import React, { useState, useEffect } from 'react';
+
+
 
 import Profile from '../Profile';
 import { getTags } from '../../services/AdvertDBService';
@@ -22,61 +23,52 @@ import Grid from '@material-ui/core/Grid';
 
 import "./Home.css"
 
+export default function Home(props) {
 
-const type = [
-  'sell',
-  'buy',
-];
+  const type = [
+    'sell',
+    'buy',
+  ];
 
-class Home extends Component {
-  constructor(props) {
-    super(props);
+  const { adverts, user, isFetching, error } = props;
 
-    this.disableUpdate = this.disableUpdate.bind(this);
+  const [filters, setFilters] = useState({
+    name: '',
+    price: '',
+    tag: '',
+    type: ''
+  });
 
-    this.state = {
-      adverts: [],
-      tagList: [],
-      filters: {
-        name: '',
-        price: '',
-        tag: '',
-        type: ''
-      },
-      disableUpdate: this.disableUpdate,
-      update: true,
-    }
+  const [update, setUpdate] = useState(true);
 
-  };
+  const [tagList, setTagList] = useState([]);
 
+  useEffect(() => {
 
-  checkUserExist() {
-    if (getUser() !== null) {
-      this.props.setUserInStore(getUser());
-      return true;
+    const user = getUser();
+
+    if (user !== undefined && user !== null) {
+      props.setUserInStore(user);
+      getTags().then(tags => setTagList(tags))
+      props.loadAdverts("tag=" + user.tag).then(() => setUpdate(true))
+
     } else {
-      this.props.history.push("/login");
-      return false;
+      props.history.push("/login");
     }
+
+  }, []);
+
+
+
+  function disableUpdate() {
+    setUpdate(false)
   }
 
- 
-  componentDidMount() {
-    if (this.checkUserExist()) {
-      getTags().then(tags => { this.setState({ tagList: tags }) })
-      this.props.loadAdverts("tag=" + getUser().tag).then(()=> this.setState({update: true}))
-    }
-  }
-
-
-  disableUpdate() {
-    this.setState({ update: false })
-  }
-
-  onSubmit = (event) => {
+  
+  const onSubmit = (event) => {
     event && event.preventDefault();
 
-    const { name, price, tag, type } = this.state.filters;
+    const { name, price, tag, type } = filters;
     let filterString = '';
     let temp = true;
 
@@ -113,16 +105,16 @@ class Home extends Component {
     }
 
     if (filterString && filterString.trim().length) {
-      this.props.loadAdverts(filterString).then(()=> this.setState({update: true}))
+      props.loadAdverts(filterString).then(() => setUpdate(true))
     } else {
-      this.props.loadAdverts().then(()=> this.setState({update: true}))
-     
+      props.loadAdverts().then(() => setUpdate(true))
+
     }
 
   }
 
 
-  onInputChange = (event) => {
+  const onInputChange = (event) => {
 
     const { name, value } = event.target;
 
@@ -131,113 +123,91 @@ class Home extends Component {
       let newValue = regExp.exec(value);
       if (newValue == null) {
         if (!(/\D/.exec(value))) {
-          this.setState(({ filters }) => ({
-            filters: {
-              ...filters,
-              [name]: value
-            }
-          }));
+          setFilters({ ...filters, [name]: value })
         }
       } else {
-        this.setState(({ filters }) => ({
-          filters: {
-            ...filters,
-            [name]: newValue[0]
-          }
-        }));
+        setFilters({ ...filters, [name]: newValue[0] })
       }
     } else {
-      this.setState(({ filters }) => ({
-        filters: {
-          ...filters,
-          [name]: value
-        }
-      }));
+      setFilters({ ...filters, [name]: value })
     }
-
   };
 
+  return (
+    <React.Fragment>
 
-  render() {
+      <Profile
+        name={user.name}
+        surname={user.surname}
+        email={user.email}
+        tag={user.tag}
+      > </Profile>
 
-    const { /*adverts,*/ tagList, filters, disableUpdate, update } = this.state;    
-    const { adverts, user, isFetching, error } = this.props;
-  
-    return (
-      <React.Fragment>
+      <form className="filter-form" onSubmit={onSubmit}>
 
-        <Profile
-          name={user.name}
-          surname={user.surname}
-          email={user.email}
-          tag={user.tag}
-        > </Profile>
+        <Grid container alignItems='center' justify='center' spacing={3}>
 
-        <form className="filter-form" onSubmit={this.onSubmit}>
+          <Grid item xs={10} sm={2}>
+            <TextField
+              label="Name"
+              value={filters.name}
+              name="name"
+              onChange={onInputChange}
+              fullWidth
+            />
+          </Grid>
 
-          <Grid container alignItems='center' justify='center' spacing={3}>
+          <Grid item xs={10} sm={2}>
+            <TextField
+              label="Price (min-max)"
+              value={filters.price}
+              name="price"
+              onChange={onInputChange}
+              fullWidth
+            />
+          </Grid>
 
-            <Grid item xs={10} sm={2}>
-              <TextField
-                label="Name"
-                value={filters.name}
-                name="name"
-                onChange={this.onInputChange}
-                fullWidth
-              />
-            </Grid>
+          <Grid item xs={10} sm={2}>
+            <FormControl fullWidth>
+              <InputLabel >Tags</InputLabel>
+              <Select
 
-            <Grid item xs={10} sm={2}>
-              <TextField
-                label="Price (min-max)"
-                value={filters.price}
-                name="price"
-                onChange={this.onInputChange}
-                fullWidth
-              />
-            </Grid>
+                label="Tag"
+                value={filters.tag}
+                name="tag"
+                onChange={onInputChange}
+              >
+                <MenuItem value='' > <em>None</em> </MenuItem>
+                {tagList.map(tag => (
+                  <MenuItem key={tag} value={tag} >
+                    {tag}
+                  </MenuItem>
+                ))}
 
-            <Grid item xs={10} sm={2}>
-              <FormControl fullWidth>
-                <InputLabel >Tags</InputLabel>
-                <Select
-                
-                  label="Tag"
-                  value={filters.tag}
-                  name="tag"
-                  onChange={this.onInputChange}
-                >
-                  <MenuItem value='' > <em>None</em> </MenuItem>
-                  {tagList.map(tag => (
-                    <MenuItem key={tag} value={tag} >
-                      {tag}
-                    </MenuItem>
-                  ))}
+              </Select>
+            </FormControl>
+          </Grid>
 
-                </Select>
-              </FormControl>
-            </Grid>
+          <Grid item xs={10} sm={2}>
+            <FormControl fullWidth >
+              <InputLabel >Type</InputLabel>
+              <Select
+                label="Type"
+                value={filters.type}
+                name="type"
+                onChange={onInputChange}
+              >
+                <MenuItem value='' > <em>None</em> </MenuItem>
+                {type.map(venta => (
+                  <MenuItem key={venta} value={venta} >
+                    {venta}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl >
+          </Grid>
 
-            <Grid item xs={10} sm={2}>
-              <FormControl fullWidth >
-                <InputLabel >Type</InputLabel>
-                <Select
-                  label="Type"
-                  value={filters.type}
-                  name="type"
-                  onChange={this.onInputChange}
-                >
-                  <MenuItem value='' > <em>None</em> </MenuItem>
-                  {type.map(venta => (
-                    <MenuItem key={venta} value={venta} >
-                      {venta}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl >
-            </Grid>
-
-            <Grid item xs={10} sm={2}>
+          <Grid item xs={10} sm={2}>
             <Box textAlign="center">
               <Button
                 variant="contained"
@@ -247,44 +217,44 @@ class Home extends Component {
                 Filtra!
             </Button>
             </Box>
-            </Grid>
           </Grid>
+        </Grid>
 
-        </form>
-        
-        {isFetching && <Loading className="app-loading" />}
-        {error && <Error className="app-error" error={error} />}
-  
-        {
-          !isFetching
-          &&
-          adverts
-          &&
-          !adverts.length
-          &&
-          <h2>No hay anuncios. Pruebe otra búsqueda por favor.</h2>
-        }
+      </form>
 
-        {
-           adverts
-           &&
-           adverts.length !==0
-           &&
+      {isFetching && <Loading className="app-loading" />}
+      {error && <Error className="app-error" error={error} />}
 
-          <Pagination
-            totalAdverts={adverts.length}
-            numberPerPage='3'
-            adverts={adverts}
-            disableUpdate={disableUpdate}
-            update={update}
-          >
+      {
+        !isFetching
+        &&
+        adverts
+        &&
+        !adverts.length
+        &&
+        <h2>No hay anuncios. Pruebe otra búsqueda por favor.</h2>
+      }
 
-          </Pagination>
-        }
+      {
+        adverts
+        &&
+        adverts.length !== 0
+        &&
 
-      </React.Fragment>
-    );
-  }
+        <Pagination
+          totalAdverts={adverts.length}
+          numberPerPage='3'
+          adverts={adverts}
+          disableUpdate={disableUpdate}
+          update={update}
+        >
+
+        </Pagination>
+      }
+
+    </React.Fragment>
+  );
 }
+//}
 
-export default withRouter(Home);
+//export default withRouter(Home);

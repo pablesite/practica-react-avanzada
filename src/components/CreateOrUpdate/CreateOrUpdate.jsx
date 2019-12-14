@@ -373,5 +373,5 @@ class CreateOrUpdate extends Component {
   }
 }
 
-
-export default withRouter(CreateOrUpdate);
+export default CreateOrUpdate;
+//export default withRouter(CreateOrUpdate);

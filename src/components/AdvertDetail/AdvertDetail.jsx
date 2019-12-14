@@ -178,4 +178,5 @@ class AdvertDetail extends Component {
   }
 }
 
-export default withRouter(AdvertDetail);
+//export default withRouter(AdvertDetail);
+export default AdvertDetail;
