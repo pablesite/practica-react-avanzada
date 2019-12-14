@@ -173,6 +173,7 @@ class Home extends Component {
         <Profile
           name={user.name}
           surname={user.surname}
+          email={user.email}
           tag={user.tag}
         > </Profile>
 

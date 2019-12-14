@@ -113,9 +113,9 @@ function Profile(props) {
                       variant="contained"
                       color="secondary"
                       onClick={() => {
-                        updateUser({});
+                        updateUser({ name: "", surname: "", email: "", tag: "" });
                         deleteStorage();
-                        props.setUserInStore( { name: "", surname: "", tag: "" });
+                        props.setUserInStore( { name: "", surname: "", email: "", tag: "" });
                         props.history.push("/login/");
                       }}
                     >

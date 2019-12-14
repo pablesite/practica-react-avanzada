@@ -35,26 +35,48 @@ export default class App extends Component {
     super(props);
 
     this.updateUser = this.updateUser.bind(this);
+    this.updateProperty = this.updateProperty.bind(this);
 
     this.state = {
+      
       user: {
         name: '',
         surname: '',
+        email: '',
         tag: ''
       },
+
       updateUser: this.updateUser,
+
+      updateProperty: this.updateProperty,
     }
 
   }
 
 
   updateUser(user) {
+    console.log('updateUSER', user)
     this.setState({ user })
 
   }
 
+  updateProperty(name, value) {
+        this.setState(({ user }) => (
+        {
+          user: {
+            ...user,
+            [name]: value
+          }
+        }
+      ));
+
+
+  }
+
+  
   render() {
 
+    console.log(' Estado de APP - User', this.state.user)
     return (
       <ErrorBoundary >
         <Provider {...this.props} store={this.props.store} > {/*Paso el store a todos los componentes*/}

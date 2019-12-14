@@ -5,6 +5,7 @@ const initialState = {
     user: {
         name: '',
         surname: '',
+        email: '',
         tag: ''
     },
 

@@ -49,6 +49,7 @@ class Login extends Component {
             user: {
                 name: "",
                 surname: "",
+                email: "",
                 tag: "",
             },
             tagList: [],
@@ -95,9 +96,9 @@ class Login extends Component {
 
 
     // Inicio de pruebas
-    onSubmitTest = (state) => {
-        saveUser(state.user);
-        this.props.setUserInStore(state.user);
+    onSubmitTest = (user) => {
+        saveUser(user);
+        this.props.setUserInStore(user);
         this.props.history.push("/home");
     }
 
@@ -130,7 +131,7 @@ class Login extends Component {
 
 
     render() {
-        const { name, surname, tag } = this.state.user;
+        const { name, surname, email, tag } = this.state.user;
         const { tagList, check } = this.state;
 
         return (
@@ -141,6 +142,7 @@ class Login extends Component {
                     <Profile
                         name={name}
                         surname={surname}
+                        email={email}
                         tag={tag}
                     >
                     </Profile>
@@ -164,35 +166,47 @@ class Login extends Component {
                             handleSubmit={this.onSubmitTest}
                             initialState={
                                 {
-                                    user:
-                                    {
-                                        name: "Pablo",
-                                        surname: "Ruiz",
-                                        email: "pabloruiz@ctnaval.com",
-                                        tag: "motor"
-                                    }
+                                    name: "Pablo",
+                                    surname: "Ruiz",
+                                    email: "pabloruiz@ctnaval.com",
+                                    tag: "motor"
+
                                 }
                             }
                         >
-                            Test
-                            <InputEnhanced
-                                type='text'
-                                name='tag'
-                            />
+
+                            <Grid container spacing={2}>
+
+                                <Grid item xs={12} sm={6}>
+                                    <InputEnhanced
+                                        type='text'
+                                        name='name'
+                                    />
+                                </Grid>
+
+                                <Grid item xs={12} sm={6}>
+                                    <InputEnhanced
+                                        type='text'
+                                        name='surname'
+                                    />
+                                </Grid>
+
+                                <Grid item xs={12}>
+                                    <InputEnhanced
+                                        type='email'
+                                        name='email'
+                                    />
+                                </Grid>
 
 
-                            {/* 
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    label="Name"
-                                    value={name}
-                                    name="name"
-                                    onChange={this.onInputChange}
-                                    fullWidth
-                                    variant="outlined"
-                                    required
-                                />
-                            </Grid> */}
+                                {/* <InputEnhanced
+                                    type='text'
+                                    name='tag'
+                                /> */}
+
+
+                            </Grid>
+
 
                         </FormEnhanced>
 
