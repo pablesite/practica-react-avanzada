@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Advert should render Advert component 1`] = `
+<Fragment>
+  <WithStyles(ForwardRef(Grid))
+    item={true}
+    onClick={[Function]}
+    sm={4}
+    xs={10}
+  >
+    <WithStyles(ForwardRef(Card))
+      className="card"
+    >
+      <div
+        className="card"
+      >
+        <WithStyles(ForwardRef(CardHeader))
+          action={
+            <ForwardRef(WithStyles)
+              aria-label="settings"
+            >
+              <Memo(MoreVertIcon) />
+            </ForwardRef(WithStyles)>
+          }
+          avatar={
+            <ForwardRef(WithStyles)
+              aria-label="recipe"
+              className="avatar"
+            >
+              sell
+            </ForwardRef(WithStyles)>
+          }
+          className="limit-height-12vh"
+          subheader="Tags:  [object Object]."
+          title="BMW X6 M"
+        />
+        <WithStyles(ForwardRef(CardMedia))
+          className="media"
+          image="http://localhost:3001/images/anuncios/x6.jpg"
+          title="BMW X6 M"
+        />
+        <WithStyles(ForwardRef(CardContent))>
+          <WithStyles(ForwardRef(Typography))
+            className="limit-height-6vh"
+            color="textSecondary"
+            component="p"
+            variant="body2"
+          >
+            Soy el del apartamento. Con eso lo digo todo.
+          </WithStyles(ForwardRef(Typography))>
+          <div
+            className="price-text"
+          >
+            Precio: 
+            40000
+             €.
+          </div>
+        </WithStyles(ForwardRef(CardContent))>
+      </div>
+    </WithStyles(ForwardRef(Card))>
+  </WithStyles(ForwardRef(Grid))>
+</Fragment>
+`;

@@ -29,7 +29,6 @@ class AdvertDetail extends Component {
   constructor(props) {
     super(props);
 
-
     this.goHome = this.goHome.bind(this);
     this.updateAdvert = this.updateAdvert.bind(this);
 
@@ -66,7 +65,6 @@ class AdvertDetail extends Component {
   render() {
 
     const { user, isFetching, error } = this.props;
-
     const advert = this.props.adverts[0];
 
     return (

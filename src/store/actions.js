@@ -9,10 +9,10 @@ import {
   export const fetchAdverts = (tag) => {
     return async function(dispatch, _getState, { services: { AdvertsService } }) {
       dispatch(AdvertsRequest());
-     
       try {
         const adverts = await AdvertsService.searchAdverts(tag)
         dispatch(fetchAdvertsSuccess(adverts));
+        
       } catch (error) {
         dispatch(AdvertsFailure(error));
       }

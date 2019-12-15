@@ -30,7 +30,7 @@ export default function Home(props) {
     'buy',
   ];
 
-  const { adverts, user, isFetching, error } = props;
+  const { adverts, user, isFetching, error, checkUser } = props;
 
   const [filters, setFilters] = useState({
     name: '',
@@ -45,12 +45,10 @@ export default function Home(props) {
 
   useEffect(() => {
 
-    const user = getUser();
-
-    if (user !== undefined && user !== null) {
-      props.setUserInStore(user);
+    if (checkUser.exist) {
+      props.setUserInStore(checkUser.user);
       getTags().then(tags => setTagList(tags))
-      props.loadAdverts("tag=" + user.tag).then(() => setUpdate(true))
+      props.loadAdverts("tag=" + checkUser.user.tag).then(() => setUpdate(true))
 
     } else {
       props.history.push("/login");
@@ -64,7 +62,7 @@ export default function Home(props) {
     setUpdate(false)
   }
 
-  
+
   const onSubmit = (event) => {
     event && event.preventDefault();
 
@@ -255,6 +253,3 @@ export default function Home(props) {
     </React.Fragment>
   );
 }
-//}
-
-//export default withRouter(Home);

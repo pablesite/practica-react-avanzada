@@ -57,7 +57,6 @@ class CreateOrUpdate extends Component {
 
   checkUserExist() {
     if (getUser() !== null) {
-      //this.context.updateUser(getUser());
       this.props.setUserInStore(getUser());
       return true;
     } else {

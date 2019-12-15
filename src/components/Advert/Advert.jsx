@@ -75,3 +75,4 @@ class Advert extends Component {
 }
 
 export default withRouter(Advert);
+//export default Advert;

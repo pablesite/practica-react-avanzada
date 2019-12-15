@@ -123,6 +123,7 @@ class Login extends Component {
 
 
                         <FormEnhanced
+                            className='fortest'
                             handleSubmit={this.onSubmit}
                             initialState={
                                 {
