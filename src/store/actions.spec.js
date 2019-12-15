@@ -1,12 +1,9 @@
-import * as actions from './actions';
-import * as types from "./types";
 
 import configureStore from 'redux-mock-store'; 
 import thunk from 'redux-thunk';
-//import * as actions from './actions';
-//import * as types from './types';
-//import BikesService from '../services/Bikes'; 
 
+import * as actions from './actions';
+import * as types from "./types";
 import * as  AdvertsService  from '../services/AdvertDBService'
 
 jest.mock('../services/AdvertDBService');
@@ -14,8 +11,8 @@ jest.mock('../services/AdvertDBService');
 const middlewares = [thunk.withExtraArgument({ services: { AdvertsService }  })]; 
 
 const mockStore = configureStore(middlewares);
-const store = mockStore({});
 
+const store = mockStore({});
 
 const adverts = {
     "name":"PS4Pro",
@@ -56,7 +53,7 @@ describe('actions', () => {
    
    });
 
-
+    // Async test
     it('should dispatch a fetchAdverts actions', async () => {
         const expectedActions = [{
             type: types.ADVERTS_REQUEST, 

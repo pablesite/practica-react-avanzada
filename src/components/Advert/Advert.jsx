@@ -13,7 +13,6 @@ import Grid from '@material-ui/core/Grid';
 
 import "./Advert.css"
 
-
 class Advert extends Component {
   goToDetail = () => {
     this.props.history.push(`/detail/${this.props.advert._id}`);
@@ -24,7 +23,6 @@ class Advert extends Component {
     return (
       <React.Fragment>
         <Grid
-          // key={advert._id}
           onClick={this.goToDetail}
           item xs={10}
           sm={4}>
@@ -75,4 +73,3 @@ class Advert extends Component {
 }
 
 export default withRouter(Advert);
-//export default Advert;

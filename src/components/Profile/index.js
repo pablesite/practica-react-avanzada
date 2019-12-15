@@ -4,14 +4,15 @@ import Profile from './Profile';
 import { setUser } from '../../store/actions' 
 
 
+function mapStateToProps() {
+  return {};
+}
+
+
 const mapDispatchToProps = {
     setUserInStore: setUser,
 };
 
-
-function mapStateToProps(state) {
-   return {test: 1};
- }
 
 export default connect(
   mapStateToProps,

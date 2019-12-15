@@ -47,7 +47,6 @@ export default class App extends Component {
       },
 
       updateUser: this.updateUser,
-
       updateProperty: this.updateProperty,
     }
 
@@ -55,9 +54,7 @@ export default class App extends Component {
 
 
   updateUser(user) {
-    console.log('updateUSER', user)
     this.setState({ user })
-
   }
 
   updateProperty(name, value) {
@@ -70,13 +67,11 @@ export default class App extends Component {
         }
       ));
 
-
   }
 
-  
+
   render() {
 
-    console.log(' Estado de APP - User', this.state.user)
     return (
       <ErrorBoundary >
         <Provider {...this.props} store={this.props.store} > {/*Paso el store a todos los componentes*/}
@@ -85,17 +80,11 @@ export default class App extends Component {
               <Router>
                 <Switch>
                   <Route exact path='/login' component={Login} />
-                  {/* <Route exact path='/login' render={(props) => <Login {...props} store={this.props.store} />} /> */}
                   <Route exact path='/home/' component={Home} />
                   <Route exact path='/detail/:id' component={AdvertDetail} />
                   <Route exact path='/createOrUpdate/' component={CreateOrUpdate} />
                   <Route exact path='/createOrUpdate/:id' component={CreateOrUpdate} />
-
                   <Route component={Login} />
-                  {/* <Route render={(props) => <Login {...props} store={this.props.store} />} /> */}
-
-                  {/* <Route component={Login}  store={this.props.store}/> */}
-
                 </Switch>
               </Router>
             </MuiThemeProvider>

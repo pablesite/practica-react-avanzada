@@ -1,13 +1,8 @@
-//import React, { Component } from 'react';
-
 import React, { useState, useEffect } from 'react';
 
-
+import { getTags } from '../../services/AdvertDBService';
 
 import Profile from '../Profile';
-import { getTags } from '../../services/AdvertDBService';
-import { getUser } from '../../services/Storage';
-
 import Loading from '../Loading';
 import Error from '../Error';
 

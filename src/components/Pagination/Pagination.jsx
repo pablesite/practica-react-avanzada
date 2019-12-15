@@ -102,7 +102,6 @@ export default class Pagination extends Component {
     }
 
 
-
     render() {
         const { advertActualPage, actualPage, pagesNumber } = this.state;
 

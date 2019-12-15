@@ -1,13 +1,9 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
-import UserContext from '../Context/User'
 
 import Profile from '../Profile';
-import * as API from '../../services/AdvertDBService';
 import { getTags } from '../../services/AdvertDBService';
 import { getUser } from '../../services/Storage';
 import { getAdvert } from "../../services/AdvertDBService";
-
 
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -373,4 +369,3 @@ class CreateOrUpdate extends Component {
 }
 
 export default CreateOrUpdate;
-//export default withRouter(CreateOrUpdate);

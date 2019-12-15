@@ -1,19 +1,12 @@
 import "../../App.css";
 import React, { Component } from 'react';
-import { getTags } from '../../services/AdvertDBService';
+
 import { saveUser, getUser } from '../../services/Storage';
 import Profile from '../Profile'
-
-
 import { FormEnhanced } from '../WithFormEnhanced/WithFormEnhanced'
 import { InputEnhanced } from '../WithInputEnhanced/WithInputEnhanced'
 
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';

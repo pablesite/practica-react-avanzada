@@ -135,5 +135,4 @@ function Profile(props) {
 
 }
 
-//export default Profile;
 export default withRouter(Profile);

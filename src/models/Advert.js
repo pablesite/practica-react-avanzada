@@ -19,8 +19,5 @@ export default class Advert {
 
   }
 
-  // isImportant() {
-  //   return this.vote_count > 25;
-  // }
 }
 

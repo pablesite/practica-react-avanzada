@@ -28,13 +28,13 @@ const WithFormEnhanced = () => (
             {({ user, updateUser }) => (
               <div>
                 {
-                  user.name == ""
+                  user.name === ""
                   &&
-                  user.surname == ""
+                  user.surname === ""
                   &&
-                  user.email == ""
+                  user.email === ""
                   &&
-                  user.tag == ""
+                  user.tag === ""
                   &&
                   updateUser(this.props.initialState)
                 }
@@ -77,8 +77,6 @@ const WithFormEnhanced = () => (
     }
   }
 )
-
-// WithFormEnhanced.contextType = UserContext;
 
 export const FormEnhanced = WithFormEnhanced()
 

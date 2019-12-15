@@ -12,7 +12,7 @@ const WithInputhanced = () => (
       this.state = {
         [this.props.name]: ''
       }
-
+      
     }
 
     handleChange = (e) => {
