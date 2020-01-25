@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-//import { getTags } from '../../services/AdvertDBService';
-
 import Profile from '../Profile';
 import Loading from '../Loading';
 import Error from '../Error';
@@ -35,11 +33,9 @@ export default function Home(props) {
   });
 
   const [update, setUpdate] = useState(true);
-  //const [tagList, setTagList] = useState([]);
 
   useEffect(() => {
     if (checkUser.exist) {
-      //getTags().then(tags => setTagList(tags))
       loadAdverts("tag=" + checkUser.user.tag).then(() => setUpdate(true))
 
     } else {
