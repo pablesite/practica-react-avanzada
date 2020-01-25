@@ -26,9 +26,7 @@ const history = createBrowserHistory();
 const user = getUserFromLS(); 
 
 const store = configureStore({  
-  history,
-  services: { AdvertsService },
-  user,
+  services: { AdvertsService }
 });
 
 

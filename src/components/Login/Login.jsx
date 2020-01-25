@@ -37,7 +37,7 @@ class Login extends Component {
         super(props);
 
         this.state = {
-       
+
             check: false
         };
 
@@ -71,7 +71,7 @@ class Login extends Component {
 
 
     render() {
-        
+
         const { check } = this.state;
 
         return (
@@ -118,6 +118,18 @@ class Login extends Component {
                                 </Grid>
                             </Grid>
 
+
+                            <div className="submit">
+                                <Button
+                                    label="Continue"
+                                    type='submit'
+                                    fullWidth
+                                    variant="contained"
+                                    color="primary"
+                                >
+                                    Enter
+                                </Button>
+                            </div>
 
                         </FormEnhanced>
 

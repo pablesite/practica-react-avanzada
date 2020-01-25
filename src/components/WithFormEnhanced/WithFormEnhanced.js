@@ -1,7 +1,6 @@
 import React from "react";
-import UserContext from '../Context/User'
+import { FormProvider } from '../Context/Form'
 
-import Button from '@material-ui/core/Button';
 
 const WithFormEnhanced = () => (
   class FormEnhanced extends React.Component {
@@ -9,7 +8,8 @@ const WithFormEnhanced = () => (
       super(props)
 
       this.state = {
-        ...this.props.initialState
+        ...this.props.initialState,
+        onInputChange: this.onInputChange,
       }
     }
 
@@ -18,61 +18,18 @@ const WithFormEnhanced = () => (
       this.props.handleSubmit(this.state)
     }
 
+
+    onInputChange = (name, value) => {
+      this.setState({ [name]: value })
+    }
+
     render() {
- 
       return (
-
-        <React.Fragment>
-          <UserContext.Consumer>
-
-            {({ user, updateUser }) => (
-              <div>
-                {
-                  user.name === ""
-                  &&
-                  user.surname === ""
-                  &&
-                  user.email === ""
-                  &&
-                  user.tag === ""
-                  &&
-                  updateUser(this.props.initialState)
-                }
-              </div>
-            )}
-
-          </UserContext.Consumer>
-
-          <UserContext.Consumer>
-            {({ user }) => (
-
-              <form className='form' onSubmit={(e) => {
-                e.preventDefault()
-                this.props.handleSubmit(user)
-              }}  >
-
-                {this.props.children}
-
-                <div className="submit">
-                  <Button
-                    label="Continue"
-                    type='submit'
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                  >
-                    Enter
-                  </Button>
-                </div>
-
-              </form>
-
-            )}
-
-          </UserContext.Consumer>
-        </React.Fragment>
-
-
+        <form onSubmit={this.handleSubmit}  >
+          <FormProvider value={this.state} >
+            {this.props.children}
+          </FormProvider>
+        </form>
       )
     }
   }

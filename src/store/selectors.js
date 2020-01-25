@@ -12,7 +12,7 @@ export function checkUserExist(user) {
     else {
             return {
                 exist: false,
-                user: user
+                user: {}
             }
         }
     }

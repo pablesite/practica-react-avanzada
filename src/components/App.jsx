@@ -7,7 +7,6 @@ import Home from './Home'
 import AdvertDetail from './AdvertDetail'
 import CreateOrUpdate from './CreateOrUpdate'
 
-import { UserProvider } from './Context/User';
 import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -31,68 +30,25 @@ const theme = createMuiTheme({
 
 
 export default class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.updateUser = this.updateUser.bind(this);
-    this.updateProperty = this.updateProperty.bind(this);
-
-    this.state = {
-      
-      user: {
-        name: '',
-        surname: '',
-        email: '',
-        tag: ''
-      },
-
-      updateUser: this.updateUser,
-      updateProperty: this.updateProperty,
-    }
-
-    console.log('Props de APP', this.props)
-  }
-
-
-  updateUser(user) {
-    this.setState({ user })
-  }
-
-  updateProperty(name, value) {
-        this.setState(({ user }) => (
-        {
-          user: {
-            ...user,
-            [name]: value
-          }
-        }
-      ));
-
-  }
-
 
   render() {
-
     return (
       <ErrorBoundary >
-        <Provider  store={this.props.store}  {...this.props} > {/*Paso el store a todos los componentes*/}
-          <UserProvider value={this.state} > {/* Para eliminar!!!! */}
-            <MuiThemeProvider theme={theme} >
-              <Router >
-                <Switch>
-                  <Route exact path='/login' component={Login} />
-                  <Route exact path='/home/' component={Home} />
-                  <Route exact path='/detail/:id' component={AdvertDetail} />
-                  <Route exact path='/createOrUpdate/' component={CreateOrUpdate} />
-                  <Route exact path='/createOrUpdate/:id' component={CreateOrUpdate} />
-                  <Route component={Login} />
-                </Switch>
-              </Router>
-            </MuiThemeProvider>
-          </UserProvider>
+        <Provider store={this.props.store}  {...this.props} > {/*Paso el store a todos los componentes*/}
+          <MuiThemeProvider theme={theme} >
+            <Router >
+              <Switch>
+                <Route exact path='/login' component={Login} />
+                <Route exact path='/home/' component={Home} />
+                <Route exact path='/detail/:id' component={AdvertDetail} />
+                <Route exact path='/createOrUpdate/' component={CreateOrUpdate} />
+                <Route exact path='/createOrUpdate/:id' component={CreateOrUpdate} />
+                <Route component={Login} />
+              </Switch>
+            </Router>
+          </MuiThemeProvider>
         </Provider>
       </ErrorBoundary>
-
     );
   }
 }
