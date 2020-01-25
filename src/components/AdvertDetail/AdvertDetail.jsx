@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { getUser } from '../../services/Storage';
 
 import Profile from '../Profile';
 import Loading from '../Loading';
@@ -32,8 +31,7 @@ class AdvertDetail extends Component {
 
 
   checkUserExist() {
-    if (getUser() !== null) {
-      this.props.setUserInStore(getUser());
+    if (this.props.checkUser.exist) {
       return true;
     } else {
       this.props.history.push("/login");
@@ -66,11 +64,16 @@ class AdvertDetail extends Component {
     return (
       <React.Fragment>
 
-        <Profile
-          name={user.name}
-          surname={user.surname}
-          tag={user.tag}
-        > </Profile>
+        {
+          user
+          &&
+          <Profile
+            name={user.name}
+            surname={user.surname}
+            tag={user.tag}
+          > </Profile>
+        }
+
 
         <div className="container">
           {

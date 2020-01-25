@@ -1,9 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import { UserConsumer } from '../Context/User'
-import { deleteStorage } from '../../services/Storage';
-
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -81,8 +78,8 @@ function Profile(props) {
 
 
   return (
-    <UserConsumer>
-      {({ updateUser }) => (
+    <React.Fragment>
+      
         <div className={classes.root}>
           <AppBar position="static">
             <Toolbar className={classes.toolbar}>
@@ -113,10 +110,8 @@ function Profile(props) {
                       variant="contained"
                       color="secondary"
                       onClick={() => {
-                        updateUser({ name: "", surname: "", email: "", tag: "" });
-                        deleteStorage();
-                        props.setUserInStore( { name: "", surname: "", email: "", tag: "" });
-                        props.history.push("/login/");
+                        props.deleteUserFromStore();
+                        props.history.push("/login");
                       }}
                     >
                       Log out
@@ -129,8 +124,8 @@ function Profile(props) {
           </AppBar>
 
         </div>
-      )}
-    </UserConsumer>
+      
+        </React.Fragment>
   );
 
 }

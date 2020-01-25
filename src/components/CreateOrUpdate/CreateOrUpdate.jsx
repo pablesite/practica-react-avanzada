@@ -2,8 +2,8 @@ import React, { Component } from "react";
 
 import Profile from '../Profile';
 import { getTags } from '../../services/AdvertDBService';
-import { getUser } from '../../services/Storage';
 import { getAdvert } from "../../services/AdvertDBService";
+import { checkUserExist } from '../../store/selectors';
 
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -44,16 +44,15 @@ class CreateOrUpdate extends Component {
       update: true,
 
     };
-  
+
     this.checkCreateorUpdate = this.checkCreateorUpdate.bind(this);
     this.goHome = this.goHome.bind(this);
   };
 
 
 
-  checkUserExist() {
-    if (getUser() !== null) {
-      this.props.setUserInStore(getUser());
+  checkUser() {
+    if (checkUserExist(this.props.user).exist) {
       return true;
     } else {
       this.props.history.push("/login");
@@ -71,7 +70,7 @@ class CreateOrUpdate extends Component {
 
 
   componentDidMount() {
-    if (this.checkUserExist()) {
+    if (this.checkUser()) {
       this.getTags();
     }
     this.checkCreateorUpdate();
@@ -105,7 +104,7 @@ class CreateOrUpdate extends Component {
     const { _id } = this.state.advert;
     if (_id) {
       this.props.updateAdvert(this.state.advert, _id).then(() => { this.props.history.push(`/detail/${_id}`) });
-    } else {     
+    } else {
       this.props.createAdvert(this.state.advert).then(() => { this.props.history.push(`/home/`) });
     }
 
@@ -193,7 +192,7 @@ class CreateOrUpdate extends Component {
 
   render() {
 
-    const { user} = this.props;
+    const { user } = this.props;
     const { description, name, photo, price, tags, type, _id } = this.state.advert;
     const { tagList } = this.state;
 
@@ -202,11 +201,15 @@ class CreateOrUpdate extends Component {
     return (
       <React.Fragment>
 
-        <Profile
-          name={user.name}
-          surname={user.surname}
-          tag={user.tag}
-        > </Profile>
+        {
+          user
+          &&
+          <Profile
+            name={user.name}
+            surname={user.surname}
+            tag={user.tag}
+          > </Profile>
+        }
 
         <Container component="main" maxWidth="xs">
           <CssBaseline />

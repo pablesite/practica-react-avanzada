@@ -1,8 +1,9 @@
-import { getUser } from '../services/Storage';
-
-export function checkUserExist() {
-    const user = getUser();
-    if (user !== undefined && user !== null) {
+export function checkUserExist(user) {
+    //if (user !== undefined && user !== null) {
+    //if (user.name === '' || user.surname == '' || user.email == '' || user.tag == '' ) {
+    if ((user !== undefined && user !== null )  && 
+        (user.name !== '' && user.surname !== '' && user.email !== '' && user.tag !== '')
+        ) {
         return {
             exist: true,
             user: user
@@ -15,6 +16,8 @@ export function checkUserExist() {
             }
         }
     }
+
+    // export const getUser = state => state.user;
 
 
 

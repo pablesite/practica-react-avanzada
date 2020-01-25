@@ -1,13 +1,13 @@
 
-export const saveUser = user => {
+export const saveUserInLS = user => {
 	localStorage.setItem('data', JSON.stringify(user));
 };
 
-export const getUser = () => {
+export const getUserFromLS = () => {
 	const user = localStorage.getItem('data');
   return JSON.parse(user)
 };
 
-export const deleteStorage = () => {
+export const deleteLS = () => {
   localStorage.clear();
 }

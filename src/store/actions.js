@@ -2,7 +2,8 @@ import {
     ADVERTS_REQUEST,
     ADVERTS_FAILURE,
     ADVERTS_SUCCESS,
-    SET_USER,
+    SAVE_USER,
+    DELETE_USER
 
   } from './types';
   
@@ -79,8 +80,13 @@ import {
   });
 
 
-  export const setUser = user => ({
-    type: SET_USER,
+  export const saveUser = user => ({
+    type: SAVE_USER,
     user,
+  });
+
+  export const deleteUser = () => ({
+    type: DELETE_USER,
+    user: null,
   });
 

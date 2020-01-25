@@ -1,4 +1,5 @@
 export const ADVERTS_REQUEST = 'ADVERTS_REQUEST';
 export const ADVERTS_FAILURE = 'FETCH_ADVERTS_FAILURE';
 export const ADVERTS_SUCCESS = 'FETCH_ADVERTS_SUCCESS';
-export const SET_USER = 'SET_USER';
+export const SAVE_USER = 'SET_USER';
+export const DELETE_USER = 'DELETE_USER';

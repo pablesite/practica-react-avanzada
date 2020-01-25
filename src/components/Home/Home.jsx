@@ -25,7 +25,7 @@ export default function Home(props) {
     'buy',
   ];
 
-  const { adverts, user, isFetching, error, checkUser } = props;
+  const { adverts, checkUser, error, history, isFetching, loadAdverts, user } = props;
 
   const [filters, setFilters] = useState({
     name: '',
@@ -34,22 +34,22 @@ export default function Home(props) {
     type: ''
   });
 
+  console.log('Entro a home')
   const [update, setUpdate] = useState(true);
 
   const [tagList, setTagList] = useState([]);
 
-  useEffect(() => {
 
+  useEffect(() => {
     if (checkUser.exist) {
-      props.setUserInStore(checkUser.user);
       getTags().then(tags => setTagList(tags))
-      props.loadAdverts("tag=" + checkUser.user.tag).then(() => setUpdate(true))
+      loadAdverts("tag=" + checkUser.user.tag).then(() => setUpdate(true))
 
     } else {
-      props.history.push("/login");
+      history.push("/login");
     }
 
-  }, []);
+  }, [checkUser.exist, loadAdverts, checkUser.user.tag, history]);
 
 
 
@@ -128,13 +128,16 @@ export default function Home(props) {
 
   return (
     <React.Fragment>
-
-      <Profile
-        name={user.name}
-        surname={user.surname}
-        email={user.email}
-        tag={user.tag}
-      > </Profile>
+      {
+        user
+        &&
+        <Profile
+          name={user.name}
+          surname={user.surname}
+          email={user.email}
+          tag={user.tag}
+        > </Profile>
+      }
 
       <form className="filter-form" onSubmit={onSubmit}>
 

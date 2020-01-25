@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import Profile from './Profile';
-import { setUser } from '../../store/actions' 
+import { deleteUser } from '../../store/actions' 
 
 
 function mapStateToProps() {
@@ -10,7 +10,7 @@ function mapStateToProps() {
 
 
 const mapDispatchToProps = {
-    setUserInStore: setUser,
+    deleteUserFromStore: deleteUser,
 };
 
 

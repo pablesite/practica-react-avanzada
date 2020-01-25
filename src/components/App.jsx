@@ -50,6 +50,7 @@ export default class App extends Component {
       updateProperty: this.updateProperty,
     }
 
+    console.log('Props de APP', this.props)
   }
 
 
@@ -74,10 +75,10 @@ export default class App extends Component {
 
     return (
       <ErrorBoundary >
-        <Provider {...this.props} store={this.props.store} > {/*Paso el store a todos los componentes*/}
-          <UserProvider value={this.state} >
-            <MuiThemeProvider theme={theme}>
-              <Router>
+        <Provider  store={this.props.store}  {...this.props} > {/*Paso el store a todos los componentes*/}
+          <UserProvider value={this.state} > {/* Para eliminar!!!! */}
+            <MuiThemeProvider theme={theme} >
+              <Router >
                 <Switch>
                   <Route exact path='/login' component={Login} />
                   <Route exact path='/home/' component={Home} />

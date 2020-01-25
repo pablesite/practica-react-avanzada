@@ -1,8 +1,6 @@
 import "../../App.css";
 import React, { Component } from 'react';
 
-import { saveUser, getUser } from '../../services/Storage';
-import Profile from '../Profile'
 import { FormEnhanced } from '../WithFormEnhanced/WithFormEnhanced'
 import { InputEnhanced } from '../WithInputEnhanced/WithInputEnhanced'
 
@@ -39,28 +37,25 @@ class Login extends Component {
         super(props);
 
         this.state = {
-            user: {
-                name: "",
-                surname: "",
-                email: "",
-                tag: "",
-            },
+       
             check: false
         };
-  
+
         this.checkError = this.checkError.bind(this);
 
     }
 
 
     componentDidMount() {
-        this.checkUserExist();
+        if (this.props.checkUser.exist) {
+            this.props.history.push("/home");
+        }
+
     }
 
 
     onSubmit = (user) => {
-        saveUser(user);
-        this.props.setUserInStore(user);
+        this.props.saveUserInStore(user);
         this.props.history.push("/home");
     }
 
@@ -75,31 +70,13 @@ class Login extends Component {
     }
 
 
-    checkUserExist() {
-        if (getUser() !== null) {
-            this.setState(() => ({ user: getUser() }));
-            this.props.setUserInStore(getUser());
-        }
-    }
-
-
     render() {
-        const { name, surname, email, tag } = this.state.user;
+        
         const { check } = this.state;
 
         return (
             <React.Fragment>
-                {
-                    getUser()
-                    &&
-                    <Profile
-                        name={name}
-                        surname={surname}
-                        email={email}
-                        tag={tag}
-                    >
-                    </Profile>
-                }
+
 
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />
