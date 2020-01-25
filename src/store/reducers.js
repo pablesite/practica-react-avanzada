@@ -17,17 +17,23 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
+
         case TYPES.SAVE_USER:
             return {
                 ...state,
                 user: action.user,
-                storeInfo: 'saveUser'
+                storeInfo: 'saveUser',
+                isFetching: false,
+                error: null
             };
+
         case TYPES.DELETE_USER:
             return {
                 ...state,
                 user: action.user,
-                storeInfo: 'deleteUser'
+                storeInfo: 'deleteUser',
+                isFetching: false,
+                error: null
             };
 
         case TYPES.ADVERTS_SUCCESS:
@@ -48,6 +54,31 @@ export default function (state = initialState, action) {
             };
 
         case TYPES.ADVERTS_FAILURE:
+            return {
+                ...state,
+                storeInfo: null,
+                isFetching: false,
+                error: action.error,
+            };
+
+            case TYPES.TAGS_SUCCESS:
+            return {
+                ...state,
+                tags: action.tags,
+                storeInfo: 'tagsInStore',
+                isFetching: false,
+                error: null
+            };
+
+        case TYPES.TAGS_REQUEST:
+            return {
+                ...state,
+                storeInfo: null,
+                isFetching: true,
+                error: null,
+            };
+
+        case TYPES.TAGS_FAILURE:
             return {
                 ...state,
                 storeInfo: null,

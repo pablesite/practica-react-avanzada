@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import CreateOrUpdate from './CreateOrUpdate';
 
 import { createAdvert, updateAdvert } from '../../store/actions';
+import { checkUserExist } from '../../store/selectors';
 
 
 const mapDispatchToProps = {
@@ -10,7 +11,12 @@ const mapDispatchToProps = {
 };
 
 function mapStateToProps(state) {
-return {adverts: state.adverts, user: state.user} //con state sólo sí que funciona
+return {
+    adverts: state.adverts, 
+    user: state.user, 
+    tagList: state.tags,
+    checkUser: checkUserExist(state.user), 
+  } 
 }
 
 export default connect(

@@ -91,7 +91,7 @@ class Login extends Component {
                             Sign up
                         </Typography>
 
-
+                        <p></p>
                         <FormEnhanced
                             className='fortest'
                             handleSubmit={this.onSubmit}
@@ -100,7 +100,7 @@ class Login extends Component {
                                     name: "Pablo",
                                     surname: "Ruiz",
                                     email: "pabloruiz@ctnaval.com",
-                                    tag: "motor"
+                                    tag: "lifestyle"
                                 }
                             }
                         >

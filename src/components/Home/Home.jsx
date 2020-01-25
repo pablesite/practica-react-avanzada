@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { getTags } from '../../services/AdvertDBService';
+//import { getTags } from '../../services/AdvertDBService';
 
 import Profile from '../Profile';
 import Loading from '../Loading';
@@ -25,7 +25,7 @@ export default function Home(props) {
     'buy',
   ];
 
-  const { adverts, checkUser, error, history, isFetching, loadAdverts, user } = props;
+  const { adverts, checkUser, error, history, isFetching, loadAdverts, user, tagList } = props;
 
   const [filters, setFilters] = useState({
     name: '',
@@ -34,15 +34,12 @@ export default function Home(props) {
     type: ''
   });
 
-  console.log('Entro a home')
   const [update, setUpdate] = useState(true);
-
-  const [tagList, setTagList] = useState([]);
-
+  //const [tagList, setTagList] = useState([]);
 
   useEffect(() => {
     if (checkUser.exist) {
-      getTags().then(tags => setTagList(tags))
+      //getTags().then(tags => setTagList(tags))
       loadAdverts("tag=" + checkUser.user.tag).then(() => setUpdate(true))
 
     } else {
@@ -52,11 +49,9 @@ export default function Home(props) {
   }, [checkUser.exist, loadAdverts, checkUser.user.tag, history]);
 
 
-
   function disableUpdate() {
     setUpdate(false)
   }
-
 
   const onSubmit = (event) => {
     event && event.preventDefault();

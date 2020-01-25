@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 
 import Profile from '../Profile';
-import { getTags } from '../../services/AdvertDBService';
 import { getAdvert } from "../../services/AdvertDBService";
-import { checkUserExist } from '../../store/selectors';
 
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -26,7 +24,6 @@ const ventas = [
 
 
 class CreateOrUpdate extends Component {
-
   constructor(props) {
     super(props);
 
@@ -40,40 +37,24 @@ class CreateOrUpdate extends Component {
         type: '',
         _id: null
       },
-      tagList: [],
       update: true,
 
     };
 
     this.checkCreateorUpdate = this.checkCreateorUpdate.bind(this);
     this.goHome = this.goHome.bind(this);
-  };
-
-
-
-  checkUser() {
-    if (checkUserExist(this.props.user).exist) {
-      return true;
-    } else {
-      this.props.history.push("/login");
-      return false;
-    }
-  }
-
-
-  getTags = () => {
-    getTags().then(tags => {
-      this.setState({ tagList: tags });
-    })
 
   };
 
 
   componentDidMount() {
-    if (this.checkUser()) {
-      this.getTags();
+    const { checkUser, history } = this.props;
+    
+    if (checkUser.exist) {
+      this.checkCreateorUpdate();
+    } else {
+      history.push("/login");
     }
-    this.checkCreateorUpdate();
   }
 
 
@@ -95,26 +76,24 @@ class CreateOrUpdate extends Component {
         update: false
       })
     }
-
   }
 
 
   createOrUpdateAdvert = () => {
-
     const { _id } = this.state.advert;
+
     if (_id) {
       this.props.updateAdvert(this.state.advert, _id).then(() => { this.props.history.push(`/detail/${_id}`) });
     } else {
       this.props.createAdvert(this.state.advert).then(() => { this.props.history.push(`/home/`) });
     }
-
-
   }
 
 
   checkCreateorUpdate() {
     // Tenemos el ID del path param ? Sí: Pues es un update: No: Pues es un create
     const advertID = this.props.match.params.id;
+
     if (advertID) {
       getAdvert(advertID).then(advert => {
         if (advert.success === false) {
@@ -135,9 +114,7 @@ class CreateOrUpdate extends Component {
           _id: null
 
         },
-        tagList: [],
         update: true,
-
       });
     }
   }
@@ -145,7 +122,6 @@ class CreateOrUpdate extends Component {
   onSubmit = (event) => {
     event && event.preventDefault();
     this.createOrUpdateAdvert();
-
     this.setState({ update: true });
   }
 
@@ -192,11 +168,8 @@ class CreateOrUpdate extends Component {
 
   render() {
 
-    const { user } = this.props;
+    const { user, tagList } = this.props;
     const { description, name, photo, price, tags, type, _id } = this.state.advert;
-    const { tagList } = this.state;
-
-
 
     return (
       <React.Fragment>

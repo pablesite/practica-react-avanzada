@@ -12,6 +12,7 @@ function mapStateToProps(state) {
     user: state.user,  
     isFetching: state.isFetching, 
     error: state.error,
+    tagList: state.tags,
     checkUser: checkUserExist(state.user), 
   } 
 }

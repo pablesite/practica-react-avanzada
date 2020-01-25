@@ -8,7 +8,7 @@ import * as serviceWorker from './serviceWorker';
 import { saveUserInLS, getUserFromLS, deleteLS } from './services/Storage';
 import { configureStore } from './store';
 
-import { saveUser } from './store/actions' 
+import { saveUser, fetchTags } from './store/actions' 
 
 import * as  AdvertsService  from './services/AdvertDBService'
 
@@ -18,19 +18,12 @@ const renderApp = props =>
 {
   ReactDOM.render(<App {...props} />, document.getElementById('root'));
 }
-  
-
-// histórico del browser
-const history = createBrowserHistory();
-
-const user = getUserFromLS(); 
 
 const store = configureStore({  
   services: { AdvertsService }
 });
 
-
-// cuando haya un cambio en el store, sincronizamos localStorage
+// actualizamos el usuario en LS cuando cambie su estado en el store de Redux
 store.subscribe(() => {
   const { storeInfo, user } = store.getState();
   
@@ -42,31 +35,23 @@ store.subscribe(() => {
     deleteLS();
   }
 
-  // cuando tengamos las tags en el store, renderizamos la app
- // if (lastAction.type === TAGS_LOAD_SUCCESFULL) {
-    //renderApp({ store, history });
-  //}
+  // Esperamos a tener las tags para renderizar la app
+  if (storeInfo === 'tagsInStore') {
+    renderApp({ store, history });
+  }
 });
 
+// histórico del browser
+const history = createBrowserHistory();
 
+// Cargamos el usuario siempre y cuando esté persistido en LS
+const user = getUserFromLS(); 
+if (user !== null) {
+  store.dispatch(saveUser(user));
+}
 
-store.dispatch(saveUser(user));
-
-// // lanzamos una accion inicial para cargar las tags
-// store.dispatch(loadTags());
-
-
-renderApp({ store, history });
-
-
-
-
-// const rootProps = {
-//     store,
-//     history
-//   };
-
-// ReactDOM.render(<App {...rootProps} />, document.getElementById('root'));
+// Cargamos las tags al inicio.
+store.dispatch(fetchTags());
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

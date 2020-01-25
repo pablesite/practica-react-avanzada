@@ -2,6 +2,9 @@ import {
     ADVERTS_REQUEST,
     ADVERTS_FAILURE,
     ADVERTS_SUCCESS,
+    TAGS_REQUEST,
+    TAGS_FAILURE,
+    TAGS_SUCCESS,
     SAVE_USER,
     DELETE_USER
 
@@ -78,6 +81,34 @@ import {
     type: ADVERTS_FAILURE,
     error,
   });
+
+  export const TagsRequest = () => ({
+    type: TAGS_REQUEST,
+  });
+
+  export const fetchTagsSuccess = tags => ({
+    type: TAGS_SUCCESS,
+    tags: tags,
+  });
+
+  export const TagsFailure = error => ({
+    type: TAGS_FAILURE,
+    error,
+  });
+
+  export const fetchTags = () => {
+    return async function(dispatch, _getState, { services: { AdvertsService } }) {
+      dispatch(TagsRequest());
+      try {
+        const tags = await AdvertsService.getTags()
+        dispatch(fetchTagsSuccess(tags));
+        
+      } catch (error) {
+        dispatch(TagsFailure(error));
+      }
+    };
+  };
+
 
 
   export const saveUser = user => ({
